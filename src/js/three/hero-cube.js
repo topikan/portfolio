@@ -269,7 +269,7 @@ export function initHeroCube() {
 
 	gltfLoader.load(
 
-		'/models/rodion-cube-desktop.glb',
+		'/portfolio/models/rodion-cube-desktop.glb',
 
 
 		(gltf) => {
