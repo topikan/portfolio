@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300..700&family=Golos+Text:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" />
+	<title>Моё портфолио</title>
+
+</head>
+
+<body>
+	<header class="hero__header" data-header>
+		<div class="hero__header-inner">
+			<a href="#hero" class="hero__logo" aria-label="Rodion — на главную">
+				<span class="hero__logo-dot" aria-hidden="true"></span>
+				<span class="hero__logo-text">RODION</span>
+			</a>
+
+			<nav class="hero__nav" aria-label="Основная навигация">
+				<ul class="hero__nav-list">
+					<li class="hero__nav-item">
+						<a href="#about" class="hero__nav-link" data-i18n="nav.about">About</a>
+					</li>
+					<li class="hero__nav-item">
+						<a href="#services" class="hero__nav-link" data-i18n="nav.services">Services</a>
+					</li>
+					<li class="hero__nav-item">
+						<a href="#work" class="hero__nav-link" data-i18n="nav.work">Works</a>
+					</li>
+					<li class="hero__nav-item">
+						<a href="#contact" class="hero__nav-link" data-i18n="nav.contact">Contact</a>
+					</li>
+				</ul>
+			</nav>
+
+			<div class="hero__header-actions">
+				<div class="hero__lang-switch" role="group" aria-label="Переключение языка">
+					<button type="button" class="hero__lang-btn" data-lang-switch="ru" aria-pressed="false">RU</button>
+					<span class="hero__lang-divider" aria-hidden="true">/</span>
+					<button type="button" class="hero__lang-btn is-active" data-lang-switch="en" aria-pressed="true">EN</button>
+				</div>
+
+				<a href="#contact" class="hero__header-cta" data-i18n="nav.cta">
+					Let&rsquo;s talk
+				</a>
+
+				<button type="button" class="hero__burger" data-menu-toggle aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-menu">
+					<span class="hero__burger-line"></span>
+					<span class="hero__burger-line"></span>
+					<span class="hero__burger-line"></span>
+				</button>
+			</div>
+		</div>
+
+		<div class="hero__mobile-menu" data-mobile-menu id="mobile-menu">
+			<nav class="hero__mobile-nav" aria-label="Мобильная навигация">
+				<ul class="hero__mobile-nav-list">
+					<li>
+						<a href="#about" class="hero__mobile-nav-link" data-i18n="nav.about" data-menu-link>About</a>
+					</li>
+					<li>
+						<a href="#services" class="hero__mobile-nav-link" data-i18n="nav.services" data-menu-link>Services</a>
+					</li>
+					<li>
+						<a href="#work" class="hero__mobile-nav-link" data-i18n="nav.work" data-menu-link>Works</a>
+					</li>
+					<li>
+						<a href="#contact" class="hero__mobile-nav-link" data-i18n="nav.contact" data-menu-link>Contact</a>
+					</li>
+				</ul>
+			</nav>
+
+			<div class="hero__mobile-footer">
+				<div class="hero__lang-switch" role="group" aria-label="Переключение языка">
+					<button type="button" class="hero__lang-btn" data-lang-switch="ru" aria-pressed="false">RU</button>
+					<span class="hero__lang-divider" aria-hidden="true">/</span>
+					<button type="button" class="hero__lang-btn is-active" data-lang-switch="en" aria-pressed="true">EN</button>
+				</div>
+
+				<a href="#contact" class="hero__header-cta" data-i18n="nav.cta" data-menu-link>
+					Let&rsquo;s talk
+				</a>
+			</div>
+		</div>
+	</header>
+	<div class="page">
+	<section class="hero" id="hero" aria-label="Hero">
+		<div class="hero__bg" aria-hidden="true">
+			<div class="hero__grid"></div>
+			<div class="hero__grid-glow"></div>
+			<div class="hero__dot hero__dot--1"></div>
+			<div class="hero__dot hero__dot--2"></div>
+		</div>
+
+		<p class="hero__wordmark" data-animate="wordmark" aria-hidden="true">
+			<span class="hero__wordmark-name">
+				<span class="hero__wordmark-letter">R</span>
+				<span class="hero__wordmark-letter">O</span>
+				<span class="hero__wordmark-letter">D</span>
+				<span class="hero__wordmark-letter">I</span>
+			</span>
+
+			<span class="hero__wordmark-status">
+				<span class="hero__wordmark-letter">O</span>
+				<span class="hero__wordmark-letter">N</span>
+			</span>
+		</p>
+
+		<div class="hero__container">
+
+			<div class="hero__content" data-animate="content">
+				<p class="hero__eyebrow" data-animate="eyebrow">
+					<span class="hero__eyebrow-dot" aria-hidden="true"></span>
+					<span data-i18n="hero.eyebrow">HEY, I&rsquo;M RODION.</span>
+				</p>
+
+				<h1 class="hero__title" data-animate="title">
+					<span class="hero__title-line" data-i18n="hero.title.line1">
+						LET'S BUILD
+					</span>
+					<span class="hero__title-line" data-i18n="hero.title.line2">
+						SOMETHING GREAT.
+					</span>
+				</h1>
+
+				<p class="hero__description" data-animate="description" data-i18n="hero.description">
+					Frontend developer building fast, responsive and visually
+					expressive websites — from pixel-perfect Figma layouts to
+					full frontend development.
+				</p>
+
+				<div class="hero__actions" data-animate="actions">
+					<a href="#work" class="hero__cta hero__cta--primary" data-i18n="hero.cta.primary">
+						<span class="hero__cta-text">View my work</span>
+						<span class="hero__cta-icon" aria-hidden="true">&#8599;</span>
+					</a>
+					<a href="#contact" class="hero__cta hero__cta--secondary" data-i18n="hero.cta.secondary">
+						<span class="hero__cta-text">Let&rsquo;s talk</span>
+						<span class="hero__cta-icon" aria-hidden="true">&#8599;</span>
+					</a>
+				</div>
+			</div>
+
+			<div class="hero__visual" data-animate="visual">
+				<div class="hero__visual-glow" aria-hidden="true"></div>
+
+				<div class="hero__visual-shadow" aria-hidden="true"></div>
+
+				<div class="hero__canvas" aria-hidden="true" data-three-target></div>
+			</div>
+
+		</div>
+
+		<div class="hero__footer">
+			<div class="hero__meta">
+				<span class="hero__meta-text" data-i18n="hero.meta">FRONTEND DEVELOPER</span>
+				<span class="hero__meta-line" aria-hidden="true"></span>
+			</div>
+
+			<div class="hero__scroll" data-animate="scroll">
+				<span class="hero__scroll-text" data-i18n="hero.scroll">SCROLL</span>
+				<span class="hero__scroll-icon" aria-hidden="true">&darr;</span>
+			</div>
+		</div>
+
+	</section>
+
+	<section class="services" id="services" aria-label="Services">
+		<div class="services__container">
+
+			<div class="services__top">
+				<div class="services__intro">
+					<p class="services__eyebrow" data-i18n="services.eyebrow">
+						<span class="services__eyebrow-dot" aria-hidden="true"></span>
+						WHAT I DO
+					</p>
+					<h2 class="services__title">
+						<span class="services__title-line" data-i18n="services.title.line1">I BUILD DIGITAL</span>
+						<span class="services__title-line" data-i18n="services.title.line2">EXPERIENCES.</span>
+					</h2>
+				</div>
+
+				<p class="services__note" data-i18n="services.intro">
+					I help businesses and individuals bring their ideas to life through
+					modern, fast and responsive web interfaces.
+				</p>
+
+				<div class="services__quality">
+					<p class="services__quality-label">
+						<span class="services__eyebrow-dot" aria-hidden="true"></span>
+						<span data-i18n="services.quality.label">FOCUS ON QUALITY</span>
+					</p>
+					<p class="services__quality-text" data-i18n="services.quality.text">
+						Clean code. Smooth animations. Perfect responsiveness. That&rsquo;s my standard.
+					</p>
+				</div>
+			</div>
+
+			<div class="services__panel" data-services-root>
+				<div class="services__list" role="tablist" aria-label="Services list" data-services-list>
+					<button type="button" class="services__item is-active" data-service-item data-service-index="0" role="tab" aria-selected="true">
+						<span class="services__item-number" data-service-number>01</span>
+						<span class="services__item-body">
+							<span class="services__item-title" data-service-title>LANDING PAGES</span>
+							<span class="services__item-desc" data-service-desc>High-converting landing pages built to achieve real results.</span>
+							<span class="services__item-tags" data-service-tags>FIGMA &bull; HTML &bull; SCSS &bull; JS &bull; GSAP</span>
+						</span>
+						<span class="services__item-arrow" aria-hidden="true">&#8599;</span>
+					</button>
+
+					<button type="button" class="services__item" data-service-item data-service-index="1" role="tab" aria-selected="false">
+						<span class="services__item-number" data-service-number>02</span>
+						<span class="services__item-body">
+							<span class="services__item-title" data-service-title>BUSINESS WEBSITES</span>
+							<span class="services__item-desc" data-service-desc>Modern and responsive websites that represent your brand.</span>
+							<span class="services__item-tags" data-service-tags>FIGMA &bull; HTML &bull; SCSS &bull; JS &bull; VITE</span>
+						</span>
+						<span class="services__item-arrow" aria-hidden="true">&#8599;</span>
+					</button>
+
+					<button type="button" class="services__item" data-service-item data-service-index="2" role="tab" aria-selected="false">
+						<span class="services__item-number" data-service-number>03</span>
+						<span class="services__item-body">
+							<span class="services__item-title" data-service-title>FRONTEND DEVELOPMENT</span>
+							<span class="services__item-desc" data-service-desc>Pixel-perfect implementation from Figma to production.</span>
+							<span class="services__item-tags" data-service-tags>FIGMA &bull; HTML &bull; SCSS &bull; JS &bull; API</span>
+						</span>
+						<span class="services__item-arrow" aria-hidden="true">&#8599;</span>
+					</button>
+				</div>
+
+				<div class="services__showcase" data-service-showcase>
+					<div class="services__showcase-top">
+						<p class="services__showcase-label" data-service-label>01 / LANDING PAGES</p>
+
+						<h3 class="services__showcase-heading">
+							<span data-service-heading-a>FROM IDEA</span><br />
+							<span class="services__showcase-heading-accent" data-service-heading-b>TO LAUNCH</span>
+						</h3>
+
+						<p class="services__showcase-desc" data-service-panel-desc>
+							I design and develop landing pages that grab attention and turn visitors into customers.
+						</p>
+					</div>
+
+					<div class="services__mockup" aria-hidden="true" data-service-mockup>
+						<div class="services__mockup-glow"></div>
+
+						<div class="services__mockup-browser">
+							<div class="services__mockup-bar">
+								<span></span><span></span><span></span>
+							</div>
+							<div class="services__mockup-body">
+								<span class="services__mockup-line services__mockup-line--lg"></span>
+								<span class="services__mockup-line services__mockup-line--lg services__mockup-line--accent"></span>
+								<span class="services__mockup-line services__mockup-line--sm"></span>
+								<span class="services__mockup-btn"></span>
+							</div>
+						</div>
+
+						<div class="services__mockup-phone">
+							<div class="services__mockup-body">
+								<span class="services__mockup-line services__mockup-line--sm"></span>
+								<span class="services__mockup-line services__mockup-line--sm services__mockup-line--accent"></span>
+								<span class="services__mockup-btn"></span>
+							</div>
+						</div>
+					</div>
+
+					<div class="services__stats" data-service-stats>
+						<div class="services__stat">
+							<span class="services__stat-value" data-stat-value>+35%</span>
+							<span class="services__stat-label" data-stat-label>conversion increase</span>
+						</div>
+						<div class="services__stat">
+							<span class="services__stat-value" data-stat-value>100%</span>
+							<span class="services__stat-label" data-stat-label>responsive</span>
+						</div>
+						<div class="services__stat">
+							<span class="services__stat-value" data-stat-value>fast</span>
+							<span class="services__stat-label" data-stat-label>loading speed</span>
+						</div>
+						<div class="services__stat">
+							<span class="services__stat-value" data-stat-value>clean</span>
+							<span class="services__stat-label" data-stat-label>code</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="services__footer">
+				<a href="#work" class="services__cta" data-i18n="services.cta">
+					<span class="services__cta-text">View all works</span>
+					<span class="services__cta-icon" aria-hidden="true">&#8599;</span>
+				</a>
+
+				<p class="services__footer-text">
+					<span data-i18n="services.footer.line1">SEE REAL PROJECTS</span>
+					<span data-i18n="services.footer.line2">I&rsquo;VE WORKED ON</span>
+				</p>
+			</div>
+
+		</div>
+	</section>
+	</div>
+
+	<script type="module" src="/src/main.js"></script>
+</body>
+
+</html>
