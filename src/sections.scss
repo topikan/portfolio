@@ -913,7 +913,6 @@ html {
 	// Первый экран целиком в высоту телефона (svh — без учёта адресной строки).
 	.hero {
 		min-height: 100svh;
-		min-height: 100dvh;
 
 		&__wordmark {
 			top: 96px;
@@ -947,14 +946,12 @@ html {
 
 		// Куб занимает всё оставшееся место экрана (но не меньше 140px).
 		&__visual {
-			height: clamp(230px, calc(100svh - 440px), 460px);
-			height: clamp(230px, calc(100dvh - 440px), 460px);
+			height: clamp(140px, calc(100svh - 566px), 340px);
 			margin-top: 0;
 		}
 
-		// Подпись «Веб-разработчик / Скролл» на телефоне убрана: место отдано кубу.
 		&__footer {
-			display: none;
+			padding-block: 10px;
 		}
 	}
 
