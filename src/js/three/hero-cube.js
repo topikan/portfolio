@@ -217,7 +217,7 @@ export function initHeroCube() {
 
 	const scene = new Scene();
 	const camera = new PerspectiveCamera(35, width / height, 0.1, 100);
-	camera.position.set(0, -0.6, 5);
+	camera.position.set(0, -0.6, window.innerWidth < 640 ? 4.6 : 5);
 	camera.lookAt(0, 0, 0);
 	addLights(scene);
 
