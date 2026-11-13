@@ -18,7 +18,7 @@ export const CONTACTS = {
 // вводишь почту, на неё приходит ключ, письма с заявками идут на эту почту).
 // Пока ключа нет, кнопка формы откроет почтовую программу (нужен CONTACTS.email).
 export const FORM = {
-	web3formsKey: '',
+	web3formsKey: '1589b428-90b2-4aa8-8c1e-116c7d81e736',
 };
 
 // Аналитика без cookie. Пример для Plausible:
