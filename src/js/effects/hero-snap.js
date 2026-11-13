@@ -1,129 +1,123 @@
 // src/js/effects/hero-snap.js
 //
-// Тот самый "наезд блока на блок": hero запинен через ScrollTrigger
-// (pin: true) ровно на один экран скролла, пока .services физически
-// проезжает поверх него снизу вверх. Разница с обычным scroll-scrub
-// пином — пользователь НЕ управляет процессом напрямую: один жест
-// скролла (колесо/тачпад/клавиша) форсированно проигрывает весь
-// переход как единую анимацию заданной длительности, а не пиксель-в-
-// пиксель следует за курсором мыши. Пока анимация идёт — весь
-// остальной ввод скролла игнорируется (locked).
+// "Наезд блока на блок": hero запинен через ScrollTrigger (pin: true) на
+// один экран скролла, пока .services физически проезжает поверх него
+// снизу вверх. Работает на всех размерах экрана — и на десктопе, и на
+// телефоне.
 //
-// Как только пользователь долистал глубже .services (там контента
-// больше одного экрана — аккордеон, статы, футер) — perехват
-// отключается, скролл дальше обычный, нативный.
+// Где именно закрепляется hero:
+// - на десктопе и планшете hero ровно в высоту экрана, поэтому он
+//   закрепляется, как только страница на самом верху;
+// - на телефоне hero ВЫШЕ экрана (контент и куб идут друг под другом).
+//   Если закрепить его за верхний край, нижняя часть контента была бы
+//   отрезана. Поэтому start = 'bottom bottom': сначала hero прокручивается
+//   как обычно, и когда его низ дошёл до низа экрана, он замирает, а
+//   Services наезжает сверху.
+//
+// Скролл остаётся НАТИВНЫМ (колесо, тачпад, палец, полоса справа, клавиши,
+// якорные ссылки). Никаких перехватов wheel/touch/keydown и preventDefault —
+// поэтому ввод пользователя никогда не "съедается".
+//
+// "Доводка" до конца перехода (snap) включена только там, где есть мышь или
+// тачпад: как только пользователь остановился внутри зоны перехода,
+// страница плавно доезжает до ближайшего края в сторону его движения. На
+// сенсорных экранах snap выключен: он конфликтует с инерцией прокрутки
+// пальцем (особенно в iOS Safari), и наезд там просто следует за пальцем.
+//
+// Затухание hero (opacity/scale) считается от прогресса скролла, поэтому
+// всегда соответствует положению страницы, каким бы способом её ни листали.
+//
+// ВАЖНО: затухание задаётся через CSS-переменные --hero-fade-opacity и
+// --hero-fade-scale (стили — в конце style.scss), а НЕ через gsap.set(scale).
+// GSAP, записав scale, забирает под себя весь `transform` элемента и
+// "замораживает" CSS-значения вроде translateY(-50%) у .hero__visual в
+// пикселях. После смены размера окна (поворот планшета, DevTools) этот
+// устаревший transform перебивал мобильный CSS и куб уезжал на кнопки.
+// Отдельное CSS-свойство `scale` с `transform` не конфликтует.
+//
+// gsap.matchMedia включает/выключает эффект при смене prefers-reduced-motion
+// и типа указателя без перезагрузки страницы.
 
 import { gsap, ScrollTrigger } from '../utils/animate.js';
 
-const JUMP_DURATION = 1;
-const EASE = 'power3.inOut';
-const EDGE = 2; // px допуска на границах pin-диапазона
+const FADE_OPACITY = 0.25; // opacity hero, когда он полностью накрыт
+const FADE_SCALE = 0.96; // scale hero, когда он полностью накрыт
+
+const SNAP = {
+	snapTo: [0, 1], // 0 — hero открыт, 1 — services полностью накрыла hero
+	directional: true, // доводим в сторону движения пользователя
+	duration: { min: 0.3, max: 0.8 },
+	delay: 0.08, // пауза после остановки скролла перед доводкой
+	ease: 'power3.inOut',
+};
 
 export function initHeroSnap() {
 	const hero = document.querySelector('.hero');
 	const services = document.querySelector('.services');
-	const fadeTargets = [
-		document.querySelector('.hero__content'),
-		document.querySelector('.hero__wordmark'),
-		document.querySelector('.hero__visual'),
-	].filter(Boolean);
+	const root = document.documentElement;
 
 	if (!hero || !services) return;
-	if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-	if (!window.matchMedia('(min-width: 1025px)').matches) return;
 
-	// pin: true — hero остаётся на экране, пока страница "прокручивается"
-	// ровно на один дополнительный viewport (end: '+=100%'); pinSpacing:
-	// false — без этого ScrollTrigger сам добавил бы пустой отступ под
-	// hero на время пина, а нам нужно, чтобы .services физически
-	// наезжала поверх, а не начиналась только после паузы.
-	const pin = ScrollTrigger.create({
-		trigger: hero,
-		start: 'top top',
-		end: '+=100%',
-		pin: true,
-		pinSpacing: false,
-	});
+	const mm = gsap.matchMedia();
 
-	let locked = false;
-
-	function inPinZone(y) {
-		return y >= pin.start - EDGE && y <= pin.end + EDGE;
-	}
-
-	function jump(direction) {
-		if (locked) return;
-
-		const current = window.scrollY;
-		let target = null;
-
-		if (direction > 0 && current < pin.end - EDGE) {
-			target = pin.end;
-		} else if (direction < 0 && current > pin.start + EDGE) {
-			target = pin.start;
-		}
-
-		if (target === null) return;
-
-		locked = true;
-
-		const tl = gsap.timeline({
-			defaults: { duration: JUMP_DURATION, ease: EASE },
-			onComplete: () => {
-				locked = false;
-			},
-		});
-
-		tl.to(window, { scrollTo: { y: target, autoKill: false } }, 0);
-
-		if (fadeTargets.length) {
-			const covering = target === pin.end;
-			tl.to(fadeTargets, { opacity: covering ? 0.25 : 1, scale: covering ? 0.96 : 1 }, 0);
-		}
-	}
-
-	function handleIntent(direction, event) {
-		if (locked) {
-			event.preventDefault();
-			return;
-		}
-		if (!inPinZone(window.scrollY)) return; // глубже в services — обычный скролл
-
-		event.preventDefault();
-		jump(direction);
-	}
-
-	window.addEventListener(
-		'wheel',
-		(event) => handleIntent(Math.sign(event.deltaY), event),
-		{ passive: false }
-	);
-
-	let touchStartY = 0;
-
-	window.addEventListener(
-		'touchstart',
-		(event) => {
-			touchStartY = event.touches[0].clientY;
+	mm.add(
+		{
+			motion: '(prefers-reduced-motion: no-preference)',
+			finePointer: '(hover: hover) and (pointer: fine)',
 		},
-		{ passive: true }
-	);
+		(context) => {
+			const { motion, finePointer } = context.conditions;
+			// Если пользователь просит меньше анимаций — страница скроллится обычно.
+			if (!motion) return;
 
-	window.addEventListener(
-		'touchmove',
-		(event) => {
-			const deltaY = touchStartY - event.touches[0].clientY;
-			if (Math.abs(deltaY) < 24) return;
-			handleIntent(Math.sign(deltaY), event);
-		},
-		{ passive: false }
-	);
+			const applyFade = (self) => {
+				// Погрешность прогресса (0.000001) не должна давать opacity < 1 в покое.
+				const p = self.progress < 0.001 ? 0 : self.progress;
+				root.style.setProperty('--hero-fade-opacity', String(1 - (1 - FADE_OPACITY) * p));
+				root.style.setProperty('--hero-fade-scale', String(1 - (1 - FADE_SCALE) * p));
 
-	window.addEventListener('keydown', (event) => {
-		if (event.key === 'ArrowDown' || event.key === 'PageDown') {
-			handleIntent(1, event);
-		} else if (event.key === 'ArrowUp' || event.key === 'PageUp') {
-			handleIntent(-1, event);
+				// Когда Services полностью накрыла hero, его ссылки и кнопки не видны —
+				// исключаем их из Tab-порядка и из дерева доступности (inert), чтобы
+				// фокус с клавиатуры не уходил "под" секцию.
+				hero.inert = p >= 0.999;
+			};
+
+			// Длина пина = высота окна: ровно столько нужно .services, чтобы
+			// доехать до верха экрана и полностью накрыть hero. Если страница
+			// короче (например, планшет в портретной ориентации: Services ниже
+			// экрана), конец эффекта привязываем к концу страницы — тогда
+			// затухание hero завершается ровно там, где можно доскроллить.
+			// pinSpacing: false — .services должна накрывать hero, а не
+			// начинаться после паузы.
+			const trigger = ScrollTrigger.create({
+				trigger: hero,
+				start: 'bottom bottom',
+				end: (self) =>
+				Math.max(
+					self.start + 1,
+					Math.min(self.start + window.innerHeight, ScrollTrigger.maxScroll(window))
+				),
+				invalidateOnRefresh: true,
+				pin: true,
+				pinSpacing: false,
+				anticipatePin: 1, // без "вспышки" при быстром флике пальцем
+				snap: finePointer ? SNAP : false,
+				onUpdate: applyFade,
+				onRefresh: applyFade,
+			});
+
+			// При смене языка высота страницы меняется (тексты разной длины) —
+			// пересчитываем позиции эффекта.
+			const onLangChange = () => requestAnimationFrame(() => ScrollTrigger.refresh());
+			document.addEventListener('langchange', onLangChange);
+
+			return () => {
+				document.removeEventListener('langchange', onLangChange);
+				trigger.kill();
+				hero.inert = false;
+				root.style.removeProperty('--hero-fade-opacity');
+				root.style.removeProperty('--hero-fade-scale');
+			};
 		}
-	});
+	);
 }

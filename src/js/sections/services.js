@@ -14,7 +14,6 @@
 
 import { gsap } from '../utils/animate.js';
 
-const STORAGE_KEY = 'site-lang';
 const DEFAULT_LANG = 'en';
 
 const SERVICES_DATA = {
@@ -29,10 +28,10 @@ const SERVICES_DATA = {
 			headingB: 'TO LAUNCH',
 			panelDesc: 'I design and develop landing pages that grab attention and turn visitors into customers.',
 			stats: [
-				{ value: '+35%', label: 'conversion increase' },
-				{ value: '100%', label: 'responsive' },
-				{ value: 'fast', label: 'loading speed' },
-				{ value: 'clean', label: 'code' },
+				{ value: '90+', label: 'Google PageSpeed goal' },
+				{ value: 'any', label: 'screen size' },
+				{ value: 'from 5d', label: 'to launch' },
+				{ value: 'SEO', label: 'basics included' },
 			],
 		},
 		{
@@ -45,10 +44,10 @@ const SERVICES_DATA = {
 			headingB: 'YOUR BRAND',
 			panelDesc: 'I craft business websites that communicate trust and professionalism at first glance.',
 			stats: [
-				{ value: '+40%', label: 'engagement' },
-				{ value: '100%', label: 'responsive' },
-				{ value: 'fast', label: 'loading speed' },
-				{ value: 'clean', label: 'code' },
+				{ value: '90+', label: 'Google PageSpeed goal' },
+				{ value: 'any', label: 'screen size' },
+				{ value: 'from 14d', label: 'to launch' },
+				{ value: 'SEO', label: 'basics included' },
 			],
 		},
 		{
@@ -61,9 +60,9 @@ const SERVICES_DATA = {
 			headingB: 'IN PRODUCTION',
 			panelDesc: 'I turn Figma designs into pixel-perfect, production-ready interfaces wired to real APIs.',
 			stats: [
-				{ value: '100%', label: 'pixel accuracy' },
-				{ value: '100%', label: 'responsive' },
-				{ value: 'fast', label: 'build time' },
+				{ value: '1:1', label: 'match with Figma' },
+				{ value: 'any', label: 'screen size' },
+				{ value: '90+', label: 'Google PageSpeed goal' },
 				{ value: 'clean', label: 'code' },
 			],
 		},
@@ -80,10 +79,10 @@ const SERVICES_DATA = {
 			headingB: 'ДО ЗАПУСКА',
 			panelDesc: 'Проектирую и верстаю лендинги, которые цепляют внимание и превращают посетителей в клиентов.',
 			stats: [
-				{ value: '+35%', label: 'рост конверсии' },
-				{ value: '100%', label: 'адаптивность' },
-				{ value: 'быстрая', label: 'загрузка' },
-				{ value: 'чистый', label: 'код' },
+				{ value: '90+', label: 'цель по Google PageSpeed' },
+				{ value: 'любой', label: 'размер экрана' },
+				{ value: 'от 5 дн.', label: 'до запуска' },
+				{ value: 'SEO', label: 'основы включены' },
 			],
 		},
 		{
@@ -96,10 +95,10 @@ const SERVICES_DATA = {
 			headingB: 'ВАШ БРЕНД',
 			panelDesc: 'Делаю сайты для бизнеса, которые с первого взгляда вызывают доверие и выглядят профессионально.',
 			stats: [
-				{ value: '+40%', label: 'вовлечённость' },
-				{ value: '100%', label: 'адаптивность' },
-				{ value: 'быстрая', label: 'загрузка' },
-				{ value: 'чистый', label: 'код' },
+				{ value: '90+', label: 'цель по Google PageSpeed' },
+				{ value: 'любой', label: 'размер экрана' },
+				{ value: 'от 14 дн.', label: 'до запуска' },
+				{ value: 'SEO', label: 'основы включены' },
 			],
 		},
 		{
@@ -112,9 +111,9 @@ const SERVICES_DATA = {
 			headingB: 'В ПРОДАКШЕНЕ',
 			panelDesc: 'Превращаю макеты Figma в точную, готовую к продакшену вёрстку, подключённую к реальным API.',
 			stats: [
-				{ value: '100%', label: 'точность вёрстки' },
-				{ value: '100%', label: 'адаптивность' },
-				{ value: 'быстрая', label: 'сборка' },
+				{ value: '1:1', label: 'совпадение с Figma' },
+				{ value: 'любой', label: 'размер экрана' },
+				{ value: '90+', label: 'цель по Google PageSpeed' },
 				{ value: 'чистый', label: 'код' },
 			],
 		},
@@ -122,12 +121,9 @@ const SERVICES_DATA = {
 };
 
 function getCurrentLang() {
-	try {
-		const stored = localStorage.getItem(STORAGE_KEY);
-		return SERVICES_DATA[stored] ? stored : DEFAULT_LANG;
-	} catch (e) {
-		return DEFAULT_LANG;
-	}
+	// Язык уже выбран общим i18n (хранилище или язык браузера) и записан в <html lang>.
+	const current = document.documentElement.getAttribute('lang');
+	return SERVICES_DATA[current] ? current : DEFAULT_LANG;
 }
 
 export function initServices() {
@@ -146,6 +142,13 @@ export function initServices() {
 
 	let currentLang = getCurrentLang();
 	let activeIndex = 0;
+	let showcaseTimeline = null;
+
+	// Декоративный макет: у каждой услуги своя "сцена" (лендинг / бизнес-сайт /
+	// разработка). Активную сцену показываем вместе со сменой текста.
+	const mockup = root.querySelector('[data-service-mockup]');
+	const scenes = mockup ? Array.from(mockup.querySelectorAll('[data-mock-scene]')) : [];
+	const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 	function renderItems() {
 		const data = SERVICES_DATA[currentLang];
@@ -159,10 +162,34 @@ export function initServices() {
 		});
 	}
 
+	// Элементы активной сцены появляются по очереди. Важно: у [data-mock] в CSS
+	// не должно быть своего transform — GSAP пишет y через transform.
+	function playMockup() {
+		if (reduceMotion.matches) return;
+
+		const parts = scenes[activeIndex]?.querySelectorAll('[data-mock]');
+		if (!parts || parts.length === 0) return;
+
+		// Сначала сбрасываем возможные "хвосты" прерванной анимации, потом
+		// gsap.from: он анимирует К значению из CSS (например, у акцентных линий
+		// своя opacity: 0.6), а не к жёсткой единице.
+		gsap.set(parts, { clearProps: 'opacity,transform' });
+		gsap.from(parts, {
+			opacity: 0,
+			y: 10,
+			duration: 0.45,
+			stagger: 0.04,
+			ease: 'power2.out',
+			overwrite: 'auto',
+			clearProps: 'opacity,transform',
+		});
+	}
+
 	function renderShowcase(animate) {
 		const entry = SERVICES_DATA[currentLang][activeIndex];
 
 		const apply = () => {
+			scenes.forEach((scene, i) => scene.classList.toggle('is-active', i === activeIndex));
 			labelEl.textContent = entry.label;
 			headingAEl.textContent = entry.headingA;
 			headingBEl.textContent = entry.headingB;
@@ -178,9 +205,15 @@ export function initServices() {
 			return;
 		}
 
-		gsap.timeline()
+		// Быстрые клики по пунктам не должны наслаиваться друг на друга.
+		showcaseTimeline?.kill();
+		showcaseTimeline = gsap
+			.timeline()
 			.to(showcase, { opacity: 0, y: 8, duration: 0.18, ease: 'power1.out' })
-			.call(apply)
+			.call(() => {
+				apply();
+				playMockup();
+			})
 			.to(showcase, { opacity: 1, y: 0, duration: 0.32, ease: 'power2.out' });
 	}
 
@@ -192,8 +225,13 @@ export function initServices() {
 			const isActive = i === index;
 			item.classList.toggle('is-active', isActive);
 			item.setAttribute('aria-selected', String(isActive));
+			// Roving tabindex: в Tab-порядке только активная вкладка,
+			// между вкладками ходим стрелками.
+			item.tabIndex = isActive ? 0 : -1;
 		});
 
+		// Панель называем по короткому заголовку вкладки, а не по всему её тексту.
+		showcase.setAttribute('aria-labelledby', items[index].querySelector('[data-service-title]').id);
 		renderShowcase(animate);
 	}
 
@@ -201,6 +239,25 @@ export function initServices() {
 		item.addEventListener('click', () => {
 			setActive(Number(item.dataset.serviceIndex), true);
 		});
+	});
+
+	// Клавиатура по паттерну WAI-ARIA Tabs (вертикальный список):
+	// ↑/← — предыдущая, ↓/→ — следующая, Home/End — первая/последняя.
+	const list = root.querySelector('[data-services-list]');
+	list?.addEventListener('keydown', (event) => {
+		const current = items.indexOf(document.activeElement);
+		if (current === -1) return;
+
+		let next = null;
+		if (event.key === 'ArrowDown' || event.key === 'ArrowRight') next = (current + 1) % items.length;
+		else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') next = (current - 1 + items.length) % items.length;
+		else if (event.key === 'Home') next = 0;
+		else if (event.key === 'End') next = items.length - 1;
+		if (next === null) return;
+
+		event.preventDefault();
+		items[next].focus();
+		setActive(next, true);
 	});
 
 	document.querySelectorAll('[data-lang-switch]').forEach((btn) => {

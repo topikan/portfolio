@@ -728,9 +728,11 @@ a {
 	}
 
 	&__cta--primary {
-		background: var(--color-accent);
+		// #2c66f5 вместо --color-accent (#2f6bff): белый текст на нём даёт
+		// контраст 4.85:1 (WCAG AA требует ≥ 4.5), на accent выходило 4.49.
+		background: #2c66f5;
 		color: #ffffff;
-		border: 1px solid var(--color-accent);
+		border: 1px solid #2c66f5;
 
 		&:hover,
 		&:focus-visible {
@@ -1353,6 +1355,463 @@ a {
 		height: 16px;
 	}
 
+	// ───── Декоративный макет: у каждой услуги своя "сцена" ─────
+	// Активную сцену включает services.js (класс is-active). Элементы с
+	// атрибутом data-mock анимирует GSAP (opacity + y), поэтому у них НЕ
+	// должно быть собственного CSS transform — иначе GSAP его перезапишет.
+
+	// display, а не visibility: явный visibility: visible у потомка перебивает
+	// visibility: hidden у предка и "протекал" бы сквозь скрытую страницу
+	// (когда открыт блок "Работы").
+	&__mockup-scene {
+		position: absolute;
+		inset: 0;
+		display: none;
+
+		&.is-active {
+			display: block;
+		}
+	}
+
+	// Адресная строка браузера (внутри .services__mockup-bar)
+	&__mock-url {
+		flex: 1;
+		max-width: 52%;
+		height: 15px;
+		margin-left: 10px;
+		padding-inline: 10px;
+		border-radius: 999px;
+		background: rgba(255, 255, 255, 0.06);
+		color: var(--color-text-muted);
+		font: 400 8px/15px var(--font-mono);
+		font-style: normal;
+		letter-spacing: 0.02em;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+
+	// Страница внутри браузера (под полосой 28px)
+	&__mock-page {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		height: calc(100% - 29px);
+		padding: 10px 14px 12px;
+	}
+
+	// ── общие элементы: шапка сайта ──
+	&__mock-nav {
+		display: flex;
+		flex: none;
+		align-items: center;
+		gap: 8px;
+	}
+
+	&__mock-logo {
+		width: 14px;
+		height: 14px;
+		margin-right: 4px;
+		border-radius: 4px;
+		background: var(--color-accent);
+	}
+
+	&__mock-link {
+		width: 22px;
+		height: 5px;
+		border-radius: 3px;
+		background: var(--color-border-strong);
+	}
+
+	&__mock-pill {
+		width: 38px;
+		height: 14px;
+		margin-left: auto;
+		border: 1px solid var(--color-border-strong);
+		border-radius: 999px;
+
+		&--solid {
+			border-color: var(--color-accent);
+			background: var(--color-accent);
+		}
+	}
+
+	&__mock-burger {
+		display: grid;
+		gap: 3px;
+		width: 12px;
+		margin-left: auto;
+
+		i {
+			display: block;
+			height: 2px;
+			border-radius: 1px;
+			background: var(--color-text-muted);
+		}
+	}
+
+	// ── 01 · Лендинг ──
+	&__mock-hero {
+		display: grid;
+		flex: 1;
+		grid-template-columns: 1.15fr 1fr;
+		gap: 14px;
+		align-items: center;
+		min-height: 0;
+	}
+
+	&__mock-copy {
+		display: flex;
+		flex-direction: column;
+		gap: 7px;
+	}
+
+	&__mock-actions {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		margin-top: 4px;
+
+		.services__mockup-btn {
+			margin-top: 0;
+		}
+	}
+
+	&__mock-ghost {
+		width: 40px;
+		height: 20px;
+		border: 1px solid var(--color-border-strong);
+		border-radius: 999px;
+	}
+
+	// Кнопка "призыва к действию" мягко пульсирует
+	&__mock-cta {
+		.is-active & {
+			animation: mock-pulse 2.6s ease-out 1.2s infinite;
+		}
+
+		&--wide {
+			width: 100%;
+			height: 16px;
+			margin-top: 0;
+		}
+	}
+
+	&__mock-chart {
+		position: relative;
+		align-self: stretch;
+		max-height: 100px;
+		min-height: 56px;
+		border: 1px solid var(--color-border);
+		border-radius: 10px;
+		background: linear-gradient(180deg, rgba(47, 107, 255, 0.12), transparent 75%);
+		overflow: hidden;
+
+		svg {
+			position: absolute;
+			inset: 0;
+			width: 100%;
+			height: 100%;
+		}
+
+		&--mini {
+			flex: none;
+			align-self: auto;
+			height: 34px;
+			min-height: 0;
+			border-radius: 7px;
+		}
+	}
+
+	&__mock-chart-area {
+		fill: rgba(47, 107, 255, 0.18);
+	}
+
+	&__mock-chart-line {
+		fill: none;
+		stroke: var(--color-accent);
+		stroke-width: 2;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		vector-effect: non-scaling-stroke;
+		stroke-dasharray: 1;
+
+		.is-active & {
+			animation: mock-draw 1s ease-out 0.25s both;
+		}
+	}
+
+	&__mock-badge {
+		position: absolute;
+		top: 6px;
+		left: 6px;
+		z-index: 1;
+		padding: 2px 7px;
+		border-radius: 999px;
+		background: var(--color-accent);
+		color: #ffffff;
+		font: 600 8px/1.4 var(--font-mono);
+	}
+
+	&__mock-trust {
+		display: flex;
+		flex: none;
+		gap: 8px;
+
+		i {
+			flex: 1;
+			height: 6px;
+			border-radius: 3px;
+			background: rgba(255, 255, 255, 0.07);
+		}
+	}
+
+	// ── 02 · Сайт для бизнеса ──
+	&__mock-banner {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		justify-content: center;
+		gap: 7px;
+		min-height: 0;
+		padding: 12px 14px;
+		border: 1px solid var(--color-border);
+		border-radius: 10px;
+		background: linear-gradient(120deg, rgba(47, 107, 255, 0.24), rgba(47, 107, 255, 0.05) 60%, transparent);
+
+		.services__mockup-btn {
+			margin-top: 2px;
+		}
+
+		&--mini {
+			flex: none;
+			gap: 6px;
+			padding: 10px;
+			border-radius: 8px;
+		}
+	}
+
+	&__mock-cards {
+		display: grid;
+		flex: none;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 8px;
+	}
+
+	&__mock-card {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+		padding: 8px;
+		border: 1px solid var(--color-border);
+		border-radius: 8px;
+		background: rgba(255, 255, 255, 0.02);
+
+		&--row {
+			flex-direction: row;
+			align-items: center;
+			gap: 6px;
+			padding: 6px;
+		}
+	}
+
+	&__mock-icon {
+		position: relative;
+		flex: none;
+		width: 14px;
+		height: 14px;
+		border-radius: 4px;
+		background: var(--color-accent-soft);
+
+		&::after {
+			content: '';
+			position: absolute;
+			inset: 4px;
+			border-radius: 2px;
+			background: var(--color-accent);
+		}
+	}
+
+	// ── 03 · Frontend-разработка: редактор кода ──
+	&__mockup-browser--editor {
+		background: var(--color-bg-elevated);
+	}
+
+	&__mock-tab {
+		margin-left: 6px;
+		padding: 5px 9px;
+		color: var(--color-text-muted);
+		font: 400 8px/1 var(--font-mono);
+		font-style: normal;
+
+		&.is-active {
+			color: var(--color-text);
+			box-shadow: inset 0 -1px 0 var(--color-accent);
+		}
+
+		& + & {
+			margin-left: 0;
+		}
+	}
+
+	&__mock-code {
+		display: flex;
+		flex-direction: column;
+		gap: 3px;
+		padding: 12px 14px;
+		font: 400 9px/1.5 var(--font-mono);
+		color: var(--color-text);
+		white-space: nowrap;
+		overflow: hidden;
+
+		code {
+			font: inherit;
+		}
+	}
+
+	&__mock-codeline {
+		display: flex;
+		gap: 14px;
+		min-height: 1.5em;
+
+		b {
+			flex: none;
+			width: 8px;
+			color: var(--color-text-muted);
+			font-weight: 400;
+			opacity: 0.5;
+			text-align: right;
+		}
+	}
+
+	&__mock-k {
+		color: #5d91ff;
+	}
+
+	&__mock-f {
+		color: #ffffff;
+	}
+
+	&__mock-c {
+		color: var(--color-text-muted);
+		opacity: 0.8;
+	}
+
+	&__mock-caret {
+		display: inline-block;
+		width: 5px;
+		height: 10px;
+		margin-left: 3px;
+		vertical-align: -1px;
+		background: var(--color-accent);
+
+		.is-active & {
+			animation: mock-blink 1.1s steps(1) infinite;
+		}
+	}
+
+	&__mock-status {
+		position: absolute;
+		right: 10px;
+		bottom: 8px;
+		padding: 3px 8px;
+		border: 1px solid rgba(47, 107, 255, 0.4);
+		border-radius: 999px;
+		background: var(--color-accent-soft);
+		color: #9db9ff;
+		font: 500 8px/1.3 var(--font-mono);
+	}
+
+	// Содержимое телефона не должно вылезать за его рамку.
+	&__mockup-phone &__mockup-body {
+		height: 100%;
+		overflow: hidden;
+	}
+
+	// На узких экранах телефон не должен закрывать содержимое браузера:
+	// браузер сужаем и прижимаем вправо, телефон ставим слева от него.
+	@include mobile {
+		&__mockup {
+			height: 236px;
+		}
+
+		&__mockup-browser {
+			width: 74%;
+		}
+
+		&__mockup-phone {
+			left: -3%;
+			width: 30%;
+			height: 74%;
+		}
+
+		&__mock-code {
+			font-size: 8px;
+		}
+	}
+
+	// ── 03 · "Рамка из Figma" вместо телефона ──
+	&__mockup-phone--figma {
+		border-color: rgba(47, 107, 255, 0.7);
+		background: rgba(47, 107, 255, 0.06);
+	}
+
+	&__mock-frame-label {
+		position: absolute;
+		top: -9px;
+		left: 6px;
+		padding: 1px 6px;
+		border-radius: 3px;
+		background: var(--color-accent);
+		color: #ffffff;
+		font: 600 7px/1.6 var(--font-mono);
+		white-space: nowrap;
+	}
+
+	// Размерная линия с подписью ("отступ 16 / 24")
+	&__mock-guide {
+		display: flex;
+		align-items: center;
+		gap: 4px;
+		color: #9db9ff;
+		font: 500 7px/1 var(--font-mono);
+
+		i {
+			flex: 1;
+			height: 1px;
+			background: rgba(47, 107, 255, 0.7);
+		}
+
+		b {
+			font-weight: 500;
+		}
+	}
+
+	// Выделенный элемент с "ручками" по углам
+	&__mock-select {
+		position: relative;
+		padding: 5px;
+		border: 1px solid var(--color-accent);
+
+		.services__mockup-btn {
+			display: block;
+			width: 100%;
+			margin-top: 0;
+		}
+
+		u {
+			position: absolute;
+			width: 4px;
+			height: 4px;
+			border: 1px solid var(--color-accent);
+			background: var(--color-bg);
+
+			&:nth-of-type(1) { top: -3px; left: -3px; }
+			&:nth-of-type(2) { top: -3px; right: -3px; }
+			&:nth-of-type(3) { bottom: -3px; left: -3px; }
+			&:nth-of-type(4) { right: -3px; bottom: -3px; }
+		}
+	}
+
 	&__stats {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
@@ -1450,4 +1909,467 @@ a {
 			row-gap: 16px;
 		}
 	}
+}
+
+
+// ─── Доступность: ссылка "Перейти к содержимому" ───
+// Невидима, пока на неё не попал фокус с клавиатуры (Tab).
+.skip-link {
+	position: fixed;
+	top: 12px;
+	left: 12px;
+	z-index: 1000;
+	padding: 10px 18px;
+	border-radius: 999px;
+	background: #ffffff;
+	color: #060608;
+	font-family: var(--font-body);
+	font-size: 14px;
+	font-weight: 500;
+	text-decoration: none;
+	transform: translateY(-200%);
+
+	&:focus-visible {
+		transform: none;
+	}
+}
+
+// Фокус на <main> после перехода по skip-link не должен рисовать рамку.
+.page:focus {
+	outline: none;
+}
+
+
+// ─── Затухание hero при наезде секции Services ───
+// Значения переменных обновляет src/js/effects/hero-snap.js от прогресса
+// скролла. Используем свойство `scale`, а не transform: так у элементов
+// сохраняется их собственный transform из CSS (например, translateY(-50%)
+// у .hero__visual на десктопе), и он не "застывает" после ресайза.
+.hero__content,
+.hero__wordmark,
+.hero__visual {
+	opacity: var(--hero-fade-opacity, 1);
+	scale: var(--hero-fade-scale, 1);
+}
+
+
+@keyframes mock-pulse {
+	0% { box-shadow: 0 0 0 0 rgba(47, 107, 255, 0.55); }
+	70%, 100% { box-shadow: 0 0 0 9px rgba(47, 107, 255, 0); }
+}
+
+@keyframes mock-draw {
+	from { stroke-dashoffset: 1; }
+	to { stroke-dashoffset: 0; }
+}
+
+@keyframes mock-blink {
+	50% { opacity: 0; }
+}
+
+// Без анимаций, если пользователь просит меньше движения.
+@media (prefers-reduced-motion: reduce) {
+	.services__mock-cta,
+	.services__mock-chart-line,
+	.services__mock-caret {
+		animation: none !important;
+	}
+
+	.services__mock-chart-line {
+		stroke-dashoffset: 0;
+	}
+}
+
+
+// ─── 3D-переворот страницы и блок "Работы" ─────────────────────────────
+// Логика — src/js/effects/works-flip.js, карточки — src/js/sections/works.js.
+
+// Лок скролла страницы: открытое меню или открытый блок "Работы".
+// (Класс, а не inline-стиль, чтобы блокировки не мешали друг другу.)
+html.is-menu-open,
+html.is-menu-open body,
+html.is-works-open {
+	overflow: hidden;
+}
+
+// ── КУБ ──────────────────────────────────────────────────────────────────
+// .cube        — контейнер перспективы
+// .cube__rotor — вращающийся куб (preserve-3d)
+//   ├─ .page-stage — передняя грань (вся страница)
+//   └─ .works      — правая грань (блок "Работы")
+// В покое обёртки ничего не делают. Класс .is-3d и все inline-стили
+// (перспектива, размеры граней, transform) ставит works-flip.js только на
+// время поворота: любой transform/perspective у предка делает его
+// containing block для position: fixed.
+
+.page-stage {
+	position: relative;
+	z-index: 2; // в покое страница лежит НАД скрытым блоком .works
+}
+
+.page {
+	position: relative;
+}
+
+.cube.is-3d {
+	overflow: clip; // грани при повороте выходят за экран — не даём скролл вбок
+}
+
+.cube__rotor.is-3d {
+	position: relative;
+	transform-style: preserve-3d;
+
+	// Передняя грань — страница.
+	// translateZ(0) — ВАЖНО: грань должна быть отдельной 3D-плоскостью.
+	// Без собственного 3D-transform Chrome рисует страницу в плоскость
+	// родителя и при сортировке по глубине теряет её (грань "пропадала",
+	// перекрытая правой гранью). position/z-index на время поворота
+	// сбрасываем: в покое они нужны, чтобы страница лежала над .works.
+	> .page-stage {
+		position: static;
+		z-index: auto;
+		transform: translateZ(0);
+		backface-visibility: hidden;
+	}
+
+	// Правая грань — блок "Работы": плоскость размером с экран, приставленная
+	// к правому краю страницы и повёрнутая на 90° (как правая стенка куба).
+	// Находится на уровне текущего скролла, чтобы после поворота точно
+	// совпасть с экраном.
+	> .works {
+		position: absolute;
+		inset: auto;
+		top: var(--face-top);
+		left: 0;
+		width: var(--cube-w);
+		height: var(--face-h);
+		z-index: auto;
+		transform: translateX(var(--cube-w)) rotateY(90deg);
+		transform-origin: 0 50%;
+		backface-visibility: hidden;
+	}
+
+	// Затемнение граней: уходящая темнеет, приходящая светлеет
+	// (--shade-a / --shade-b: 0…1, анимирует GSAP).
+	.page::after,
+	.works::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: 100;
+		pointer-events: none;
+	}
+
+	.page::after {
+		background: linear-gradient(90deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.85));
+		opacity: var(--shade-a, 0);
+	}
+
+	.works::after {
+		background: linear-gradient(270deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.85));
+		opacity: var(--shade-b, 0);
+	}
+}
+
+.works {
+	position: fixed;
+	inset: 0;
+	z-index: 1;
+	overflow-x: hidden;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	visibility: hidden;
+	padding-top: calc(var(--header-height) + var(--header-inset) * 2);
+	color: var(--color-text);
+	font-family: var(--font-body);
+	background:
+		radial-gradient(60% 45% at 88% 0%, rgba(47, 107, 255, 0.16), transparent 70%),
+		linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px) 0 0 / 64px 64px,
+		linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px) 0 0 / 64px 64px,
+		var(--color-bg);
+
+	&__container {
+		max-width: var(--container-max);
+		margin-inline: auto;
+		padding: clamp(24px, 4vw, 48px) var(--hero-padding-inline) clamp(64px, 8vw, 120px);
+	}
+
+	&__back {
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		padding: 10px 20px 10px 16px;
+		border: 1px solid var(--color-border-strong);
+		border-radius: 999px;
+		background: transparent;
+		color: var(--color-text);
+		font-family: var(--font-body);
+		font-size: 14px;
+		font-weight: 500;
+		cursor: pointer;
+		transition:
+			border-color var(--transition-fast),
+			background-color var(--transition-fast);
+
+		&:hover,
+		&:focus-visible {
+			border-color: var(--color-accent);
+			background: var(--color-accent-soft);
+		}
+
+		&:focus-visible {
+			outline: 2px solid var(--color-accent);
+			outline-offset: 3px;
+		}
+	}
+
+	&__head {
+		display: grid;
+		gap: 0;
+		margin: clamp(28px, 5vw, 56px) 0 clamp(36px, 5vw, 64px);
+	}
+
+	&__eyebrow {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		margin: 0 0 20px;
+		font-family: var(--font-mono);
+		font-size: 12px;
+		font-weight: 500;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--color-accent);
+	}
+
+	&__eyebrow-dot {
+		width: 5px;
+		height: 5px;
+		flex-shrink: 0;
+		border-radius: 50%;
+		background: var(--color-accent);
+		box-shadow: 0 0 8px 1px var(--color-accent-soft);
+	}
+
+	&__title {
+		margin: 0;
+		font-family: var(--font-display);
+		font-size: clamp(36px, 5.2vw, 80px);
+		font-weight: 700;
+		line-height: 1.05;
+		letter-spacing: -0.02em;
+
+		&:focus {
+			outline: none;
+		}
+
+		@include mobile {
+			font-size: clamp(30px, 9vw, 48px);
+		}
+	}
+
+	&__title-line {
+		display: block;
+
+		&--accent {
+			color: var(--color-accent);
+		}
+	}
+
+	&__note {
+		max-width: 52ch;
+		margin: 20px 0 0;
+		font-size: clamp(14px, 1.1vw, 17px);
+		line-height: 1.6;
+		color: var(--color-text-muted);
+	}
+
+	&__grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: clamp(16px, 2vw, 28px);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+
+		@include tablet-sm {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		@include mobile {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	&__card {
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+		border: 1px solid var(--color-border);
+		border-radius: 20px;
+		background: var(--color-bg-elevated);
+		transition:
+			border-color var(--transition-medium),
+			box-shadow var(--transition-medium);
+
+		&:hover,
+		&:focus-within {
+			border-color: rgba(47, 107, 255, 0.5);
+			box-shadow: 0 0 0 1px rgba(47, 107, 255, 0.18), 0 24px 60px -30px rgba(47, 107, 255, 0.5);
+		}
+	}
+
+	&__thumb {
+		position: relative;
+		aspect-ratio: 16 / 10;
+		overflow: hidden;
+		border-bottom: 1px solid var(--color-border);
+		background:
+			radial-gradient(80% 90% at 50% 0%, rgba(47, 107, 255, 0.16), transparent 70%),
+			repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.025) 0 8px, transparent 8px 16px);
+
+		// Лёгкий "блик", бегущий по пустому шаблону
+		.works__card--empty &::after {
+			content: '';
+			position: absolute;
+			inset: 0;
+			background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.05) 50%, transparent 70%);
+			background-size: 250% 100%;
+			animation: works-shimmer 4.5s ease-in-out infinite;
+		}
+	}
+
+	&__image {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	&__thumb-frame {
+		position: absolute;
+		inset: 16% 12%;
+		display: grid;
+		place-items: center;
+		border: 1px dashed rgba(255, 255, 255, 0.18);
+		border-radius: 12px;
+	}
+
+	&__thumb-plus {
+		color: var(--color-text-muted);
+		font-family: var(--font-mono);
+		font-size: 28px;
+		font-weight: 300;
+		line-height: 1;
+	}
+
+	&__chip {
+		position: absolute;
+		top: 12px;
+		left: 12px;
+		z-index: 1;
+		padding: 4px 10px;
+		border: 1px solid var(--color-border-strong);
+		border-radius: 999px;
+		background: rgba(6, 6, 8, 0.6);
+		color: var(--color-text-muted);
+		font-family: var(--font-mono);
+		font-size: 10px;
+		font-weight: 500;
+		letter-spacing: 0.12em;
+	}
+
+	&__body {
+		display: grid;
+		gap: 10px;
+		padding: 20px 22px 24px;
+	}
+
+	&__number {
+		color: var(--color-accent);
+		font-family: var(--font-mono);
+		font-size: 12px;
+		font-weight: 500;
+		letter-spacing: 0.1em;
+	}
+
+	&__card-title {
+		margin: 0;
+		font-family: var(--font-display);
+		font-size: 17px;
+		font-weight: 600;
+		line-height: 1.25;
+		text-transform: uppercase;
+		color: var(--color-text);
+	}
+
+	&__card--empty &__card-title {
+		color: var(--color-text-muted);
+	}
+
+	&__card-desc {
+		margin: 0;
+		font-size: 14px;
+		line-height: 1.55;
+		color: var(--color-text-muted);
+	}
+
+	&__tags {
+		margin: 4px 0 0;
+		font-family: var(--font-mono);
+		font-size: 11px;
+		letter-spacing: 0.08em;
+		color: var(--color-accent);
+	}
+
+	&__link {
+		justify-self: start;
+		margin-top: 6px;
+		font-size: 14px;
+		font-weight: 500;
+		color: var(--color-text);
+		text-decoration: none;
+
+		&:hover {
+			color: var(--color-accent);
+		}
+
+		&:focus-visible {
+			outline: 2px solid var(--color-accent);
+			outline-offset: 4px;
+			border-radius: 4px;
+		}
+
+		&--disabled {
+			color: var(--color-text-muted);
+			opacity: 0.6;
+			cursor: default;
+		}
+	}
+}
+
+@keyframes works-shimmer {
+	from { background-position: 150% 0; }
+	to { background-position: -100% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.works__card--empty .works__thumb::after {
+		animation: none;
+	}
+}
+
+
+// Кнопки со стрелкой вправо (открывают "Работы"): при наведении стрелка
+// "едет" вправо — туда же, куда поворачивается куб.
+.services__cta-icon--next {
+	display: inline-block;
+	transition: transform var(--transition-fast);
+}
+
+.hero__cta:hover .hero__cta-icon--next,
+.hero__cta:focus-visible .hero__cta-icon--next,
+.services__cta:hover .services__cta-icon--next,
+.services__cta:focus-visible .services__cta-icon--next {
+	transform: translateX(4px);
 }

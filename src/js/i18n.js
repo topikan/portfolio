@@ -11,6 +11,7 @@
 // текст подставляется именно в него, чтобы не затереть соседнюю иконку-стрелку.
 
 import { flipHeight } from './utils/animate.js';
+import { sectionTranslations } from './i18n-sections.js';
 
 const STORAGE_KEY = 'site-lang';
 const CONTENT_SELECTOR = '.hero__content';
@@ -21,16 +22,17 @@ const translations = {
 		'nav.services': 'Services',
 		'nav.work': 'Works',
 		'nav.contact': 'Contact',
+		'nav.pricing': 'Pricing',
 		'nav.cta': 'Let\u2019s talk',
 
 		'hero.eyebrow': 'HEY, I\u2019M RODION.',
-		'hero.title.line1': 'LET\u2019S BUILD',
-		'hero.title.line2': 'SOMETHING GREAT.',
+		'hero.title.line1': 'WEBSITES THAT',
+		'hero.title.line2': 'BRING CLIENTS.',
 		'hero.description':
-			'Frontend developer building fast, responsive and visually expressive websites \u2014 from pixel-perfect Figma layouts to full frontend development.',
-		'hero.cta.primary': 'View my work',
-		'hero.cta.secondary': 'Let\u2019s talk',
-		'hero.meta': 'FRONTEND DEVELOPER',
+			'Landing pages and websites for small businesses and startups: fast, responsive and built to turn visitors into enquiries. Launch from 5 days.',
+		'hero.cta.primary': 'Discuss your project',
+		'hero.cta.secondary': 'View my work',
+		'hero.meta': 'WEB DEVELOPER',
 		'hero.scroll': 'SCROLL',
 
 		'services.eyebrow': 'WHAT I DO',
@@ -39,10 +41,36 @@ const translations = {
 		'services.intro':
 			'I help businesses and individuals bring their ideas to life through modern, fast and responsive web interfaces.',
 		'services.quality.label': 'FOCUS ON QUALITY',
-		'services.quality.text': 'Clean code. Smooth animations. Perfect responsiveness. That\\u2019s my standard.',
+		'services.quality.text': 'Clean code. Smooth animations. Perfect responsiveness. That\u2019s my standard.',
 		'services.cta': 'View all works',
 		'services.footer.line1': 'SEE REAL PROJECTS',
-		'services.footer.line2': 'I\\u2019VE WORKED ON',
+		'services.footer.line2': 'I\u2019VE WORKED ON',
+
+		'a11y.skip': 'Skip to content',
+		'a11y.home': 'ON \u2014 Rodion, home',
+		'a11y.nav': 'Main navigation',
+		'a11y.mobileNav': 'Mobile navigation',
+		'a11y.lang': 'Language',
+		'a11y.menuOpen': 'Open menu',
+		'a11y.menuClose': 'Close menu',
+		'a11y.hero': 'Introduction',
+		'a11y.services': 'Services',
+		'a11y.servicesList': 'Services list',
+
+		'works.back': 'Back',
+		'works.eyebrow': 'PORTFOLIO',
+		'works.title.line1': 'SELECTED',
+		'works.title.line2': 'WORKS',
+		'works.note':
+			'My projects will appear here soon. These templates are ready and waiting for their first cases.',
+		'works.card.soon': 'COMING SOON',
+		'works.card.title': 'Project name',
+		'works.card.desc': 'A short description of the project and the result it delivered.',
+		'works.card.cta': 'View project',
+
+		'meta.title': 'Rodion \u2014 Websites for business that bring clients',
+		'meta.description':
+			'Rodion \u2014 web developer. Landing pages and business websites for small businesses and startups: fast, responsive, from $100, launch from 5 days.',
 	},
 
 	ru: {
@@ -50,16 +78,17 @@ const translations = {
 		'nav.services': 'Услуги',
 		'nav.work': 'Работы',
 		'nav.contact': 'Контакты',
+		'nav.pricing': 'Цены',
 		'nav.cta': 'Обсудим проект',
 
 		'hero.eyebrow': 'ПРИВЕТ, Я РОДИОН.',
-		'hero.title.line1': 'ДАВАЙТЕ СОЗДАВАТЬ',
-		'hero.title.line2': 'КРАСОТУ.',
+		'hero.title.line1': 'САЙТЫ, КОТОРЫЕ',
+		'hero.title.line2': 'ПРИВОДЯТ КЛИЕНТОВ.',
 		'hero.description':
-			'Frontend-разработчик. Делаю быстрые, адаптивные и визуально выразительные сайты — от pixel-perfect вёрстки по Figma до полноценной фронтенд-разработки.',
-		'hero.cta.primary': 'Мои работы',
-		'hero.cta.secondary': 'Связаться',
-		'hero.meta': 'ФРОНТЕНД-РАЗРАБОТЧИК',
+			'Лендинги и сайты для малого бизнеса и стартапов: быстрые, адаптивные, заточенные под то, чтобы посетитель оставил заявку. Запуск от 5 дней.',
+		'hero.cta.primary': 'Обсудить проект',
+		'hero.cta.secondary': 'Мои работы',
+		'hero.meta': 'ВЕБ-РАЗРАБОТЧИК',
 		'hero.scroll': 'СКРОЛЛ',
 
 		'services.eyebrow': 'ЧТО Я ДЕЛАЮ',
@@ -72,11 +101,55 @@ const translations = {
 		'services.cta': 'Смотреть все работы',
 		'services.footer.line1': 'РЕАЛЬНЫЕ ПРОЕКТЫ,',
 		'services.footer.line2': 'НАД КОТОРЫМИ Я РАБОТАЛ',
+
+		'a11y.skip': 'Перейти к содержимому',
+		'a11y.home': 'ON — Родион, на главную',
+		'a11y.nav': 'Основная навигация',
+		'a11y.mobileNav': 'Мобильная навигация',
+		'a11y.lang': 'Язык',
+		'a11y.menuOpen': 'Открыть меню',
+		'a11y.menuClose': 'Закрыть меню',
+		'a11y.hero': 'Введение',
+		'a11y.services': 'Услуги',
+		'a11y.servicesList': 'Список услуг',
+
+		'works.back': 'Назад',
+		'works.eyebrow': 'ПОРТФОЛИО',
+		'works.title.line1': 'ИЗБРАННЫЕ',
+		'works.title.line2': 'РАБОТЫ',
+		'works.note':
+			'Здесь скоро появятся мои проекты. Эти шаблоны уже готовы и ждут первые кейсы.',
+		'works.card.soon': 'СКОРО',
+		'works.card.title': 'Название проекта',
+		'works.card.desc': 'Короткое описание проекта и результата, которого удалось достичь.',
+		'works.card.cta': 'Смотреть проект',
+
+		'meta.title': 'Родион — сайты для бизнеса, которые приводят клиентов',
+		'meta.description':
+			'Родион — веб-разработчик. Лендинги и сайты для малого бизнеса и стартапов: быстро, адаптивно, от 7 500 ₽, запуск от 5 дней.',
 	},
 };
 
+Object.assign(translations.en, sectionTranslations.en);
+Object.assign(translations.ru, sectionTranslations.ru);
+
 const SUPPORTED_LANGS = Object.keys(translations);
 const DEFAULT_LANG = 'en';
+
+// Перевод по ключу для JS-кода (например, подписи кнопки меню).
+export function t(key) {
+	const lang = document.documentElement.getAttribute('lang');
+	const dict = translations[lang] || translations[DEFAULT_LANG];
+	return dict[key] ?? translations[DEFAULT_LANG][key] ?? key;
+}
+
+// Язык по умолчанию — по настройкам браузера: русскоязычные (ru, be, uk, kk)
+// видят русский, все остальные — английский. Сохранённый выбор важнее.
+function detectBrowserLang() {
+	const langs = navigator.languages?.length ? navigator.languages : [navigator.language || ''];
+	const first = String(langs[0] || '').toLowerCase().slice(0, 2);
+	return ['ru', 'be', 'uk', 'kk'].includes(first) ? 'ru' : DEFAULT_LANG;
+}
 
 function getStoredLang() {
 	try {
@@ -95,15 +168,33 @@ function setStoredLang(lang) {
 }
 
 function setElementText(el, text) {
-	// Кнопки hero__cta содержат текстовый span + span с иконкой-стрелкой.
-	// Если он есть — обновляем только его, чтобы не потерять иконку.
-	const textSpan = el.querySelector(':scope > .hero__cta-text');
+	// 1) Кнопки со вложенным текстовым span (+ иконка-стрелка рядом): обновляем
+	//    только этот span, чтобы не потерять иконку.
+	const textSpan = el.querySelector(':scope > .hero__cta-text, :scope > .services__cta-text');
 
 	if (textSpan) {
 		textSpan.textContent = text;
-	} else {
-		el.textContent = text;
+		return;
 	}
+
+	// 2) Элемент с вложенными тегами (например, точка-маркер .services__eyebrow-dot
+	//    перед текстом): меняем только текстовый узел. Раньше здесь был
+	//    el.textContent = text, который стирал вложенные теги.
+	if (el.children.length > 0) {
+		const textNode = Array.from(el.childNodes).find(
+			(node) => node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== ''
+		);
+
+		if (textNode) {
+			textNode.textContent = text;
+		} else {
+			el.append(text);
+		}
+		return;
+	}
+
+	// 3) Обычный элемент только с текстом.
+	el.textContent = text;
 }
 
 function applyLang(lang) {
@@ -120,14 +211,35 @@ function applyLang(lang) {
 		}
 	});
 
+	// Подписи для скринридеров (aria-label) переводятся так же, как текст.
+	document.querySelectorAll('[data-i18n-label]').forEach((el) => {
+		const value = dict[el.getAttribute('data-i18n-label')];
+		if (value !== undefined) el.setAttribute('aria-label', value);
+	});
+
+	// Подсказки внутри полей формы.
+	document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
+		const value = dict[el.getAttribute('data-i18n-placeholder')];
+		if (value !== undefined) el.setAttribute('placeholder', value);
+	});
+
 	document.querySelectorAll('[data-lang-switch]').forEach((btn) => {
 		const isActive = btn.getAttribute('data-lang-switch') === lang;
 		btn.classList.toggle('is-active', isActive);
 		btn.setAttribute('aria-pressed', String(isActive));
 	});
 
+	// Заголовок вкладки и описание страницы — на языке интерфейса.
+	document.title = dict['meta.title'];
+	document
+		.querySelector('meta[name="description"]')
+		?.setAttribute('content', dict['meta.description']);
+
 	document.documentElement.setAttribute('lang', lang);
 	setStoredLang(lang);
+
+	// Сообщаем остальным модулям (например, меню), что язык сменился.
+	document.dispatchEvent(new CustomEvent('langchange', { detail: { lang } }));
 }
 
 function switchLangAnimated(lang) {
@@ -138,7 +250,7 @@ function switchLangAnimated(lang) {
 
 export function initI18n() {
 	const stored = getStoredLang();
-	const initialLang = SUPPORTED_LANGS.includes(stored) ? stored : DEFAULT_LANG;
+	const initialLang = SUPPORTED_LANGS.includes(stored) ? stored : detectBrowserLang();
 
 	// Первое применение — мгновенно, без анимации (иначе будет дёргаться при загрузке страницы).
 	applyLang(initialLang);
