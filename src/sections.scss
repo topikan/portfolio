@@ -916,6 +916,7 @@ html {
 	// Первый экран целиком в высоту телефона (svh — без учёта адресной строки).
 	.hero {
 		min-height: 100svh;
+		min-height: 100dvh;
 
 		&__wordmark {
 			top: 96px;
@@ -950,6 +951,7 @@ html {
 		// Куб занимает всё оставшееся место экрана (но не меньше 140px).
 		&__visual {
 			height: clamp(150px, calc(100svh - 520px), 400px);
+			height: clamp(150px, calc(100dvh - 520px), 400px);
 			margin-top: 0;
 		}
 
@@ -990,7 +992,12 @@ html {
 	.about__grid {
 		display: flex;
 		flex-direction: column;
+		align-items: stretch;
 		gap: 0;
+	}
+
+	.about__body > .sec__eyebrow {
+		align-self: flex-start;
 	}
 
 	.about__body {
