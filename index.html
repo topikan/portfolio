@@ -1,26 +1,51 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" translate="no">
 
 <head>
 	<meta charset="UTF-8" />
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<link rel="preconnect" href="https://fonts.googleapis.com" />
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300..700&family=Golos+Text:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" />
-	<title>Моё портфолио</title>
+	<!-- Цвет системной панели браузера на телефоне (= фон сайта --color-bg) -->
+	<meta name="theme-color" content="#060608" />
+	<!-- Запрет автоперевода (Google Translate и др.): у сайта свой переключатель RU / EN -->
+	<meta name="google" content="notranslate" />
+	<!-- Шрифты свои (public/fonts, подключены в src/fonts.css). Preload — только для
+	     тех, что нужны на первом экране; cyrillic подтянется сам при переключении на RU. -->
+	<link rel="preload" href="/fonts/unbounded-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+	<link rel="preload" href="/fonts/golos-text-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+	<link rel="preload" href="/fonts/jetbrains-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
+
+	<title>Rodion — Websites for business that bring clients</title>
+	<meta name="description" content="Rodion — web developer. Landing pages and business websites for small businesses and startups: fast, responsive, from $200, launch from 5 days." />
+	<link rel="canonical" href="%SITE_URL%" />
+
+	<!-- Превью ссылки в Telegram / соцсетях (адрес задаётся в vite.config.js) -->
+	<meta property="og:type" content="website" />
+	<meta property="og:site_name" content="Rodion" />
+	<meta property="og:title" content="Rodion — Websites for business that bring clients" />
+	<meta property="og:description" content="Rodion — web developer. Landing pages and business websites for small businesses and startups: fast, responsive, from $200, launch from 5 days." />
+	<meta property="og:url" content="%SITE_URL%" />
+	<meta property="og:image" content="%SITE_URL%og-image.png" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta property="og:image:alt" content="Rodion — websites for business: 3D-куб и крупная надпись RODION на тёмном фоне" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:locale:alternate" content="ru_RU" />
+	<meta name="twitter:card" content="summary_large_image" />
 
 </head>
 
 <body>
+	<a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
+
 	<header class="hero__header" data-header>
 		<div class="hero__header-inner">
-			<a href="#hero" class="hero__logo" aria-label="Rodion — на главную">
+			<a href="#hero" class="hero__logo" aria-label="ON — Rodion, home" data-i18n-label="a11y.home">
 				<span class="hero__logo-dot" aria-hidden="true"></span>
-				<span class="hero__logo-text">RODION</span>
+				<span class="hero__logo-text">ON</span>
 			</a>
 
-			<nav class="hero__nav" aria-label="Основная навигация">
+			<nav class="hero__nav" aria-label="Main navigation" data-i18n-label="a11y.nav">
 				<ul class="hero__nav-list">
 					<li class="hero__nav-item">
 						<a href="#about" class="hero__nav-link" data-i18n="nav.about">About</a>
@@ -32,13 +57,16 @@
 						<a href="#work" class="hero__nav-link" data-i18n="nav.work">Works</a>
 					</li>
 					<li class="hero__nav-item">
+						<a href="#pricing" class="hero__nav-link" data-i18n="nav.pricing">Pricing</a>
+					</li>
+					<li class="hero__nav-item">
 						<a href="#contact" class="hero__nav-link" data-i18n="nav.contact">Contact</a>
 					</li>
 				</ul>
 			</nav>
 
 			<div class="hero__header-actions">
-				<div class="hero__lang-switch" role="group" aria-label="Переключение языка">
+				<div class="hero__lang-switch" role="group" aria-label="Language" data-i18n-label="a11y.lang">
 					<button type="button" class="hero__lang-btn" data-lang-switch="ru" aria-pressed="false">RU</button>
 					<span class="hero__lang-divider" aria-hidden="true">/</span>
 					<button type="button" class="hero__lang-btn is-active" data-lang-switch="en" aria-pressed="true">EN</button>
@@ -48,7 +76,7 @@
 					Let&rsquo;s talk
 				</a>
 
-				<button type="button" class="hero__burger" data-menu-toggle aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-menu">
+				<button type="button" class="hero__burger" data-menu-toggle aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
 					<span class="hero__burger-line"></span>
 					<span class="hero__burger-line"></span>
 					<span class="hero__burger-line"></span>
@@ -57,7 +85,7 @@
 		</div>
 
 		<div class="hero__mobile-menu" data-mobile-menu id="mobile-menu">
-			<nav class="hero__mobile-nav" aria-label="Мобильная навигация">
+			<nav class="hero__mobile-nav" aria-label="Mobile navigation" data-i18n-label="a11y.mobileNav">
 				<ul class="hero__mobile-nav-list">
 					<li>
 						<a href="#about" class="hero__mobile-nav-link" data-i18n="nav.about" data-menu-link>About</a>
@@ -69,13 +97,16 @@
 						<a href="#work" class="hero__mobile-nav-link" data-i18n="nav.work" data-menu-link>Works</a>
 					</li>
 					<li>
+						<a href="#pricing" class="hero__mobile-nav-link" data-i18n="nav.pricing" data-menu-link>Pricing</a>
+					</li>
+					<li>
 						<a href="#contact" class="hero__mobile-nav-link" data-i18n="nav.contact" data-menu-link>Contact</a>
 					</li>
 				</ul>
 			</nav>
 
 			<div class="hero__mobile-footer">
-				<div class="hero__lang-switch" role="group" aria-label="Переключение языка">
+				<div class="hero__lang-switch" role="group" aria-label="Language" data-i18n-label="a11y.lang">
 					<button type="button" class="hero__lang-btn" data-lang-switch="ru" aria-pressed="false">RU</button>
 					<span class="hero__lang-divider" aria-hidden="true">/</span>
 					<button type="button" class="hero__lang-btn is-active" data-lang-switch="en" aria-pressed="true">EN</button>
@@ -87,8 +118,14 @@
 			</div>
 		</div>
 	</header>
-	<div class="page">
-	<section class="hero" id="hero" aria-label="Hero">
+	<!-- КУБ: передняя грань — страница (.page-stage), правая грань — блок "Работы"
+	     (.works). Клик по ссылке #work поворачивает куб вправо (см. works-flip.js).
+	     В покое обёртки .cube и .cube__rotor ни на что не влияют. -->
+	<div class="cube" data-cube>
+	<div class="cube__rotor" data-cube-rotor>
+	<div class="page-stage" data-page-stage>
+	<main class="page" id="main" tabindex="-1">
+	<section class="hero" id="hero" aria-label="Introduction" data-i18n-label="a11y.hero">
 		<div class="hero__bg" aria-hidden="true">
 			<div class="hero__grid"></div>
 			<div class="hero__grid-glow"></div>
@@ -120,27 +157,26 @@
 
 				<h1 class="hero__title" data-animate="title">
 					<span class="hero__title-line" data-i18n="hero.title.line1">
-						LET'S BUILD
+						WEBSITES THAT
 					</span>
 					<span class="hero__title-line" data-i18n="hero.title.line2">
-						SOMETHING GREAT.
+						BRING CLIENTS.
 					</span>
 				</h1>
 
 				<p class="hero__description" data-animate="description" data-i18n="hero.description">
-					Frontend developer building fast, responsive and visually
-					expressive websites — from pixel-perfect Figma layouts to
-					full frontend development.
+					Landing pages and websites for small businesses and startups: fast,
+					responsive and built to turn visitors into enquiries. Launch from 5 days.
 				</p>
 
 				<div class="hero__actions" data-animate="actions">
-					<a href="#work" class="hero__cta hero__cta--primary" data-i18n="hero.cta.primary">
-						<span class="hero__cta-text">View my work</span>
+					<a href="#contact" class="hero__cta hero__cta--primary" data-i18n="hero.cta.primary">
+						<span class="hero__cta-text">Discuss your project</span>
 						<span class="hero__cta-icon" aria-hidden="true">&#8599;</span>
 					</a>
-					<a href="#contact" class="hero__cta hero__cta--secondary" data-i18n="hero.cta.secondary">
-						<span class="hero__cta-text">Let&rsquo;s talk</span>
-						<span class="hero__cta-icon" aria-hidden="true">&#8599;</span>
+					<a href="#work" class="hero__cta hero__cta--secondary" data-i18n="hero.cta.secondary">
+						<span class="hero__cta-text">View my work</span>
+						<span class="hero__cta-icon hero__cta-icon--next" aria-hidden="true">&#8594;</span>
 					</a>
 				</div>
 			</div>
@@ -169,7 +205,7 @@
 
 	</section>
 
-	<section class="services" id="services" aria-label="Services">
+	<section class="services" id="services" aria-label="Services" data-i18n-label="a11y.services">
 		<div class="services__container">
 
 			<div class="services__top">
@@ -201,31 +237,31 @@
 			</div>
 
 			<div class="services__panel" data-services-root>
-				<div class="services__list" role="tablist" aria-label="Services list" data-services-list>
-					<button type="button" class="services__item is-active" data-service-item data-service-index="0" role="tab" aria-selected="true">
+				<div class="services__list" role="tablist" aria-orientation="vertical" aria-label="Services list" data-i18n-label="a11y.servicesList" data-services-list>
+					<button type="button" class="services__item is-active" data-service-item data-service-index="0" id="service-tab-0" role="tab" aria-selected="true" aria-controls="service-panel" tabindex="0">
 						<span class="services__item-number" data-service-number>01</span>
 						<span class="services__item-body">
-							<span class="services__item-title" data-service-title>LANDING PAGES</span>
+							<span class="services__item-title" id="service-title-0" data-service-title>LANDING PAGES</span>
 							<span class="services__item-desc" data-service-desc>High-converting landing pages built to achieve real results.</span>
 							<span class="services__item-tags" data-service-tags>FIGMA &bull; HTML &bull; SCSS &bull; JS &bull; GSAP</span>
 						</span>
 						<span class="services__item-arrow" aria-hidden="true">&#8599;</span>
 					</button>
 
-					<button type="button" class="services__item" data-service-item data-service-index="1" role="tab" aria-selected="false">
+					<button type="button" class="services__item" data-service-item data-service-index="1" id="service-tab-1" role="tab" aria-selected="false" aria-controls="service-panel" tabindex="-1">
 						<span class="services__item-number" data-service-number>02</span>
 						<span class="services__item-body">
-							<span class="services__item-title" data-service-title>BUSINESS WEBSITES</span>
+							<span class="services__item-title" id="service-title-1" data-service-title>BUSINESS WEBSITES</span>
 							<span class="services__item-desc" data-service-desc>Modern and responsive websites that represent your brand.</span>
 							<span class="services__item-tags" data-service-tags>FIGMA &bull; HTML &bull; SCSS &bull; JS &bull; VITE</span>
 						</span>
 						<span class="services__item-arrow" aria-hidden="true">&#8599;</span>
 					</button>
 
-					<button type="button" class="services__item" data-service-item data-service-index="2" role="tab" aria-selected="false">
+					<button type="button" class="services__item" data-service-item data-service-index="2" id="service-tab-2" role="tab" aria-selected="false" aria-controls="service-panel" tabindex="-1">
 						<span class="services__item-number" data-service-number>03</span>
 						<span class="services__item-body">
-							<span class="services__item-title" data-service-title>FRONTEND DEVELOPMENT</span>
+							<span class="services__item-title" id="service-title-2" data-service-title>FRONTEND DEVELOPMENT</span>
 							<span class="services__item-desc" data-service-desc>Pixel-perfect implementation from Figma to production.</span>
 							<span class="services__item-tags" data-service-tags>FIGMA &bull; HTML &bull; SCSS &bull; JS &bull; API</span>
 						</span>
@@ -233,7 +269,7 @@
 					</button>
 				</div>
 
-				<div class="services__showcase" data-service-showcase>
+				<div class="services__showcase" id="service-panel" role="tabpanel" aria-labelledby="service-title-0" tabindex="0" data-service-showcase>
 					<div class="services__showcase-top">
 						<p class="services__showcase-label" data-service-label>01 / LANDING PAGES</p>
 
@@ -250,43 +286,183 @@
 					<div class="services__mockup" aria-hidden="true" data-service-mockup>
 						<div class="services__mockup-glow"></div>
 
-						<div class="services__mockup-browser">
-							<div class="services__mockup-bar">
-								<span></span><span></span><span></span>
+						<!-- Три сцены, по одной на услугу. Активную включает services.js
+						     (класс is-active), а элементы [data-mock] появляются по очереди.
+						     Внутри всё декоративное (aria-hidden на контейнере). -->
+
+						<!-- 01 · Лендинг: шапка, оффер, CTA и график роста конверсии -->
+						<div class="services__mockup-scene is-active" data-mock-scene>
+							<div class="services__mockup-browser">
+								<div class="services__mockup-bar">
+									<span></span><span></span><span></span>
+									<i class="services__mock-url">yourproduct.com</i>
+								</div>
+								<div class="services__mock-page">
+									<div class="services__mock-nav" data-mock>
+										<b class="services__mock-logo"></b>
+										<span class="services__mock-link"></span>
+										<span class="services__mock-link"></span>
+										<span class="services__mock-link"></span>
+										<span class="services__mock-pill services__mock-pill--solid"></span>
+									</div>
+									<div class="services__mock-hero">
+										<div class="services__mock-copy">
+											<span class="services__mockup-line services__mockup-line--lg" data-mock></span>
+											<span class="services__mockup-line services__mockup-line--lg services__mockup-line--accent" data-mock></span>
+											<span class="services__mockup-line services__mockup-line--sm" data-mock></span>
+											<div class="services__mock-actions" data-mock>
+												<span class="services__mockup-btn services__mock-cta"></span>
+												<span class="services__mock-ghost"></span>
+											</div>
+										</div>
+										<div class="services__mock-chart" data-mock>
+											<span class="services__mock-badge">+35%</span>
+											<svg viewBox="0 0 120 70" preserveAspectRatio="none">
+												<polygon class="services__mock-chart-area" points="0,70 0,58 20,50 38,54 58,34 78,38 100,16 120,8 120,70" />
+												<polyline class="services__mock-chart-line" pathLength="1" points="0,58 20,50 38,54 58,34 78,38 100,16 120,8" />
+											</svg>
+										</div>
+									</div>
+									<div class="services__mock-trust" data-mock><i></i><i></i><i></i><i></i></div>
+								</div>
 							</div>
-							<div class="services__mockup-body">
-								<span class="services__mockup-line services__mockup-line--lg"></span>
-								<span class="services__mockup-line services__mockup-line--lg services__mockup-line--accent"></span>
-								<span class="services__mockup-line services__mockup-line--sm"></span>
-								<span class="services__mockup-btn"></span>
+
+							<div class="services__mockup-phone">
+								<div class="services__mockup-body">
+									<div class="services__mock-nav" data-mock>
+										<b class="services__mock-logo"></b>
+										<span class="services__mock-burger"><i></i><i></i></span>
+									</div>
+									<span class="services__mockup-line services__mockup-line--lg" data-mock></span>
+									<span class="services__mockup-line services__mockup-line--sm services__mockup-line--accent" data-mock></span>
+									<div class="services__mock-chart services__mock-chart--mini" data-mock>
+										<svg viewBox="0 0 120 70" preserveAspectRatio="none">
+											<polygon class="services__mock-chart-area" points="0,70 0,58 20,50 38,54 58,34 78,38 100,16 120,8 120,70" />
+											<polyline class="services__mock-chart-line" pathLength="1" points="0,58 20,50 38,54 58,34 78,38 100,16 120,8" />
+										</svg>
+									</div>
+									<span class="services__mockup-btn services__mock-cta services__mock-cta--wide" data-mock></span>
+								</div>
 							</div>
 						</div>
 
-						<div class="services__mockup-phone">
-							<div class="services__mockup-body">
-								<span class="services__mockup-line services__mockup-line--sm"></span>
-								<span class="services__mockup-line services__mockup-line--sm services__mockup-line--accent"></span>
-								<span class="services__mockup-btn"></span>
+						<!-- 02 · Сайт для бизнеса: шапка с меню, баннер, карточки услуг -->
+						<div class="services__mockup-scene" data-mock-scene>
+							<div class="services__mockup-browser">
+								<div class="services__mockup-bar">
+									<span></span><span></span><span></span>
+									<i class="services__mock-url">yourbrand.com</i>
+								</div>
+								<div class="services__mock-page">
+									<div class="services__mock-nav" data-mock>
+										<b class="services__mock-logo"></b>
+										<span class="services__mock-link"></span>
+										<span class="services__mock-link"></span>
+										<span class="services__mock-link"></span>
+										<span class="services__mock-link"></span>
+										<span class="services__mock-pill"></span>
+									</div>
+									<div class="services__mock-banner" data-mock>
+										<span class="services__mockup-line services__mockup-line--lg"></span>
+										<span class="services__mockup-line services__mockup-line--sm services__mockup-line--accent"></span>
+										<span class="services__mockup-btn"></span>
+									</div>
+									<div class="services__mock-cards">
+										<div class="services__mock-card" data-mock>
+											<b class="services__mock-icon"></b>
+											<span class="services__mockup-line services__mockup-line--lg"></span>
+											<span class="services__mockup-line services__mockup-line--sm"></span>
+										</div>
+										<div class="services__mock-card" data-mock>
+											<b class="services__mock-icon"></b>
+											<span class="services__mockup-line services__mockup-line--lg"></span>
+											<span class="services__mockup-line services__mockup-line--sm"></span>
+										</div>
+										<div class="services__mock-card" data-mock>
+											<b class="services__mock-icon"></b>
+											<span class="services__mockup-line services__mockup-line--lg"></span>
+											<span class="services__mockup-line services__mockup-line--sm"></span>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="services__mockup-phone">
+								<div class="services__mockup-body">
+									<div class="services__mock-nav" data-mock>
+										<b class="services__mock-logo"></b>
+										<span class="services__mock-burger"><i></i><i></i><i></i></span>
+									</div>
+									<div class="services__mock-banner services__mock-banner--mini" data-mock>
+										<span class="services__mockup-line services__mockup-line--lg"></span>
+										<span class="services__mockup-line services__mockup-line--sm services__mockup-line--accent"></span>
+									</div>
+									<div class="services__mock-card services__mock-card--row" data-mock>
+										<b class="services__mock-icon"></b>
+										<span class="services__mockup-line services__mockup-line--lg"></span>
+									</div>
+									<div class="services__mock-card services__mock-card--row" data-mock>
+										<b class="services__mock-icon"></b>
+										<span class="services__mockup-line services__mockup-line--lg"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- 03 · Frontend-разработка: редактор кода + рамка из Figma -->
+						<div class="services__mockup-scene" data-mock-scene>
+							<div class="services__mockup-browser services__mockup-browser--editor">
+								<div class="services__mockup-bar">
+									<span></span><span></span><span></span>
+									<i class="services__mock-tab is-active">app.js</i>
+									<i class="services__mock-tab">card.scss</i>
+								</div>
+								<div class="services__mock-code">
+									<div class="services__mock-codeline" data-mock><b>1</b><code><span class="services__mock-k">const</span> res = <span class="services__mock-k">await</span> <span class="services__mock-f">fetch</span>(<span class="services__mock-f">API_URL</span>);</code></div>
+									<div class="services__mock-codeline" data-mock><b>2</b><code><span class="services__mock-k">const</span> data = <span class="services__mock-k">await</span> res.<span class="services__mock-f">json</span>();</code></div>
+									<div class="services__mock-codeline" data-mock><b>3</b><code></code></div>
+									<div class="services__mock-codeline" data-mock><b>4</b><code>data.<span class="services__mock-f">forEach</span>((item) <span class="services__mock-k">=&gt;</span> {</code></div>
+									<div class="services__mock-codeline" data-mock><b>5</b><code>&nbsp;&nbsp;<span class="services__mock-f">renderCard</span>(item);</code></div>
+									<div class="services__mock-codeline" data-mock><b>6</b><code>});</code></div>
+									<div class="services__mock-codeline" data-mock><b>7</b><code></code></div>
+									<div class="services__mock-codeline" data-mock><b>8</b><code><span class="services__mock-c">// pixel-perfect &middot; fast</span></code></div>
+									<div class="services__mock-codeline" data-mock><b>9</b><code><span class="services__mock-caret"></span></code></div>
+								</div>
+								<span class="services__mock-status" data-mock>&#10003; built in 0.4s</span>
+							</div>
+
+							<div class="services__mockup-phone services__mockup-phone--figma">
+								<span class="services__mock-frame-label">390 &times; 844</span>
+								<div class="services__mockup-body">
+									<span class="services__mockup-line services__mockup-line--lg" data-mock></span>
+									<div class="services__mock-guide" data-mock><i></i><b>16</b><i></i></div>
+									<div class="services__mock-select" data-mock>
+										<span class="services__mockup-btn"></span>
+										<u></u><u></u><u></u><u></u>
+									</div>
+									<div class="services__mock-guide" data-mock><i></i><b>24</b><i></i></div>
+									<span class="services__mockup-line services__mockup-line--sm services__mockup-line--accent" data-mock></span>
+								</div>
 							</div>
 						</div>
 					</div>
 
 					<div class="services__stats" data-service-stats>
 						<div class="services__stat">
-							<span class="services__stat-value" data-stat-value>+35%</span>
-							<span class="services__stat-label" data-stat-label>conversion increase</span>
+							<span class="services__stat-value" data-stat-value>90+</span>
+							<span class="services__stat-label" data-stat-label>Google PageSpeed goal</span>
 						</div>
 						<div class="services__stat">
-							<span class="services__stat-value" data-stat-value>100%</span>
-							<span class="services__stat-label" data-stat-label>responsive</span>
+							<span class="services__stat-value" data-stat-value>any</span>
+							<span class="services__stat-label" data-stat-label>screen size</span>
 						</div>
 						<div class="services__stat">
-							<span class="services__stat-value" data-stat-value>fast</span>
-							<span class="services__stat-label" data-stat-label>loading speed</span>
+							<span class="services__stat-value" data-stat-value>from 5d</span>
+							<span class="services__stat-label" data-stat-label>to launch</span>
 						</div>
 						<div class="services__stat">
-							<span class="services__stat-value" data-stat-value>clean</span>
-							<span class="services__stat-label" data-stat-label>code</span>
+							<span class="services__stat-value" data-stat-value>SEO</span>
+							<span class="services__stat-label" data-stat-label>basics included</span>
 						</div>
 					</div>
 				</div>
@@ -295,7 +471,7 @@
 			<div class="services__footer">
 				<a href="#work" class="services__cta" data-i18n="services.cta">
 					<span class="services__cta-text">View all works</span>
-					<span class="services__cta-icon" aria-hidden="true">&#8599;</span>
+					<span class="services__cta-icon services__cta-icon--next" aria-hidden="true">&#8594;</span>
 				</a>
 
 				<p class="services__footer-text">
@@ -306,7 +482,255 @@
 
 		</div>
 	</section>
+
+	<!-- ════════ ПРОДАЮЩИЕ БЛОКИ: Обо мне → Процесс → Цены → Доказательства → FAQ → Контакты ════════
+	     Тексты — src/js/i18n-sections.js, контакты и ключ формы — src/config.js -->
+
+	<section class="sec about" id="about" aria-labelledby="about-title">
+		<div class="sec__container about__grid">
+			<div class="about__card">
+				<img class="about__photo" src="/me.jpg" alt="Rodion" width="640" height="640" loading="lazy" decoding="async" />
+				<span class="about__status" aria-hidden="true"><i></i>ONLINE</span>
+			</div>
+
+			<div class="about__body">
+				<p class="sec__eyebrow"><span class="sec__eyebrow-dot" aria-hidden="true"></span><span data-i18n="about.eyebrow">ABOUT ME</span></p>
+				<h2 class="sec__title" id="about-title">
+					<span class="sec__title-line" data-i18n="about.title.line1">A DEVELOPER WHO</span>
+					<span class="sec__title-line sec__title-line--accent" data-i18n="about.title.line2">THINKS ABOUT CLIENTS.</span>
+				</h2>
+				<p class="sec__lead" data-i18n="about.p1">I&rsquo;m Rodion, a web developer.</p>
+				<p class="sec__text" data-i18n="about.p2">Background.</p>
+				<p class="sec__text" data-i18n="about.p3">Workflow.</p>
+
+				<dl class="about__facts">
+					<div><dt data-i18n="about.f1.k">years of experience</dt><dd data-i18n="about.f1.v">3+</dd></div>
+					<div><dt data-i18n="about.f2.k">role</dt><dd data-i18n="about.f2.v">Senior</dd></div>
+					<div><dt data-i18n="about.f3.k">languages</dt><dd data-i18n="about.f3.v">RU / EN</dd></div>
+				</dl>
+			</div>
+		</div>
+	</section>
+
+	<section class="sec process" id="process" aria-labelledby="process-title">
+		<div class="sec__container process__grid">
+			<header class="sec__head">
+				<p class="sec__eyebrow"><span class="sec__eyebrow-dot" aria-hidden="true"></span><span data-i18n="process.eyebrow">HOW I WORK</span></p>
+				<h2 class="sec__title" id="process-title">
+					<span class="sec__title-line" data-i18n="process.title.line1">FIVE STEPS</span>
+					<span class="sec__title-line sec__title-line--accent" data-i18n="process.title.line2">TO LAUNCH.</span>
+				</h2>
+			</header>
+
+			<ol class="process__list">
+				<li class="process__step"><span class="process__num">01</span><h3 class="process__name" data-i18n="process.1.title">Request</h3><p class="process__text" data-i18n="process.1.text">.</p></li>
+				<li class="process__step"><span class="process__num">02</span><h3 class="process__name" data-i18n="process.2.title">Agreement</h3><p class="process__text" data-i18n="process.2.text">.</p></li>
+				<li class="process__step"><span class="process__num">03</span><h3 class="process__name" data-i18n="process.3.title">Design</h3><p class="process__text" data-i18n="process.3.text">.</p></li>
+				<li class="process__step"><span class="process__num">04</span><h3 class="process__name" data-i18n="process.4.title">Build</h3><p class="process__text" data-i18n="process.4.text">.</p></li>
+				<li class="process__step"><span class="process__num">05</span><h3 class="process__name" data-i18n="process.5.title">Launch</h3><p class="process__text" data-i18n="process.5.text">.</p></li>
+			</ol>
+		</div>
+	</section>
+
+	<section class="sec pricing" id="pricing" aria-labelledby="pricing-title">
+		<div class="sec__container">
+			<header class="sec__head">
+				<p class="sec__eyebrow"><span class="sec__eyebrow-dot" aria-hidden="true"></span><span data-i18n="pricing.eyebrow">PRICING</span></p>
+				<h2 class="sec__title" id="pricing-title">
+					<span class="sec__title-line" data-i18n="pricing.title.line1">CLEAR PRICES,</span>
+					<span class="sec__title-line sec__title-line--accent" data-i18n="pricing.title.line2">NO SURPRISES.</span>
+				</h2>
+				<p class="sec__note" data-i18n="pricing.note">Guide prices.</p>
+			</header>
+
+			<div class="pricing__grid">
+				<article class="plan">
+					<h3 class="plan__name" data-i18n="pricing.1.name">Landing page</h3>
+					<p class="plan__price" data-i18n="pricing.1.price">from $200</p>
+					<p class="plan__time" data-i18n="pricing.1.time">5&ndash;7 days</p>
+					<ul class="plan__list">
+						<li data-i18n="pricing.1.f1">.</li><li data-i18n="pricing.1.f2">.</li><li data-i18n="pricing.1.f3">.</li><li data-i18n="pricing.1.f4">.</li>
+					</ul>
+					<a class="plan__cta" href="#contact" data-plan="landing" data-i18n="pricing.cta">Order</a>
+				</article>
+
+				<article class="plan plan--featured">
+					<p class="plan__badge" data-i18n="pricing.badge">MOST POPULAR</p>
+					<h3 class="plan__name" data-i18n="pricing.2.name">Business website</h3>
+					<p class="plan__price" data-i18n="pricing.2.price">from $600</p>
+					<p class="plan__time" data-i18n="pricing.2.time">2&ndash;3 weeks</p>
+					<ul class="plan__list">
+						<li data-i18n="pricing.2.f1">.</li><li data-i18n="pricing.2.f2">.</li><li data-i18n="pricing.2.f3">.</li><li data-i18n="pricing.2.f4">.</li>
+					</ul>
+					<a class="plan__cta" href="#contact" data-plan="site" data-i18n="pricing.cta">Order</a>
+				</article>
+
+				<article class="plan">
+					<h3 class="plan__name" data-i18n="pricing.3.name">Figma to code</h3>
+					<p class="plan__price" data-i18n="pricing.3.price">from $20/h</p>
+					<p class="plan__time" data-i18n="pricing.3.time">by scope</p>
+					<ul class="plan__list">
+						<li data-i18n="pricing.3.f1">.</li><li data-i18n="pricing.3.f2">.</li><li data-i18n="pricing.3.f3">.</li><li data-i18n="pricing.3.f4">.</li>
+					</ul>
+					<a class="plan__cta" href="#contact" data-plan="frontend" data-i18n="pricing.cta">Order</a>
+				</article>
+			</div>
+
+			<ul class="pricing__terms">
+				<li data-i18n="pricing.t1">.</li>
+				<li data-i18n="pricing.t2">.</li>
+				<li data-i18n="pricing.t3">.</li>
+			</ul>
+		</div>
+	</section>
+
+	<section class="sec faq" id="faq" aria-labelledby="faq-title">
+		<div class="sec__container faq__grid">
+			<header class="sec__head">
+				<p class="sec__eyebrow"><span class="sec__eyebrow-dot" aria-hidden="true"></span><span data-i18n="faq.eyebrow">FAQ</span></p>
+				<h2 class="sec__title" id="faq-title">
+					<span class="sec__title-line" data-i18n="faq.title.line1">QUESTIONS</span>
+					<span class="sec__title-line sec__title-line--accent" data-i18n="faq.title.line2">BEFORE WE START.</span>
+				</h2>
+			</header>
+
+			<div class="faq__list">
+				<details class="faq__item"><summary data-i18n="faq.1.q">.</summary><p data-i18n="faq.1.a">.</p></details>
+				<details class="faq__item"><summary data-i18n="faq.2.q">.</summary><p data-i18n="faq.2.a">.</p></details>
+				<details class="faq__item"><summary data-i18n="faq.3.q">.</summary><p data-i18n="faq.3.a">.</p></details>
+				<details class="faq__item"><summary data-i18n="faq.4.q">.</summary><p data-i18n="faq.4.a">.</p></details>
+				<details class="faq__item"><summary data-i18n="faq.5.q">.</summary><p data-i18n="faq.5.a">.</p></details>
+			</div>
+		</div>
+	</section>
+
+	<section class="sec contact" id="contact" aria-labelledby="contact-title">
+		<div class="sec__container contact__grid">
+			<div class="contact__intro">
+				<p class="sec__eyebrow"><span class="sec__eyebrow-dot" aria-hidden="true"></span><span data-i18n="contact.eyebrow">LET&rsquo;S TALK</span></p>
+				<h2 class="sec__title" id="contact-title">
+					<span class="sec__title-line" data-i18n="contact.title.line1">TELL ME ABOUT</span>
+					<span class="sec__title-line sec__title-line--accent" data-i18n="contact.title.line2">YOUR PROJECT.</span>
+				</h2>
+				<p class="sec__lead" data-i18n="contact.lead">Reply within a day.</p>
+
+				<ul class="contact__links" data-contact-links aria-label="Contacts" data-i18n-label="contact.linksLabel"></ul>
+				<p class="contact__hint" data-contact-empty hidden data-i18n="contact.empty">Contacts are being set up.</p>
+			</div>
+
+			<form class="form" data-form novalidate>
+				<div class="form__row">
+					<label class="form__field">
+						<span class="form__label" data-i18n="form.name">Name</span>
+						<input type="text" name="name" autocomplete="name" required maxlength="80" />
+					</label>
+					<label class="form__field">
+						<span class="form__label" data-i18n="form.contact">How to reach you</span>
+						<input type="text" name="contact" autocomplete="off" required maxlength="120" data-i18n-placeholder="form.contact.ph" placeholder="@telegram / email / WhatsApp" />
+					</label>
+				</div>
+
+				<div class="form__row">
+					<label class="form__field">
+						<span class="form__label" data-i18n="form.type">Project type</span>
+						<select name="type" data-form-type>
+							<option value="landing" data-i18n="form.type.landing">Landing page</option>
+							<option value="site" data-i18n="form.type.site">Business website</option>
+							<option value="frontend" data-i18n="form.type.frontend">Figma to code</option>
+							<option value="other" data-i18n="form.type.other">Something else</option>
+						</select>
+					</label>
+					<label class="form__field">
+						<span class="form__label" data-i18n="form.budget">Budget (optional)</span>
+						<select name="budget">
+							<option value="" data-i18n="form.budget.none">Not sure yet</option>
+							<option value="lt300" data-i18n="form.budget.1">up to $300</option>
+							<option value="300-800" data-i18n="form.budget.2">$300&ndash;800</option>
+							<option value="800+" data-i18n="form.budget.3">$800+</option>
+						</select>
+					</label>
+				</div>
+
+				<label class="form__field">
+					<span class="form__label" data-i18n="form.message">About the project</span>
+					<textarea name="message" rows="5" required maxlength="2000" data-i18n-placeholder="form.message.ph" placeholder=""></textarea>
+				</label>
+
+				<!-- Ловушка для спам-ботов: человек это поле не видит и не заполняет -->
+				<div class="form__trap" aria-hidden="true">
+					<label>Website <input type="text" name="botcheck" tabindex="-1" autocomplete="off" /></label>
+				</div>
+
+				<label class="form__consent">
+					<input type="checkbox" name="consent" required />
+					<span><span data-i18n="form.consent.pre">I agree to the processing of my data according to the</span> <a href="#privacy" data-privacy-open data-i18n="form.consent.link">privacy policy</a>.</span>
+				</label>
+
+				<button type="submit" class="form__submit" data-i18n="form.submit">Send request</button>
+				<p class="form__status" role="status" aria-live="polite" data-form-status></p>
+			</form>
+		</div>
+	</section>
+
+	<footer class="footer">
+		<div class="sec__container footer__inner">
+			<p class="footer__copy">&copy; <span data-year>2026</span> Rodion</p>
+			<nav class="footer__nav" aria-label="Footer" data-i18n-label="a11y.footer">
+				<a href="#about" data-i18n="nav.about">About</a>
+				<a href="#services" data-i18n="nav.services">Services</a>
+				<a href="#pricing" data-i18n="nav.pricing">Pricing</a>
+				<a href="#faq" data-i18n="footer.faq">FAQ</a>
+				<a href="#privacy" data-privacy-open data-i18n="footer.privacy">Privacy policy</a>
+			</nav>
+			<a class="footer__top" href="#hero" data-i18n="footer.top">Back to top</a>
+		</div>
+	</footer>
+	</main>
 	</div>
+
+	<!-- Блок "Работы" — правая грань куба; открывается поворотом по ссылкам
+	     #work (кнопка "Смотреть все работы", пункт меню "Works" и т.д.).
+	     Карточки рисует src/js/sections/works.js из списка PROJECTS. -->
+	<section class="works" id="work" aria-labelledby="works-title" data-works inert>
+		<div class="works__container">
+			<button type="button" class="works__back" data-works-back>
+				<span class="works__back-icon" aria-hidden="true">&larr;</span>
+				<span data-i18n="works.back">Back</span>
+			</button>
+
+			<header class="works__head">
+				<p class="works__eyebrow">
+					<span class="works__eyebrow-dot" aria-hidden="true"></span>
+					<span data-i18n="works.eyebrow">PORTFOLIO</span>
+				</p>
+				<h2 class="works__title" id="works-title" tabindex="-1">
+					<span class="works__title-line" data-i18n="works.title.line1">SELECTED</span>
+					<span class="works__title-line works__title-line--accent" data-i18n="works.title.line2">WORKS</span>
+				</h2>
+				<p class="works__note" data-i18n="works.note">
+					My projects will appear here soon. These templates are ready and waiting for their first cases.
+				</p>
+			</header>
+
+			<ul class="works__grid" data-works-grid></ul>
+		</div>
+	</section>
+	</div>
+	</div>
+
+
+	<dialog class="privacy" data-privacy aria-labelledby="privacy-title">
+		<div class="privacy__box">
+			<h2 class="privacy__title" id="privacy-title" data-i18n="privacy.title">Privacy policy</h2>
+			<div class="privacy__body">
+				<p data-i18n="privacy.p1">.</p>
+				<p data-i18n="privacy.p2">.</p>
+				<p data-i18n="privacy.p3">.</p>
+				<p data-i18n="privacy.p4">.</p>
+			</div>
+			<button type="button" class="privacy__close" data-privacy-close data-i18n="privacy.close">Close</button>
+		</div>
+	</dialog>
 
 	<script type="module" src="/src/main.js"></script>
 </body>
