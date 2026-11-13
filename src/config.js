@@ -6,8 +6,8 @@
 // Секретные токены (например, токен Telegram-бота) сюда НЕЛЬЗЯ — они видны всем.
 
 export const CONTACTS = {
-	telegram: '', // ник без @, например 'rodion_dev'
-	email: '', // например 'hello@example.com'
+	telegram: 'rodionfrontend', // ник без @, например 'rodion_dev'
+	email: 'horhetopikoff@gmail.com', // например 'hello@example.com'
 	whatsapp: '', // номер в международном формате без + и пробелов, например '375291234567'
 	linkedin: '', // хвост ссылки: https://www.linkedin.com/in/<ЭТО>
 	upwork: '', // полная ссылка на профиль, если есть
