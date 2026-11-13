@@ -91,7 +91,11 @@ export function initHeroSnap() {
 			// начинаться после паузы.
 			const trigger = ScrollTrigger.create({
 				trigger: hero,
-				start: 'bottom bottom',
+				// Если hero ниже экрана (телефон) — 'bottom bottom'. Если hero НЕ выше
+				// экрана (адресная строка/панель браузера меняют высоту окна), 'bottom
+				// bottom' дало бы отрицательный старт: hero прижимался бы ко дну экрана
+				// и сдвигался вниз с полупрозрачностью. Тогда пиним за верх.
+				start: () => (hero.offsetHeight > window.innerHeight + 1 ? 'bottom bottom' : 'top top'),
 				end: (self) =>
 				Math.max(
 					self.start + 1,
