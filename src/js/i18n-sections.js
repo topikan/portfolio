@@ -8,8 +8,8 @@ export const sectionTranslations = {
 	en: {
 		'about.eyebrow': 'ABOUT ME',
 		'about.badge': 'Rodion · developer',
-		'about.title.line1': 'A DEVELOPER WHO',
-		'about.title.line2': 'THINKS ABOUT CLIENTS.',
+		'about.title.line1': 'I\u2019M A DEVELOPER.',
+		'about.title.line2': 'I THINK ABOUT MY CLIENTS.',
 		'about.p1': 'I’m Rodion, a web developer. I make landing pages and websites for small businesses and startups.',
 		'about.p2':
 			'For over 3 years I have been building websites for business: leading projects from idea to launch, and alongside that working as a senior analyst at a marketing agency. That is why I think not only about code, but about how a site brings in money.',
@@ -43,7 +43,7 @@ export const sectionTranslations = {
 		'pricing.title.line1': 'CLEAR PRICES,',
 		'pricing.title.line2': 'NO SURPRISES.',
 		'pricing.note': 'Guide prices. The exact figure is fixed after a short chat about your task.',
-		'pricing.badge': 'MOST POPULAR',
+		'pricing.badge': 'RECOMMENDED',
 		'pricing.cta': 'Order',
 		'pricing.1.name': 'Landing page',
 		'pricing.1.price': 'from $100',
@@ -140,8 +140,8 @@ export const sectionTranslations = {
 	ru: {
 		'about.eyebrow': 'ОБО МНЕ',
 		'about.badge': 'Родион · разработчик',
-		'about.title.line1': 'РАЗРАБОТЧИК,',
-		'about.title.line2': 'КОТОРЫЙ ДУМАЕТ О КЛИЕНТАХ.',
+		'about.title.line1': 'Я РАЗРАБОТЧИК.',
+		'about.title.line2': 'ДУМАЮ О СВОИХ КЛИЕНТАХ.',
 		'about.p1': 'Я Родион, веб-разработчик. Делаю лендинги и сайты для малого бизнеса и стартапов.',
 		'about.p2':
 			'Более 3 лет делаю сайты для бизнеса: веду проекты от идеи до запуска и параллельно работал старшим аналитиком в маркетинговом агентстве. Поэтому думаю не только о коде, но и о том, как сайт приносит деньги.',
@@ -175,7 +175,7 @@ export const sectionTranslations = {
 		'pricing.title.line1': 'ПОНЯТНЫЕ ЦЕНЫ,',
 		'pricing.title.line2': 'БЕЗ СЮРПРИЗОВ.',
 		'pricing.note': 'Ориентировочные цены. Точную сумму называю после короткого разговора о вашей задаче.',
-		'pricing.badge': 'ЧАЩЕ ВСЕГО ВЫБИРАЮТ',
+		'pricing.badge': 'РЕКОМЕНДУЮ',
 		'pricing.cta': 'Заказать',
 		'pricing.1.name': 'Лендинг',
 		'pricing.1.price': 'от 7 500 ₽',
