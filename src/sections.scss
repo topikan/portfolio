@@ -412,10 +412,7 @@ html {
 	}
 
 	&__badge {
-		position: absolute;
-		top: 22px;
-		right: 22px;
-		margin: 0;
+		margin: 0 0 10px;
 		font-family: var(--font-mono);
 		font-size: 11px;
 		letter-spacing: 0.1em;
@@ -950,13 +947,14 @@ html {
 
 		// Куб занимает всё оставшееся место экрана (но не меньше 140px).
 		&__visual {
-			height: clamp(150px, calc(100svh - 520px), 400px);
-			height: clamp(150px, calc(100dvh - 520px), 400px);
+			height: clamp(230px, calc(100svh - 440px), 460px);
+			height: clamp(230px, calc(100dvh - 440px), 460px);
 			margin-top: 0;
 		}
 
+		// Подпись «Веб-разработчик / Скролл» на телефоне убрана: место отдано кубу.
 		&__footer {
-			padding-block: 10px;
+			display: none;
 		}
 	}
 
