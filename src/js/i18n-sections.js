@@ -7,6 +7,7 @@
 export const sectionTranslations = {
 	en: {
 		'about.eyebrow': 'ABOUT ME',
+		'about.badge': 'Rodion · developer',
 		'about.title.line1': 'A DEVELOPER WHO',
 		'about.title.line2': 'THINKS ABOUT CLIENTS.',
 		'about.p1': 'I’m Rodion, a web developer. I make landing pages and websites for small businesses and startups.',
@@ -138,6 +139,7 @@ export const sectionTranslations = {
 
 	ru: {
 		'about.eyebrow': 'ОБО МНЕ',
+		'about.badge': 'Родион · разработчик',
 		'about.title.line1': 'РАЗРАБОТЧИК,',
 		'about.title.line2': 'КОТОРЫЙ ДУМАЕТ О КЛИЕНТАХ.',
 		'about.p1': 'Я Родион, веб-разработчик. Делаю лендинги и сайты для малого бизнеса и стартапов.',
