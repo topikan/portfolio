@@ -217,8 +217,7 @@ export function initHeroCube() {
 
 	const scene = new Scene();
 	const camera = new PerspectiveCamera(35, width / height, 0.1, 100);
-	// На телефоне куб ближе к камере: холст там узкий и невысокий, при z=5 куб выглядит мелким.
-	camera.position.set(0, -0.6, window.innerWidth < 640 ? 4.3 : 5);
+	camera.position.set(0, -0.6, 5);
 	camera.lookAt(0, 0, 0);
 	addLights(scene);
 
