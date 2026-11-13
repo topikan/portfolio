@@ -949,7 +949,7 @@ html {
 
 		// Куб занимает всё оставшееся место экрана (но не меньше 140px).
 		&__visual {
-			height: clamp(140px, calc(100svh - 566px), 340px);
+			height: clamp(150px, calc(100svh - 520px), 400px);
 			margin-top: 0;
 		}
 
@@ -986,8 +986,34 @@ html {
 		padding-block: 36px 28px;
 	}
 
+	// «Обо мне»: сначала заголовок, потом фото по центру, потом текст.
+	.about__grid {
+		display: flex;
+		flex-direction: column;
+		gap: 0;
+	}
+
+	.about__body {
+		display: contents;
+	}
+
+	.about__body > * {
+		order: 4;
+	}
+
+	.about__body > .sec__eyebrow {
+		order: 1;
+	}
+
+	.about__body > .sec__title {
+		order: 2;
+	}
+
 	.about__card {
-		max-width: 200px;
+		order: 3;
+		align-self: center;
+		max-width: 220px;
+		margin: 18px 0 22px;
 	}
 
 	.about__facts {
