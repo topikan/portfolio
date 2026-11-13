@@ -82,6 +82,41 @@ export function initHeroSnap() {
 				hero.inert = p >= 0.999;
 			};
 
+			// Телефоны и планшеты: без ScrollTrigger-пина (он съезжал из-за адресной
+			// строки браузера). Hero закреплён обычным CSS `position: sticky`, а
+			// Services наезжает сверху; затухание считается от прогресса скролла.
+			if (!finePointer) {
+				const setStickyTop = () => {
+					// Hero выше окна — закрепляем за нижний край (как 'bottom bottom').
+					const top = Math.min(0, window.innerHeight - hero.offsetHeight);
+					hero.style.setProperty('--hero-sticky-top', `${top}px`);
+				};
+				hero.classList.add('is-sticky');
+				setStickyTop();
+				const fadeTrigger = ScrollTrigger.create({
+					trigger: services,
+					start: 'top bottom',
+					end: 'top top',
+					invalidateOnRefresh: true,
+					onUpdate: applyFade,
+					onRefresh: (self) => {
+						setStickyTop();
+						applyFade(self);
+					},
+				});
+				const onLang = () => requestAnimationFrame(() => ScrollTrigger.refresh());
+				document.addEventListener('langchange', onLang);
+				return () => {
+					document.removeEventListener('langchange', onLang);
+					fadeTrigger.kill();
+					hero.classList.remove('is-sticky');
+					hero.style.removeProperty('--hero-sticky-top');
+					hero.inert = false;
+					root.style.removeProperty('--hero-fade-opacity');
+					root.style.removeProperty('--hero-fade-scale');
+				};
+			}
+
 			// Длина пина = высота окна: ровно столько нужно .services, чтобы
 			// доехать до верха экрана и полностью накрыть hero. Если страница
 			// короче (например, планшет в портретной ориентации: Services ниже
