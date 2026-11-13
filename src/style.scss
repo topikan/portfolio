@@ -635,16 +635,16 @@ a {
 	&__title {
 		margin: 0 0 24px;
 		font-family: var(--font-display);
-		font-size: clamp(30px, 2.5vw, 48px);
+		font-size: clamp(36px, 3vw, 64px);
 		font-weight: 600;
 		line-height: 1.08;
 		letter-spacing: -0.02em;
 		color: var(--color-text);
 		@include tablet-sm {
-			font-size: clamp(24px, 7vw, 38px);
+			font-size: clamp(28px, 8vw, 52px);
 		}
 		@include mobile {
-			font-size: clamp(24px, 7vw, 38px);
+			font-size: clamp(28px, 8vw, 52px);
 			line-height: 1.08;
 			margin-bottom: 24px;
 		}
