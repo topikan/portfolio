@@ -10,17 +10,36 @@
 import { t } from '../i18n.js';
 
 export const PROJECTS = [
-	// {
-	//   title: { en: 'Coffee shop landing', ru: 'Лендинг кофейни' },
-	//   description: {
-	//     en: 'One-page site with online booking.',
-	//     ru: 'Одностраничный сайт с онлайн-бронированием.',
-	//   },
-	//   tags: ['Figma', 'HTML', 'SCSS', 'JS'],
-	//   // Картинку положи в public/images/ и укажи путь с учётом base:
-	//   image: `${import.meta.env.BASE_URL}images/coffee.jpg`,
-	//   url: 'https://example.com',
-	// },
+	{
+		title: { en: 'Nedetsky Prazdnik — party venue', ru: 'Недетский праздник — пространство праздников' },
+		description: {
+			en: 'Website for a party venue in Krasnodar: gallery, video tour, pricing, FAQ and booking.',
+			ru: 'Сайт пространства праздников в Краснодаре: галерея, видеоэкскурсия, цены, FAQ и бронирование.',
+		},
+		tags: ['HTML', 'SCSS', 'JS', 'UI'],
+		image: `${import.meta.env.BASE_URL}images/nd-prazdnik.jpg`,
+		url: 'https://nd-prazdnik.com/',
+	},
+	{
+		title: { en: 'Mainfood — catering redesign', ru: 'Mainfood — редизайн кейтеринга' },
+		description: {
+			en: 'Redesign concept for a catering company: services, event formats, price request in 24 hours.',
+			ru: 'Концепт редизайна сайта кейтеринга: услуги, форматы мероприятий, расчёт за 24 часа.',
+		},
+		tags: ['HTML', 'SCSS', 'JS', 'UI'],
+		image: `${import.meta.env.BASE_URL}images/mainfood.jpg`,
+		url: 'https://topikan.github.io/mainfood-redesign/',
+	},
+	{
+		title: { en: 'Vasilich Design — 3D studio', ru: 'Vasilich Design — студия 3D' },
+		description: {
+			en: 'Design reference for a 3D visualization studio: interactive hero, services, packages, RU/EN.',
+			ru: 'Дизайн-референс сайта студии 3D-визуализации: интерактивный первый экран, услуги, пакеты, RU/EN.',
+		},
+		tags: ['Three.js', 'HTML', 'SCSS', 'JS'],
+		image: `${import.meta.env.BASE_URL}images/vasilich-design.jpg`,
+		url: 'https://topikan.github.io/vasilich-design/site/',
+	},
 ];
 
 const MIN_CARDS = 6; // минимум карточек в сетке
