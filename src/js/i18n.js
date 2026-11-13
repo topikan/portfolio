@@ -26,8 +26,8 @@ const translations = {
 		'nav.cta': 'Let\u2019s talk',
 
 		'hero.eyebrow': 'HEY, I\u2019M RODION.',
-		'hero.title.line1': 'WEBSITES THAT',
-		'hero.title.line2': 'BRING CLIENTS.',
+		'hero.title.line1': 'WEBSITES',
+		'hero.title.line2': 'THAT SELL.',
 		'hero.description':
 			'Landing pages and websites for small businesses and startups: fast, responsive and built to turn visitors into enquiries. Launch from 5 days.',
 		'hero.cta.primary': 'Discuss your project',
@@ -83,7 +83,7 @@ const translations = {
 
 		'hero.eyebrow': 'ПРИВЕТ, Я РОДИОН.',
 		'hero.title.line1': 'САЙТЫ, КОТОРЫЕ',
-		'hero.title.line2': 'ПРИВОДЯТ КЛИЕНТОВ.',
+		'hero.title.line2': 'ПРОДАЮТ.',
 		'hero.description':
 			'Лендинги и сайты для малого бизнеса и стартапов: быстрые, адаптивные, заточенные под то, чтобы посетитель оставил заявку. Запуск от 5 дней.',
 		'hero.cta.primary': 'Обсудить проект',
