@@ -70,7 +70,7 @@ const translations = {
 
 		'meta.title': 'Rodion \u2014 Websites for business that bring clients',
 		'meta.description':
-			'Rodion \u2014 web developer. Landing pages and business websites for small businesses and startups: fast, responsive, from $200, launch from 5 days.',
+			'Rodion \u2014 web developer. Landing pages and business websites for small businesses and startups: fast, responsive, from $100, launch from 5 days.',
 	},
 
 	ru: {
@@ -126,7 +126,7 @@ const translations = {
 
 		'meta.title': 'Родион — сайты для бизнеса, которые приводят клиентов',
 		'meta.description':
-			'Родион — веб-разработчик. Лендинги и сайты для малого бизнеса и стартапов: быстро, адаптивно, от 15 000 ₽, запуск от 5 дней.',
+			'Родион — веб-разработчик. Лендинги и сайты для малого бизнеса и стартапов: быстро, адаптивно, от 7 500 ₽, запуск от 5 дней.',
 	},
 };
 
