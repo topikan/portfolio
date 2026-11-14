@@ -143,13 +143,8 @@ export function t(key) {
 	return dict[key] ?? translations[DEFAULT_LANG][key] ?? key;
 }
 
-// Язык по умолчанию — по настройкам браузера: русскоязычные (ru, be, uk, kk)
-// видят русский, все остальные — английский. Сохранённый выбор важнее.
-function detectBrowserLang() {
-	const langs = navigator.languages?.length ? navigator.languages : [navigator.language || ''];
-	const first = String(langs[0] || '').toLowerCase().slice(0, 2);
-	return ['ru', 'be', 'uk', 'kk'].includes(first) ? 'ru' : DEFAULT_LANG;
-}
+// Язык по умолчанию — русский. Сохранённый выбор (кнопка RU / EN) важнее.
+const INITIAL_LANG = 'ru';
 
 function getStoredLang() {
 	try {
@@ -236,6 +231,7 @@ function applyLang(lang) {
 		?.setAttribute('content', dict['meta.description']);
 
 	document.documentElement.setAttribute('lang', lang);
+	document.documentElement.classList.remove('is-i18n-loading');
 	setStoredLang(lang);
 
 	// Сообщаем остальным модулям (например, меню), что язык сменился.
@@ -250,7 +246,7 @@ function switchLangAnimated(lang) {
 
 export function initI18n() {
 	const stored = getStoredLang();
-	const initialLang = SUPPORTED_LANGS.includes(stored) ? stored : detectBrowserLang();
+	const initialLang = SUPPORTED_LANGS.includes(stored) ? stored : INITIAL_LANG;
 
 	// Первое применение — мгновенно, без анимации (иначе будет дёргаться при загрузке страницы).
 	applyLang(initialLang);

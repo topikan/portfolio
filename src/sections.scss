@@ -1118,3 +1118,43 @@ html {
 		margin-block: 0 clamp(24px, 4vw, 40px);
 	}
 }
+
+// Контраст текста карточек работ (a11y) и крупные зоны нажатия.
+.works .works__number,
+.works .works__tags {
+	color: var(--color-accent-text);
+}
+
+.works .works__link {
+	padding-block: 10px;
+	margin-top: 0;
+}
+
+.hero__logo {
+	padding-block: 10px;
+}
+
+.hero__lang-btn {
+	padding: 10px 8px;
+}
+
+.hero__nav-link {
+	padding-block: 10px;
+}
+
+.hero--no-3d .hero__visual {
+	display: none;
+}
+
+// Пока JS не подставил перевод, страницу не показываем (иначе мелькнёт
+// запасной английский текст). Если JS не загрузился — через 2 с покажем всё равно.
+html.is-i18n-loading .page {
+	opacity: 0;
+	animation: i18n-reveal 0s 2s forwards;
+}
+
+@keyframes i18n-reveal {
+	to {
+		opacity: 1;
+	}
+}

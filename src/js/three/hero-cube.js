@@ -201,7 +201,11 @@ export function initHeroCube() {
 	}
 
 	const renderer = createRenderer(width, height);
-	if (!renderer) return;
+	if (!renderer) {
+		// Без WebGL пустое место под куб убираем.
+		container.closest('.hero')?.classList.add('hero--no-3d');
+		return;
+	}
 
 	const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 	const canvas = renderer.domElement;
