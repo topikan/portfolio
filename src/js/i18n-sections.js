@@ -127,13 +127,35 @@ export const sectionTranslations = {
 		'a11y.footer': 'Footer',
 
 		'privacy.title': 'Privacy policy',
+		'reviews.eyebrow':
+			'REVIEWS',
+		'reviews.title.line1':
+			'WHAT CLIENTS',
+		'reviews.title.line2':
+			'SAY ABOUT ME.',
+		'reviews.rating':
+			'on YouDo, 41 reviews',
+		'reviews.note':
+			'Reviews are from freelance tasks on YouDo (design, video, data, support), published in the original Russian.',
+		'reviews.link':
+			'All reviews on YouDo',
+
 		'privacy.p1':
-			'What I collect: only what you type into the contact form (name, contact details, project description). It is used solely to reply to your request and is not passed to third parties for advertising.',
+			'Who processes data: the site owner, Rodion (web developer, contacts are listed on this site). Effective from 14 November 2026.',
 		'privacy.p2':
-			'How the form works: the request is sent through the Web3Forms service to my email. I keep correspondence as long as needed to discuss and carry out the project, and delete it on request.',
+			'What I collect: only what you enter in the contact form — name, contact details (Telegram / email / WhatsApp), budget, project type and description. Nothing is collected without you sending the form.',
 		'privacy.p3':
-			'Cookies and analytics: the site sets no cookies. Visit statistics, if enabled, are collected by a cookie-free service without personal profiles. Your language choice is stored in your browser (localStorage) only.',
-		'privacy.p4': 'To access or delete your data, write to me through any contact listed on the site.',
+			'Why: solely to reply to your request, discuss and carry out the project. I do not sell the data and do not use it for advertising or mailing lists.',
+		'privacy.p4':
+			'How the form works: the request is sent through the Web3Forms service (servers outside Russia) to my email. By sending the form you agree to such transfer. Correspondence is kept as long as needed for the project and up to 3 years after, then deleted.',
+		'privacy.p5':
+			'Hosting: the site is served by GitHub Pages; like any web server it may log technical data (IP address, browser, time of visit) for security. I do not have access to or use these logs.',
+		'privacy.p6':
+			'Cookies and analytics: the site sets no cookies and has no analytics or ad trackers. Your language choice is stored only in your browser (localStorage) and never sent anywhere.',
+		'privacy.p7':
+			'Your rights: you can ask what data I hold, correct it, withdraw consent or ask me to delete it, by writing to any contact on the site. I will answer within 10 working days.',
+		'privacy.p8':
+			'Changes: the current version of this policy is always on this page.',
 		'privacy.close': 'Close',
 	},
 
@@ -259,13 +281,35 @@ export const sectionTranslations = {
 		'a11y.footer': 'Подвал сайта',
 
 		'privacy.title': 'Политика конфиденциальности',
+		'reviews.eyebrow':
+			'ОТЗЫВЫ',
+		'reviews.title.line1':
+			'ЧТО ГОВОРЯТ',
+		'reviews.title.line2':
+			'КЛИЕНТЫ.',
+		'reviews.rating':
+			'на YouDo, 41 отзыв',
+		'reviews.note':
+			'Отзывы с фриланс-заданий на YouDo (дизайн, видео, данные, техподдержка).',
+		'reviews.link':
+			'Все отзывы на YouDo',
+
 		'privacy.p1':
-			'Что я собираю: только то, что вы сами вводите в форму (имя, контакты, описание проекта). Эти данные используются только для ответа на вашу заявку и не передаются третьим лицам для рекламы.',
+			'Кто обрабатывает данные: владелец сайта — Родион, веб-разработчик (контакты указаны на сайте). Действует с 14 ноября 2026 года.',
 		'privacy.p2':
-			'Как работает форма: заявка уходит через сервис Web3Forms мне на почту. Переписку я храню столько, сколько нужно для обсуждения и выполнения проекта, и удаляю по вашему запросу.',
+			'Что собирается: только то, что вы вводите в форму заявки — имя, контакт (Telegram / email / WhatsApp), бюджет, тип проекта и описание задачи. Без отправки формы ничего не собирается.',
 		'privacy.p3':
-			'Cookie и аналитика: сайт не использует cookie. Статистика посещений, если она включена, собирается сервисом без cookie и без персональных профилей. Выбранный язык хранится только в вашем браузере (localStorage).',
-		'privacy.p4': 'Чтобы узнать или удалить свои данные, напишите мне через любой контакт на сайте.',
+			'Зачем: только чтобы ответить на заявку, обсудить и выполнить проект. Данные не продаются и не используются для рекламы или рассылок.',
+		'privacy.p4':
+			'Как работает форма: заявка отправляется через сервис Web3Forms (серверы за пределами России) мне на почту. Отправляя форму, вы соглашаетесь на такую передачу. Переписка хранится, пока нужна для проекта, и до 3 лет после него, затем удаляется.',
+		'privacy.p5':
+			'Хостинг: сайт размещён на GitHub Pages; как любой веб-сервер, он может записывать технические данные (IP-адрес, браузер, время визита) в целях безопасности. Доступа к этим журналам и их использования у меня нет.',
+		'privacy.p6':
+			'Cookie и аналитика: сайт не использует cookie, на нём нет аналитики и рекламных трекеров. Выбранный язык хранится только в вашем браузере (localStorage) и никуда не отправляется.',
+		'privacy.p7':
+			'Ваши права: вы можете запросить, какие данные у меня есть, исправить их, отозвать согласие или потребовать удаления — напишите на любой контакт с сайта. Отвечу в течение 10 рабочих дней.',
+		'privacy.p8':
+			'Изменения: актуальная версия политики всегда находится на этой странице.',
 		'privacy.close': 'Закрыть',
 	},
 };
