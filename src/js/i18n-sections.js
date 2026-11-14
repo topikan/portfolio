@@ -141,13 +141,13 @@ export const sectionTranslations = {
 			'All reviews on YouDo',
 
 		'privacy.p1':
-			'Who processes data: the site owner, Rodion (web developer, contacts are listed on this site). Effective from 14 November 2026.',
+			'Who processes data: Rodion Kazimov, self-employed (professional income tax payer), web developer; contacts are listed on this site. Effective from 14 November 2026.',
 		'privacy.p2':
 			'What I collect: only what you enter in the contact form — name, contact details (Telegram / email / WhatsApp), budget, project type and description. Nothing is collected without you sending the form.',
 		'privacy.p3':
 			'Why: solely to reply to your request, discuss and carry out the project. I do not sell the data and do not use it for advertising or mailing lists.',
 		'privacy.p4':
-			'How the form works: the request is sent through the Web3Forms service (servers outside Russia) to my email. By sending the form you agree to such transfer. Correspondence is kept as long as needed for the project and up to 3 years after, then deleted.',
+			'How the form works: the request is sent through the Web3Forms service (servers outside Russia) to my email. By sending the form you agree to such transfer. Requests received through the form (and the email thread that follows) are kept while needed for the project and up to 3 years after, then deleted.',
 		'privacy.p5':
 			'Hosting: the site is served by GitHub Pages; like any web server it may log technical data (IP address, browser, time of visit) for security. I do not have access to or use these logs.',
 		'privacy.p6':
@@ -295,13 +295,13 @@ export const sectionTranslations = {
 			'Все отзывы на YouDo',
 
 		'privacy.p1':
-			'Кто обрабатывает данные: владелец сайта — Родион, веб-разработчик (контакты указаны на сайте). Действует с 14 ноября 2026 года.',
+			'Кто обрабатывает данные: Родион Казимов, самозанятый (плательщик НПД), веб-разработчик; контакты указаны на сайте. Действует с 14 ноября 2026 года.',
 		'privacy.p2':
 			'Что собирается: только то, что вы вводите в форму заявки — имя, контакт (Telegram / email / WhatsApp), бюджет, тип проекта и описание задачи. Без отправки формы ничего не собирается.',
 		'privacy.p3':
 			'Зачем: только чтобы ответить на заявку, обсудить и выполнить проект. Данные не продаются и не используются для рекламы или рассылок.',
 		'privacy.p4':
-			'Как работает форма: заявка отправляется через сервис Web3Forms (серверы за пределами России) мне на почту. Отправляя форму, вы соглашаетесь на такую передачу. Переписка хранится, пока нужна для проекта, и до 3 лет после него, затем удаляется.',
+			'Как работает форма: заявка отправляется через сервис Web3Forms (серверы за пределами России) мне на почту. Отправляя форму, вы соглашаетесь на такую передачу. Полученные заявки (и последующая переписка по ним) хранятся, пока нужны для проекта, и до 3 лет после него, затем удаляются.',
 		'privacy.p5':
 			'Хостинг: сайт размещён на GitHub Pages; как любой веб-сервер, он может записывать технические данные (IP-адрес, браузер, время визита) в целях безопасности. Доступа к этим журналам и их использования у меня нет.',
 		'privacy.p6':
