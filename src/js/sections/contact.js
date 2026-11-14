@@ -96,6 +96,34 @@ function initForm() {
 			message: form.elements.message.value.trim(),
 		};
 
+		if (FORM.endpoint) {
+			submit.disabled = true;
+			setStatus('form.sending', '');
+			try {
+				const res = await fetch(FORM.endpoint, {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+					body: JSON.stringify({
+						...data,
+						budget: form.elements.budget.value,
+						lang: document.documentElement.getAttribute('lang'),
+						consent: form.elements.consent.checked,
+						botcheck: form.elements.botcheck.value,
+					}),
+				});
+				const json = await res.json();
+				if (!res.ok || !json.ok) throw new Error(json.error || res.status);
+				form.reset();
+				setStatus('form.ok', 'ok');
+			} catch (error) {
+				console.error('[form]', error);
+				setStatus('form.err.send', 'error');
+			} finally {
+				submit.disabled = false;
+			}
+			return;
+		}
+
 		if (FORM.web3formsKey) {
 			submit.disabled = true;
 			setStatus('form.sending', '');
