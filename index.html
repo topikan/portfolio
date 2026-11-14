@@ -16,14 +16,14 @@
 	<link rel="preload" href="/fonts/jetbrains-mono-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
 
 	<title>Rodion — Websites for business that bring clients</title>
-	<meta name="description" content="Rodion — web developer. Landing pages and business websites for small businesses and startups: fast, responsive, from $100, launch from 5 days." />
+	<meta name="description" content="Rodion — web developer. Landing pages and business websites for small businesses and startups: fast, responsive, from $100, launch from 1 day." />
 	<link rel="canonical" href="%SITE_URL%" />
 
 	<!-- Превью ссылки в Telegram / соцсетях (адрес задаётся в vite.config.js) -->
 	<meta property="og:type" content="website" />
 	<meta property="og:site_name" content="Rodion" />
 	<meta property="og:title" content="Rodion — Websites for business that bring clients" />
-	<meta property="og:description" content="Rodion — web developer. Landing pages and business websites for small businesses and startups: fast, responsive, from $100, launch from 5 days." />
+	<meta property="og:description" content="Rodion — web developer. Landing pages and business websites for small businesses and startups: fast, responsive, from $100, launch from 1 day." />
 	<meta property="og:url" content="%SITE_URL%" />
 	<meta property="og:image" content="%SITE_URL%og-image.png" />
 	<meta property="og:image:width" content="1200" />
@@ -166,7 +166,7 @@
 
 				<p class="hero__description" data-animate="description" data-i18n="hero.description">
 					Landing pages and websites for small businesses and startups: fast,
-					responsive and built to turn visitors into enquiries. Launch from 5 days.
+					responsive and built to turn visitors into enquiries. Launch from 1 day.
 				</p>
 
 				<div class="hero__actions" data-animate="actions">
@@ -457,7 +457,7 @@
 							<span class="services__stat-label" data-stat-label>screen size</span>
 						</div>
 						<div class="services__stat">
-							<span class="services__stat-value" data-stat-value>from 5d</span>
+							<span class="services__stat-value" data-stat-value>from 1d</span>
 							<span class="services__stat-label" data-stat-label>to launch</span>
 						</div>
 						<div class="services__stat">
@@ -485,6 +485,32 @@
 
 	<!-- ════════ ПРОДАЮЩИЕ БЛОКИ: Обо мне → Процесс → Цены → Доказательства → FAQ → Контакты ════════
 	     Тексты — src/js/i18n-sections.js, контакты и ключ формы — src/config.js -->
+
+	<!-- Блок "Работы": обычный раздел страницы. Карточки рисует src/js/sections/works.js из списка PROJECTS. -->
+	<section class="works works--inline" id="work" aria-labelledby="works-title">
+		<div class="works__container">
+			<button type="button" class="works__back" data-works-back>
+				<span class="works__back-icon" aria-hidden="true">&larr;</span>
+				<span data-i18n="works.back">Back</span>
+			</button>
+
+			<header class="works__head">
+				<p class="works__eyebrow">
+					<span class="works__eyebrow-dot" aria-hidden="true"></span>
+					<span data-i18n="works.eyebrow">PORTFOLIO</span>
+				</p>
+				<h2 class="works__title" id="works-title" tabindex="-1">
+					<span class="works__title-line" data-i18n="works.title.line1">SELECTED</span>
+					<span class="works__title-line works__title-line--accent" data-i18n="works.title.line2">WORKS</span>
+				</h2>
+				<p class="works__note" data-i18n="works.note">
+					Real projects and concepts I have worked on.
+				</p>
+			</header>
+
+			<ul class="works__grid" data-works-grid></ul>
+		</div>
+	</section>
 
 	<section class="sec about" id="about" aria-labelledby="about-title">
 		<div class="sec__container about__grid">
@@ -554,7 +580,6 @@
 				</article>
 
 				<article class="plan plan--featured">
-					<p class="plan__badge" data-i18n="pricing.badge">RECOMMENDED</p>
 					<h3 class="plan__name" data-i18n="pricing.2.name">Business website</h3>
 					<p class="plan__price" data-i18n="pricing.2.price">from $330</p>
 					<p class="plan__time" data-i18n="pricing.2.time">2&ndash;3 weeks</p>
@@ -687,33 +712,6 @@
 	</main>
 	</div>
 
-	<!-- Блок "Работы" — правая грань куба; открывается поворотом по ссылкам
-	     #work (кнопка "Смотреть все работы", пункт меню "Works" и т.д.).
-	     Карточки рисует src/js/sections/works.js из списка PROJECTS. -->
-	<section class="works" id="work" aria-labelledby="works-title" data-works inert>
-		<div class="works__container">
-			<button type="button" class="works__back" data-works-back>
-				<span class="works__back-icon" aria-hidden="true">&larr;</span>
-				<span data-i18n="works.back">Back</span>
-			</button>
-
-			<header class="works__head">
-				<p class="works__eyebrow">
-					<span class="works__eyebrow-dot" aria-hidden="true"></span>
-					<span data-i18n="works.eyebrow">PORTFOLIO</span>
-				</p>
-				<h2 class="works__title" id="works-title" tabindex="-1">
-					<span class="works__title-line" data-i18n="works.title.line1">SELECTED</span>
-					<span class="works__title-line works__title-line--accent" data-i18n="works.title.line2">WORKS</span>
-				</h2>
-				<p class="works__note" data-i18n="works.note">
-					My projects will appear here soon. These templates are ready and waiting for their first cases.
-				</p>
-			</header>
-
-			<ul class="works__grid" data-works-grid></ul>
-		</div>
-	</section>
 	</div>
 	</div>
 

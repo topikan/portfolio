@@ -42,7 +42,7 @@ export const PROJECTS = [
 	},
 ];
 
-const MIN_CARDS = 6; // минимум карточек в сетке
+const MIN_CARDS = 3; // минимум карточек в сетке
 const COLUMNS = 3; // чтобы последний ряд не был неполным
 const PLACEHOLDER_TAGS = ['FIGMA', 'HTML', 'SCSS', 'JS'];
 

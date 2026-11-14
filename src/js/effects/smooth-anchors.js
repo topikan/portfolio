@@ -5,7 +5,7 @@
 // не попадают. Если открыт блок «Работы», ссылки обрабатывает works-flip.js.
 // При prefers-reduced-motion прокрутка мгновенная.
 
-const SKIP = new Set(['#', '#work', '#privacy']);
+const SKIP = new Set(['#', '#privacy']);
 const OFFSET = 24; // зазор сверху, чтобы заголовок не прилипал к краю
 
 export function initSmoothAnchors() {

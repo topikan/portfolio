@@ -29,7 +29,7 @@ const translations = {
 		'hero.title.line1': 'WEBSITES',
 		'hero.title.line2': 'THAT SELL.',
 		'hero.description':
-			'Landing pages and websites for small businesses and startups: fast, responsive and built to turn visitors into enquiries. Launch from 5 days.',
+			'Landing pages and websites for small businesses and startups: fast, responsive and built to turn visitors into enquiries. Launch from 1 day.',
 		'hero.cta.primary': 'Discuss your project',
 		'hero.cta.secondary': 'View my work',
 		'hero.meta': 'WEB DEVELOPER',
@@ -62,7 +62,7 @@ const translations = {
 		'works.title.line1': 'SELECTED',
 		'works.title.line2': 'WORKS',
 		'works.note':
-			'My projects will appear here soon. These templates are ready and waiting for their first cases.',
+			'Real projects and concepts I have worked on.',
 		'works.card.soon': 'COMING SOON',
 		'works.card.title': 'Project name',
 		'works.card.desc': 'A short description of the project and the result it delivered.',
@@ -70,7 +70,7 @@ const translations = {
 
 		'meta.title': 'Rodion \u2014 Websites for business that bring clients',
 		'meta.description':
-			'Rodion \u2014 web developer. Landing pages and business websites for small businesses and startups: fast, responsive, from $100, launch from 5 days.',
+			'Rodion \u2014 web developer. Landing pages and business websites for small businesses and startups: fast, responsive, from $100, launch from 1 day.',
 	},
 
 	ru: {
@@ -85,7 +85,7 @@ const translations = {
 		'hero.title.line1': 'САЙТЫ, КОТОРЫЕ',
 		'hero.title.line2': 'ПРОДАЮТ.',
 		'hero.description':
-			'Лендинги и сайты для малого бизнеса и стартапов: быстрые, адаптивные, заточенные под то, чтобы посетитель оставил заявку. Запуск от 5 дней.',
+			'Лендинги и сайты для малого бизнеса и стартапов: быстрые, адаптивные, заточенные под то, чтобы посетитель оставил заявку. Запуск от 1 дня.',
 		'hero.cta.primary': 'Обсудить проект',
 		'hero.cta.secondary': 'Мои работы',
 		'hero.meta': 'ВЕБ-РАЗРАБОТЧИК',
@@ -118,7 +118,7 @@ const translations = {
 		'works.title.line1': 'ИЗБРАННЫЕ',
 		'works.title.line2': 'РАБОТЫ',
 		'works.note':
-			'Здесь скоро появятся мои проекты. Эти шаблоны уже готовы и ждут первые кейсы.',
+			'Реальные проекты и концепты, над которыми я работал.',
 		'works.card.soon': 'СКОРО',
 		'works.card.title': 'Название проекта',
 		'works.card.desc': 'Короткое описание проекта и результата, которого удалось достичь.',
@@ -126,7 +126,7 @@ const translations = {
 
 		'meta.title': 'Родион — сайты для бизнеса, которые приводят клиентов',
 		'meta.description':
-			'Родион — веб-разработчик. Лендинги и сайты для малого бизнеса и стартапов: быстро, адаптивно, от 7 500 ₽, запуск от 5 дней.',
+			'Родион — веб-разработчик. Лендинги и сайты для малого бизнеса и стартапов: быстро, адаптивно, от 7 500 ₽, запуск от 1 дня.',
 	},
 };
 

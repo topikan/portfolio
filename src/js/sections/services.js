@@ -30,7 +30,7 @@ const SERVICES_DATA = {
 			stats: [
 				{ value: '90+', label: 'Google PageSpeed goal' },
 				{ value: 'any', label: 'screen size' },
-				{ value: 'from 5d', label: 'to launch' },
+				{ value: 'from 1d', label: 'to launch' },
 				{ value: 'SEO', label: 'basics included' },
 			],
 		},
@@ -46,7 +46,7 @@ const SERVICES_DATA = {
 			stats: [
 				{ value: '90+', label: 'Google PageSpeed goal' },
 				{ value: 'any', label: 'screen size' },
-				{ value: 'from 14d', label: 'to launch' },
+				{ value: 'from 7d', label: 'to launch' },
 				{ value: 'SEO', label: 'basics included' },
 			],
 		},
@@ -81,7 +81,7 @@ const SERVICES_DATA = {
 			stats: [
 				{ value: '90+', label: 'цель по Google PageSpeed' },
 				{ value: 'любой', label: 'размер экрана' },
-				{ value: 'от 5 дн.', label: 'до запуска' },
+				{ value: 'от 1 дн.', label: 'до запуска' },
 				{ value: 'SEO', label: 'основы включены' },
 			],
 		},
@@ -97,7 +97,7 @@ const SERVICES_DATA = {
 			stats: [
 				{ value: '90+', label: 'цель по Google PageSpeed' },
 				{ value: 'любой', label: 'размер экрана' },
-				{ value: 'от 14 дн.', label: 'до запуска' },
+				{ value: 'от 7 дн.', label: 'до запуска' },
 				{ value: 'SEO', label: 'основы включены' },
 			],
 		},
