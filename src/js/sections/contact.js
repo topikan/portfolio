@@ -105,7 +105,9 @@ function initForm() {
 					headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
 					body: JSON.stringify({
 						...data,
-						budget: form.elements.budget.value,
+						// В заявку идут читаемые подписи выбранных пунктов, а не технические коды.
+						type: form.elements.type.selectedOptions[0]?.textContent.trim() || data.type,
+						budget: form.elements.budget.selectedOptions[0]?.textContent.trim() || '',
 						lang: document.documentElement.getAttribute('lang'),
 						consent: form.elements.consent.checked,
 						botcheck: form.elements.botcheck.value,

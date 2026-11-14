@@ -125,7 +125,7 @@ foreach ($rows as $r) {
 		. '<span class="muted"> ' . h($r['created_at']) . ' · ' . h($r['type']) . '</span></summary>'
 		. '<dl><dt>Контакт</dt><dd>' . h($r['contact']) . '</dd>'
 		. '<dt>Тип проекта</dt><dd>' . h($r['type']) . '</dd>'
-		. '<dt>Бюджет</dt><dd>' . h($r['budget']) . '</dd>'
+		. '<dt>Бюджет</dt><dd>' . h($r['budget'] !== '' ? $r['budget'] : '—') . '</dd>'
 		. '<dt>Язык сайта</dt><dd>' . h(strtoupper($r['lang'])) . '</dd>'
 		. '<dt>Сообщение</dt><dd class="msg">' . nl2br(h($r['message'])) . '</dd></dl>'
 		. '<form method="post" action="./' . ($filter ? '?s=' . h($filter) : '') . '"><input type="hidden" name="csrf" value="' . h($csrf) . '"><input type="hidden" name="id" value="' . (int) $r['id'] . '">'
