@@ -21,16 +21,6 @@ export const PROJECTS = [
 		url: 'https://nd-prazdnik.com/',
 	},
 	{
-		title: { en: 'Mainfood — catering redesign', ru: 'Mainfood — редизайн кейтеринга' },
-		description: {
-			en: 'Redesign concept for a catering company: services, event formats, price request in 24 hours.',
-			ru: 'Концепт редизайна сайта кейтеринга: услуги, форматы мероприятий, расчёт за 24 часа.',
-		},
-		tags: ['HTML', 'SCSS', 'JS', 'UI'],
-		image: `${import.meta.env.BASE_URL}images/mainfood.jpg`,
-		url: 'https://topikan.github.io/mainfood-redesign/',
-	},
-	{
 		title: { en: 'Vasilich Design — 3D studio', ru: 'Vasilich Design — студия 3D' },
 		description: {
 			en: 'Design reference for a 3D visualization studio: interactive hero, services, packages, RU/EN.',
@@ -41,6 +31,21 @@ export const PROJECTS = [
 		url: 'https://topikan.github.io/vasilich-design/site/',
 	},
 ];
+
+// Временно скрыто: Mainfood (концепт редизайна кейтеринга). Чтобы вернуть —
+// перенеси объект обратно в PROJECTS.
+// const HIDDEN_PROJECTS = [
+// 	{
+// 		title: { en: 'Mainfood — catering redesign', ru: 'Mainfood — редизайн кейтеринга' },
+// 		description: {
+// 			en: 'Redesign concept for a catering company: services, event formats, price request in 24 hours.',
+// 			ru: 'Концепт редизайна сайта кейтеринга: услуги, форматы мероприятий, расчёт за 24 часа.',
+// 		},
+// 		tags: ['HTML', 'SCSS', 'JS', 'UI'],
+// 		image: `${import.meta.env.BASE_URL}images/mainfood.jpg`,
+// 		url: 'https://topikan.github.io/mainfood-redesign/',
+// 	},
+// ];
 
 const MIN_CARDS = 3; // минимум карточек в сетке
 const COLUMNS = 3; // чтобы последний ряд не был неполным
