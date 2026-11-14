@@ -136,7 +136,7 @@ export const sectionTranslations = {
 		'reviews.rating':
 			'on YouDo, 41 reviews',
 		'reviews.note':
-			'Reviews are from freelance tasks on YouDo (design, video, data, support), published in the original Russian.',
+			'Reviews of my website tasks on YouDo, published in the original Russian.',
 		'reviews.link':
 			'All reviews on YouDo',
 
@@ -290,7 +290,7 @@ export const sectionTranslations = {
 		'reviews.rating':
 			'на YouDo, 41 отзыв',
 		'reviews.note':
-			'Отзывы с фриланс-заданий на YouDo (дизайн, видео, данные, техподдержка).',
+			'Отзывы по моим заданиям с сайтами на YouDo.',
 		'reviews.link':
 			'Все отзывы на YouDo',
 
