@@ -147,9 +147,9 @@ export const sectionTranslations = {
 		'privacy.p3':
 			'Why: solely to reply to your request, discuss and carry out the project. I do not sell the data and do not use it for advertising or mailing lists.',
 		'privacy.p4':
-			'How the form works: the request is sent through the Web3Forms service (servers outside Russia) to my email. By sending the form you agree to such transfer. Requests received through the form (and the email thread that follows) are kept while needed for the project and up to 3 years after, then deleted.',
+			'How the form works: the request is sent to my own server in Russia (hosting reg.ru) and I am notified in Telegram. Data is not passed to other services, except that the notification text goes through Telegram. Requests received through the form (and the email thread that follows) are kept while needed for the project and up to 3 years after, then deleted.',
 		'privacy.p5':
-			'Hosting: the site is served by GitHub Pages; like any web server it may log technical data (IP address, browser, time of visit) for security. I do not have access to or use these logs.',
+			'Hosting: the site and requests are stored at reg.ru hosting; like any web server it may log technical data (IP address, browser, time of visit) for security. These logs are used only to operate and protect the server.',
 		'privacy.p6':
 			'Cookies and analytics: the site sets no cookies and has no analytics or ad trackers. Your language choice is stored only in your browser (localStorage) and never sent anywhere.',
 		'privacy.p7':
@@ -301,9 +301,9 @@ export const sectionTranslations = {
 		'privacy.p3':
 			'Зачем: только чтобы ответить на заявку, обсудить и выполнить проект. Данные не продаются и не используются для рекламы или рассылок.',
 		'privacy.p4':
-			'Как работает форма: заявка отправляется через сервис Web3Forms (серверы за пределами России) мне на почту. Отправляя форму, вы соглашаетесь на такую передачу. Полученные заявки (и последующая переписка по ним) хранятся, пока нужны для проекта, и до 3 лет после него, затем удаляются.',
+			'Как работает форма: заявка отправляется на мой сервер в России (хостинг reg.ru), а уведомление о ней приходит мне в Telegram. Другим сервисам данные не передаются, кроме текста уведомления, который проходит через Telegram. Полученные заявки (и последующая переписка по ним) хранятся, пока нужны для проекта, и до 3 лет после него, затем удаляются.',
 		'privacy.p5':
-			'Хостинг: сайт размещён на GitHub Pages; как любой веб-сервер, он может записывать технические данные (IP-адрес, браузер, время визита) в целях безопасности. Доступа к этим журналам и их использования у меня нет.',
+			'Хостинг: сайт и заявки размещены на хостинге reg.ru; как любой веб-сервер, он может записывать технические данные (IP-адрес, браузер, время визита) в целях безопасности. Эти журналы нужны только для работы и защиты сервера.',
 		'privacy.p6':
 			'Cookie и аналитика: сайт не использует cookie, на нём нет аналитики и рекламных трекеров. Выбранный язык хранится только в вашем браузере (localStorage) и никуда не отправляется.',
 		'privacy.p7':

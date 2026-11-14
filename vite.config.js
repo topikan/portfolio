@@ -4,10 +4,10 @@ import { defineConfig } from 'vite'
 // Нужен для превью ссылки в мессенджерах и соцсетях (og:image и og:url
 // должны быть абсолютными) и для canonical. Переедешь на свой домен —
 // поменяй SITE_URL и base (на '/').
-const SITE_URL = 'https://topikan.github.io/portfolio/'
+const SITE_URL = 'https://rodionfrontend.ru/'
 
 export default defineConfig({
-  base: '/portfolio/',
+  base: '/',
   // three.js подгружается лениво (import() в main.js). Без этого списка Vite в
   // режиме разработки находит его только на лету и перезагружает страницу.
   optimizeDeps: {

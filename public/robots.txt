@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /api/
 
-Sitemap: https://topikan.github.io/portfolio/sitemap.xml
+Sitemap: https://rodionfrontend.ru/sitemap.xml

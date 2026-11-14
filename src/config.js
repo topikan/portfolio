@@ -20,7 +20,7 @@ export const CONTACTS = {
 export const FORM = {
 	// Адрес своего обработчика заявок (PHP на хостинге), например '/api/submit.php'.
 	// Если заполнен — заявки идут туда (база + Telegram), Web3Forms не используется.
-	endpoint: '',
+	endpoint: '/api/submit.php',
 	web3formsKey: '1589b428-90b2-4aa8-8c1e-116c7d81e736',
 };
 
