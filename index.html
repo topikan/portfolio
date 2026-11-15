@@ -32,6 +32,8 @@
 	<meta property="og:image:alt" content="Rodion — websites for business: 3D-куб и крупная надпись RODION на тёмном фоне" />
 	<meta property="og:locale" content="ru_RU" />
 	<meta property="og:locale:alternate" content="en_US" />
+	<meta name="color-scheme" content="dark light" />
+	<script>try{if(localStorage.getItem("site-theme")==="light")document.documentElement.setAttribute("data-theme","light")}catch(e){}</script>
 	<meta name="twitter:card" content="summary_large_image" />
 
 	<noscript><style>html.is-i18n-loading .page{opacity:1!important}</style></noscript>
@@ -70,6 +72,10 @@
 			</nav>
 
 			<div class="hero__header-actions">
+				<button type="button" class="hero__theme-btn" data-theme-toggle aria-pressed="false" aria-label="Light theme" data-i18n-label="a11y.theme">
+					<svg class="hero__theme-icon hero__theme-icon--sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+					<svg class="hero__theme-icon hero__theme-icon--moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+				</button>
 				<div class="hero__lang-switch" role="group" aria-label="Language" data-i18n-label="a11y.lang">
 					<button type="button" class="hero__lang-btn" data-lang-switch="ru" aria-pressed="false">RU</button>
 					<span class="hero__lang-divider" aria-hidden="true">/</span>
@@ -110,6 +116,10 @@
 			</nav>
 
 			<div class="hero__mobile-footer">
+				<button type="button" class="hero__theme-btn" data-theme-toggle aria-pressed="false" aria-label="Light theme" data-i18n-label="a11y.theme">
+					<svg class="hero__theme-icon hero__theme-icon--sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+					<svg class="hero__theme-icon hero__theme-icon--moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+				</button>
 				<div class="hero__lang-switch" role="group" aria-label="Language" data-i18n-label="a11y.lang">
 					<button type="button" class="hero__lang-btn" data-lang-switch="ru" aria-pressed="false">RU</button>
 					<span class="hero__lang-divider" aria-hidden="true">/</span>

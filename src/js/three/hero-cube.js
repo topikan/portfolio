@@ -8,10 +8,14 @@ import {
 	AgXToneMapping,
 	AmbientLight,
 	Box3,
+	CanvasTexture,
 	Color,
 	DirectionalLight,
 	Group,
 	HemisphereLight,
+	Mesh,
+	MeshBasicMaterial,
+	PlaneGeometry,
 	PerspectiveCamera,
 	PointLight,
 	Scene,
@@ -95,6 +99,126 @@ function addLights(scene) {
 		accent,
 		textFill
 	);
+}
+
+
+// ─── Надписи на гранях ───────────────────────────────────────────────────
+// Каждая грань — про то, что я делаю и что получает клиент. Только честные
+// данные (те же, что в тексте сайта). Меняя язык, надписи перерисовываются.
+const FACE_OFFSET = 0.84; // чуть снаружи грани модели (модель ≈ ±0.82)
+const FACE_SIZE = 1.5;
+// Надписи RODION и FRONTEND на двух гранях — часть самой модели. Остальные
+// грани (сплошные) занимают наши подписи.
+const FACES = [
+	{ pos: [-1, 0, 0], rot: [0, -Math.PI / 2, 0], kind: 'logo', big: 'ON', sub: { ru: 'родион', en: 'rodion' } },
+	{
+		pos: [0, 0, -1],
+		rot: [0, Math.PI, 0],
+		kind: 'list',
+		items: [
+			{ ru: ['ЛЕНДИНГИ', 'запуск от 1 дня'], en: ['LANDING PAGES', 'launch from 1 day'] },
+			{ ru: ['САЙТЫ ДЛЯ БИЗНЕСА', 'от 7 дней'], en: ['BUSINESS SITES', 'from 7 days'] },
+			{ ru: ['МАКЕТ → КОД', 'точно по дизайну'], en: ['FIGMA → CODE', 'pixel-accurate'] },
+		],
+	},
+	{ pos: [0, 1, 0], rot: [-Math.PI / 2, 0, 0], kind: 'number', big: '3+', sub: { ru: 'года опыта', en: 'years of experience' } },
+	{ pos: [0, -1, 0], rot: [Math.PI / 2, 0, 0], kind: 'number', big: '4,9', cy: 0.76, sub: { ru: 'на YouDo · 41 отзыв', en: 'on YouDo · 41 reviews' } },
+];
+
+function wrapLines(ctx, text, maxWidth) {
+	const words = text.split(' ');
+	const lines = [];
+	let line = '';
+	words.forEach((w) => {
+		const test = line ? `${line} ${w}` : w;
+		if (ctx.measureText(test).width > maxWidth && line) {
+			lines.push(line);
+			line = w;
+		} else line = test;
+	});
+	if (line) lines.push(line);
+	return lines;
+}
+
+function drawFace(canvas, face, lang) {
+	const ctx = canvas.getContext('2d');
+	const size = canvas.width;
+	ctx.clearRect(0, 0, size, size);
+	ctx.textAlign = 'center';
+	ctx.textBaseline = 'middle';
+	const title = (px) => `700 ${px}px Unbounded, Inter, sans-serif`;
+	const text = (px) => `500 ${px}px "Golos Text", Inter, sans-serif`;
+	const glow = (blur, color) => {
+		ctx.shadowColor = 'rgba(47,107,255,0.9)';
+		ctx.shadowBlur = blur;
+		ctx.fillStyle = color;
+	};
+
+	if (face.kind === 'list') {
+		// Три строки «что делаю» в верхней части грани (внизу у грани вырез).
+		const top = size * 0.03;
+		const rowH = size * 0.18;
+		face.items.forEach((item, i) => {
+			const [name, note] = item[lang] || item.en;
+			let px = size * 0.07;
+			ctx.font = title(px);
+			while (ctx.measureText(name).width > size * 0.84 && px > 20) {
+				px -= 3;
+				ctx.font = title(px);
+			}
+			const cy = top + rowH * i + rowH / 2;
+			glow(size * 0.035, '#6a9bff');
+			ctx.fillText(name, size / 2, cy - size * 0.015);
+			glow(size * 0.012, '#9db8ff');
+			ctx.font = text(size * 0.036);
+			ctx.fillText(note.toUpperCase(), size / 2, cy + size * 0.045);
+		});
+		return;
+	}
+
+	const big = face.big;
+	const sub = face.sub[lang] || face.sub.en;
+	const cy = face.kind === 'number' ? size * (face.cy ?? 0.22) : size * 0.5;
+	const px = face.kind === 'number' ? size * 0.26 : size * 0.4;
+	glow(size * 0.045, '#6a9bff');
+	ctx.font = title(px);
+	ctx.fillText(big, size / 2, cy);
+	glow(size * 0.014, '#9db8ff');
+	ctx.font = text(size * 0.05);
+	ctx.fillText(sub.toUpperCase(), size / 2, cy + px * 0.62);
+}
+
+function addFaceLabels(cubeGroup) {
+	const faces = FACES.map((face) => {
+		const canvas = document.createElement('canvas');
+		canvas.width = canvas.height = 1024;
+		const texture = new CanvasTexture(canvas);
+		texture.colorSpace = SRGBColorSpace;
+		texture.anisotropy = 4;
+		const mesh = new Mesh(
+			new PlaneGeometry(FACE_SIZE, FACE_SIZE),
+			new MeshBasicMaterial({ map: texture, transparent: true, depthWrite: false, toneMapped: false })
+		);
+		mesh.position.set(...face.pos.map((v) => v * FACE_OFFSET));
+		mesh.rotation.set(...face.rot);
+		cubeGroup.add(mesh);
+		return { face, canvas, texture };
+	});
+
+	const redraw = () => {
+		const lang = document.documentElement.getAttribute('lang') === 'en' ? 'en' : 'ru';
+		faces.forEach(({ face, canvas, texture }) => {
+			drawFace(canvas, face, lang);
+			texture.needsUpdate = true;
+		});
+	};
+
+	// Шрифты подгружаются лениво: ждём их, иначе на холсте будет запасной.
+	const fontsReady = document.fonts?.load
+		? Promise.all([document.fonts.load('700 40px Unbounded'), document.fonts.load('500 40px "Golos Text"')]).catch(() => {})
+		: Promise.resolve();
+	fontsReady.then(redraw);
+	document.addEventListener('langchange', redraw);
 }
 
 // ─── Материалы модели ────────────────────────────────────────────────────
@@ -227,6 +351,8 @@ export function initHeroCube() {
 
 	const cubeGroup = new Group();
 	scene.add(cubeGroup);
+	if (import.meta.env.DEV) window.__cubeGroup = cubeGroup;
+	addFaceLabels(cubeGroup);
 
 	const loader = new GLTFLoader();
 	loader.setMeshoptDecoder(MeshoptDecoder);
@@ -325,6 +451,7 @@ export function initHeroCube() {
 		// Пока страница поворачивается кубом к «Работам» или блок «Работы» открыт,
 		// hero не нужен: не рендерим, чтобы не тормозить поворот.
 		if (!isHeroVisible || pageFlipping()) return;
+		if (import.meta.env.DEV && window.__cubeFreeze) { renderer.render(scene, camera); return; }
 
 		const idleFor = now - lastInteraction;
 		const isCoasting =

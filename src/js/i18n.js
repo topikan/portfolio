@@ -47,6 +47,9 @@ const translations = {
 		'services.footer.line2': 'I\u2019VE WORKED ON',
 
 		'a11y.skip': 'Skip to content',
+		'a11y.theme': 'Switch theme',
+		'a11y.themeToLight': 'Switch to light theme',
+		'a11y.themeToDark': 'Switch to dark theme',
 		'a11y.home': 'ON \u2014 Rodion, home',
 		'a11y.nav': 'Main navigation',
 		'a11y.mobileNav': 'Mobile navigation',
@@ -103,6 +106,9 @@ const translations = {
 		'services.footer.line2': 'НАД КОТОРЫМИ Я РАБОТАЛ',
 
 		'a11y.skip': 'Перейти к содержимому',
+		'a11y.theme': 'Сменить тему',
+		'a11y.themeToLight': 'Включить светлую тему',
+		'a11y.themeToDark': 'Включить тёмную тему',
 		'a11y.home': 'ON — Родион, на главную',
 		'a11y.nav': 'Основная навигация',
 		'a11y.mobileNav': 'Мобильная навигация',

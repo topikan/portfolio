@@ -3,6 +3,7 @@ import './style.scss';
 import './sections.scss';
 import { ANALYTICS } from './config.js';
 import { initI18n } from './js/i18n.js';
+import { initTheme } from './js/theme.js';
 import { initInteractiveGrid } from './js/effects/interactive-grid.js';
 import { initMobileMenu } from './js/nav/mobile-menu.js';
 import { initServices } from './js/sections/services.js';
@@ -24,6 +25,7 @@ function safeInit(name, init) {
 }
 
 safeInit('i18n', initI18n);
+safeInit('theme', initTheme);
 safeInit('interactive-grid', initInteractiveGrid);
 safeInit('mobile-menu', initMobileMenu);
 safeInit('services', initServices);
