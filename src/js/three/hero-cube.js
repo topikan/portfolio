@@ -8,7 +8,6 @@ import {
 	AgXToneMapping,
 	AmbientLight,
 	Box3,
-	BoxGeometry,
 	CanvasTexture,
 	Color,
 	DirectionalLight,
@@ -59,7 +58,7 @@ const debugLog = (...args) => {
 };
 
 // Состояние темы: материалы корпуса и свет перекрашиваются при переключении.
-const themed = { body: [], text: [], glow: [], lights: [], core: null };
+const themed = { body: [], text: [], glow: [], emissive: [], lights: [], key: null };
 const isLight = () => document.documentElement.getAttribute('data-theme') === 'light';
 
 function applyCubeTheme(renderer) {
@@ -87,7 +86,10 @@ function applyCubeTheme(renderer) {
 		}
 		mat.needsUpdate = true;
 	});
-	if (themed.core) themed.core.visible = light;
+	if (themed.key) themed.key.castShadow = light;
+	themed.emissive.forEach(({ mat, intensity }) => {
+		mat.emissiveIntensity = light ? Math.min(intensity, EMISSIVE_LIGHT) : intensity;
+	});
 	themed.glow.forEach((mat) => {
 		mat.color.setHex(light ? 0x0a3fd8 : ELECTRIC_BLUE);
 	});
@@ -98,6 +100,8 @@ function applyCubeTheme(renderer) {
 	themed.hemi?.groundColor.setHex(light ? 0x8d9bbd : 0x03050a);
 	renderer.toneMappingExposure = light ? 0.95 : 0.7;
 }
+
+const EMISSIVE_LIGHT = 1.6; // в светлой теме свечение слабее, иначе уходит в белый
 
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 
@@ -124,6 +128,17 @@ function addLights(scene) {
 	const key = new DirectionalLight(0x8dbaff, 0.55);
 	key.position.set(4, 6, 6);
 
+	key.shadow.mapSize.set(1024, 1024);
+	key.shadow.camera.left = -1.6;
+	key.shadow.camera.right = 1.6;
+	key.shadow.camera.top = 1.6;
+	key.shadow.camera.bottom = -1.6;
+	key.shadow.camera.near = 1;
+	key.shadow.camera.far = 20;
+	key.shadow.bias = -0.0005;
+	key.shadow.normalBias = 0.02;
+	themed.key = key;
+
 	const rim = new PointLight(ELECTRIC_BLUE, 0.8, 12, 2);
 	rim.position.set(-3, 2, -4);
 
@@ -138,37 +153,22 @@ function addLights(scene) {
 
 	scene.add(ambient, hemi, key, rim, accent, textFill);
 	themed.hemi = hemi;
-	// Синий источник внутри куба: в светлой теме даёт глубокое голубое свечение полостей.
-	const core = new PointLight(0x1d5bff, 0, 3.2, 2);
-	core.position.set(0.15, 0.05, 0.15);
+	// Синее свечение изнутри: в светлой теме ключевой свет отбрасывает тени, и полости
+	// освещает только этот источник.
+	const core = new PointLight(0x0a38ff, 0, 3.5, 1.2);
+	core.position.set(0.1, 0.05, 0.1);
 	scene.add(core);
 	themed.lights = [
-		{ light: ambient, dark: 0.22, bright: 0.95 },
-		{ light: hemi, dark: 0.22, bright: 1.1 },
+		{ light: ambient, dark: 0.22, bright: 0.35 },
+		{ light: hemi, dark: 0.22, bright: 0.5 },
 		{ light: key, dark: 0.55, bright: 3.0 },
 		{ light: rim, dark: 0.8, bright: 2.4 },
 		{ light: accent, dark: 0.6, bright: 1.8 },
 		{ light: textFill, dark: 0.12, bright: 0.5 },
-		{ light: core, dark: 0, bright: 7 },
+		{ light: core, dark: 0, bright: 9 },
 	];
 }
 
-
-// Градиент для синего ядра: светлее в центре, глубокий синий к краям.
-function makeCoreTexture() {
-	const c = document.createElement('canvas');
-	c.width = c.height = 256;
-	const ctx = c.getContext('2d');
-	const g = ctx.createRadialGradient(128, 110, 8, 128, 128, 190);
-	g.addColorStop(0, '#9cc0ff');
-	g.addColorStop(0.35, '#3d7bff');
-	g.addColorStop(1, '#0a2fc4');
-	ctx.fillStyle = g;
-	ctx.fillRect(0, 0, 256, 256);
-	const t = new CanvasTexture(c);
-	t.colorSpace = SRGBColorSpace;
-	return t;
-}
 
 // ─── Надписи на гранях ───────────────────────────────────────────────────
 // Каждая грань — про то, что я делаю и что получает клиент. Только честные
@@ -314,6 +314,9 @@ function styleMaterial(node, mat) {
 	const hasEmissive = Boolean(
 		mat.emissive && (mat.emissive.r > 0 || mat.emissive.g > 0 || mat.emissive.b > 0)
 	);
+	if (hasEmissive && !themed.emissive.some((e) => e.mat === mat)) {
+		themed.emissive.push({ mat, intensity: mat.emissiveIntensity });
+	}
 	const brightness = mat.color ? (mat.color.r + mat.color.g + mat.color.b) / 3 : 0;
 	const isVeryBright = brightness > 0.65;
 
@@ -366,7 +369,7 @@ function styleMaterial(node, mat) {
 		const current = (mat.color.r + mat.color.g + mat.color.b) / 3;
 		if (current > 0.75) mat.color.lerp(BRIGHT_TINT, 0.25);
 		mat.roughness = Math.max(mat.roughness, 0.32);
-		themed.body.push({ mat, color: mat.color.clone(), roughness: mat.roughness, metalness: mat.metalness });
+		if (!hasEmissive) themed.body.push({ mat, color: mat.color.clone(), roughness: mat.roughness, metalness: mat.metalness });
 	}
 }
 
@@ -383,10 +386,13 @@ function prepareModel(model) {
 
 	model.traverse((node) => {
 		if (!node.isMesh) return;
+		node.castShadow = true;
+		node.receiveShadow = true;
 		const materials = Array.isArray(node.material) ? node.material : [node.material];
 		materials.forEach((mat) => mat && styleMaterial(node, mat));
 	});
 }
+
 
 // ─── Точка входа ─────────────────────────────────────────────────────────
 
@@ -431,14 +437,6 @@ export function initHeroCube() {
 
 	const cubeGroup = new Group();
 	scene.add(cubeGroup);
-	// Глубокое синее ядро: в светлой теме просвечивает в вырезах серебристого корпуса.
-	const coreBox = new Mesh(
-		new BoxGeometry(1.2, 1.2, 1.2),
-		new MeshBasicMaterial({ map: makeCoreTexture(), toneMapped: false })
-	);
-	coreBox.visible = false;
-	cubeGroup.add(coreBox);
-	themed.core = coreBox;
 	if (import.meta.env.DEV) { window.__cubeGroup = cubeGroup; window.__themed = themed; }
 	addFaceLabels(cubeGroup);
 	document.addEventListener('themechange', () => applyCubeTheme(renderer));
@@ -449,8 +447,8 @@ export function initHeroCube() {
 		MODEL_URL,
 		(gltf) => {
 			prepareModel(gltf.scene);
-			applyCubeTheme(renderer);
 			cubeGroup.add(gltf.scene);
+			applyCubeTheme(renderer);
 			canvas.style.opacity = '1';
 			debugLog('[hero-cube] GLB-модель успешно загружена.');
 		},
