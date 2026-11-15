@@ -57,6 +57,46 @@ const debugLog = (...args) => {
 	if (import.meta.env.DEV) console.log(...args);
 };
 
+// Состояние темы: материалы корпуса и свет перекрашиваются при переключении.
+const themed = { body: [], text: [], glow: [], lights: [] };
+const isLight = () => document.documentElement.getAttribute('data-theme') === 'light';
+
+function applyCubeTheme(renderer) {
+	const light = isLight();
+	themed.body.forEach(({ mat, color, roughness, metalness }) => {
+		if (light) {
+			mat.color.setHex(0xf1f3f8);
+			if ('roughness' in mat) mat.roughness = 0.26;
+			if ('metalness' in mat) mat.metalness = 0.04;
+		} else {
+			mat.color.copy(color);
+			if ('roughness' in mat) mat.roughness = roughness;
+			if ('metalness' in mat) mat.metalness = metalness;
+		}
+		mat.needsUpdate = true;
+	});
+	themed.text.forEach(({ mat, color, emissive, emissiveIntensity }) => {
+		if (light) {
+			mat.color.setHex(0x1b2236);
+			mat.emissive?.setHex(0x000000);
+		} else {
+			mat.color.copy(color);
+			mat.emissive?.copy(emissive);
+			mat.emissiveIntensity = emissiveIntensity;
+		}
+		mat.needsUpdate = true;
+	});
+	themed.glow.forEach((mat) => {
+		mat.color.setHex(light ? 0x0a3fd8 : ELECTRIC_BLUE);
+	});
+	themed.lights.forEach(({ light: l, dark, bright }) => {
+		l.intensity = light ? bright : dark;
+	});
+	themed.hemi?.color.setHex(light ? 0xffffff : 0x183b80);
+	themed.hemi?.groundColor.setHex(light ? 0x8d9bbd : 0x03050a);
+	renderer.toneMappingExposure = light ? 0.95 : 0.7;
+}
+
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 
 // ─── Сцена ───────────────────────────────────────────────────────────────
@@ -91,14 +131,19 @@ function addLights(scene) {
 	const textFill = new DirectionalLight(ELECTRIC_BLUE, 0.12);
 	textFill.position.set(0, -1, 6);
 
-	scene.add(
-		new AmbientLight(0x101a30, 0.22),
-		new HemisphereLight(0x183b80, 0x03050a, 0.22),
-		key,
-		rim,
-		accent,
-		textFill
-	);
+	const ambient = new AmbientLight(0xffffff, 0.22);
+	const hemi = new HemisphereLight(0x183b80, 0x03050a, 0.22);
+
+	scene.add(ambient, hemi, key, rim, accent, textFill);
+	themed.hemi = hemi;
+	themed.lights = [
+		{ light: ambient, dark: 0.22, bright: 0.95 },
+		{ light: hemi, dark: 0.22, bright: 1.1 },
+		{ light: key, dark: 0.55, bright: 3.0 },
+		{ light: rim, dark: 0.8, bright: 2.4 },
+		{ light: accent, dark: 0.6, bright: 1.8 },
+		{ light: textFill, dark: 0.12, bright: 0.5 },
+	];
 }
 
 
@@ -148,10 +193,11 @@ function drawFace(canvas, face, lang) {
 	ctx.textBaseline = 'middle';
 	const title = (px) => `700 ${px}px Unbounded, Inter, sans-serif`;
 	const text = (px) => `500 ${px}px "Golos Text", Inter, sans-serif`;
+	const light = isLight();
 	const glow = (blur, color) => {
-		ctx.shadowColor = 'rgba(47,107,255,0.9)';
-		ctx.shadowBlur = blur;
-		ctx.fillStyle = color;
+		ctx.shadowColor = light ? 'rgba(0,0,0,0)' : 'rgba(47,107,255,0.9)';
+		ctx.shadowBlur = light ? 0 : blur;
+		ctx.fillStyle = light ? (color === '#6a9bff' ? '#1f55e6' : '#39445f') : color;
 	};
 
 	if (face.kind === 'list') {
@@ -221,6 +267,7 @@ function addFaceLabels(cubeGroup) {
 		: Promise.resolve();
 	fontsReady.then(redraw);
 	document.addEventListener('langchange', redraw);
+	document.addEventListener('themechange', redraw);
 }
 
 // ─── Материалы модели ────────────────────────────────────────────────────
@@ -271,6 +318,12 @@ function styleMaterial(node, mat) {
 	}
 
 	if (isText) {
+		themed.text.push({
+			mat,
+			color: mat.color.clone().setHex(TEXT_BLUE),
+			emissive: new Color(TEXT_EMISSIVE),
+			emissiveIntensity: 0.3,
+		});
 		mat.color?.setHex(TEXT_BLUE);
 		if (mat.emissive) {
 			mat.emissive.setHex(TEXT_EMISSIVE);
@@ -283,12 +336,14 @@ function styleMaterial(node, mat) {
 
 	if (mat.type === 'MeshBasicMaterial' || mat.type === 'MeshMatcapMaterial') {
 		mat.color?.setHex(ELECTRIC_BLUE);
+		themed.glow.push(mat);
 	}
 
 	if (mat.color && 'metalness' in mat && 'roughness' in mat) {
 		const current = (mat.color.r + mat.color.g + mat.color.b) / 3;
 		if (current > 0.75) mat.color.lerp(BRIGHT_TINT, 0.25);
 		mat.roughness = Math.max(mat.roughness, 0.32);
+		themed.body.push({ mat, color: mat.color.clone(), roughness: mat.roughness, metalness: mat.metalness });
 	}
 }
 
@@ -353,8 +408,9 @@ export function initHeroCube() {
 
 	const cubeGroup = new Group();
 	scene.add(cubeGroup);
-	if (import.meta.env.DEV) window.__cubeGroup = cubeGroup;
+	if (import.meta.env.DEV) { window.__cubeGroup = cubeGroup; window.__themed = themed; }
 	addFaceLabels(cubeGroup);
+	document.addEventListener('themechange', () => applyCubeTheme(renderer));
 
 	const loader = new GLTFLoader();
 	loader.setMeshoptDecoder(MeshoptDecoder);
@@ -362,6 +418,7 @@ export function initHeroCube() {
 		MODEL_URL,
 		(gltf) => {
 			prepareModel(gltf.scene);
+			applyCubeTheme(renderer);
 			cubeGroup.add(gltf.scene);
 			canvas.style.opacity = '1';
 			debugLog('[hero-cube] GLB-модель успешно загружена.');

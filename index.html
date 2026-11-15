@@ -141,6 +141,28 @@
 	<main class="page" id="main" tabindex="-1">
 	<section class="hero" id="hero" aria-label="Introduction" data-i18n-label="a11y.hero">
 		<div class="hero__bg" aria-hidden="true">
+			<svg class="hero__deco" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" focusable="false">
+				<defs>
+					<linearGradient id="ribbonA" x1="0" y1="0" x2="1" y2="1">
+						<stop offset="0" stop-color="var(--deco-a)" />
+						<stop offset="1" stop-color="var(--deco-b)" />
+					</linearGradient>
+					<linearGradient id="ribbonB" x1="1" y1="0" x2="0" y2="1">
+						<stop offset="0" stop-color="var(--deco-a)" />
+						<stop offset="1" stop-color="var(--deco-b)" />
+					</linearGradient>
+				</defs>
+				<path class="hero__ribbon" fill="url(#ribbonA)" d="M1150 -60 C1560 40 1600 520 1180 760 C1420 480 1380 160 1020 -60 Z" />
+				<path class="hero__ribbon" fill="url(#ribbonB)" d="M-120 470 C120 360 400 400 520 640 C330 520 110 560 -120 720 Z" />
+				<ellipse class="hero__ring" cx="860" cy="640" rx="420" ry="110" fill="none" />
+			</svg>
+			<span class="hero__guide hero__guide--v1"></span>
+			<span class="hero__guide hero__guide--v2"></span>
+			<span class="hero__guide hero__guide--h1"></span>
+			<span class="hero__cross" style="left:7%;top:22%"></span>
+			<span class="hero__cross" style="left:81%;top:73%"></span>
+			<span class="hero__cross" style="left:93%;top:18%"></span>
+			<span class="hero__cross" style="left:20%;top:84%"></span>
 			<div class="hero__grid"></div>
 			<div class="hero__grid-glow"></div>
 			<div class="hero__dot hero__dot--1"></div>
@@ -173,9 +195,7 @@
 					<span class="hero__title-line" data-i18n="hero.title.line1">
 						WEBSITES
 					</span>
-					<span class="hero__title-line" data-i18n="hero.title.line2">
-						THAT SELL.
-					</span>
+					<span class="hero__title-line" data-i18n="hero.title.line2">THAT SELL<span class="hero__title-dot">.</span></span>
 				</h1>
 
 				<p class="hero__description" data-animate="description" data-i18n="hero.description">
@@ -212,6 +232,7 @@
 			</div>
 
 			<div class="hero__scroll" data-animate="scroll">
+				<svg class="hero__mouse" viewBox="0 0 16 24" width="14" height="21" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="1" y="1" width="14" height="22" rx="7"/><path class="hero__mouse-wheel" d="M8 5v4" stroke-linecap="round"/></svg>
 				<span class="hero__scroll-text" data-i18n="hero.scroll">SCROLL</span>
 				<span class="hero__scroll-icon" aria-hidden="true">&darr;</span>
 			</div>

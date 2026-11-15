@@ -17,7 +17,7 @@ function paint() {
 		btn.setAttribute('aria-pressed', String(light));
 		btn.setAttribute('aria-label', t(light ? 'a11y.themeToDark' : 'a11y.themeToLight'));
 	});
-	document.querySelector('meta[name="theme-color"]')?.setAttribute('content', light ? '#e5e8ef' : '#060608');
+	document.querySelector('meta[name="theme-color"]')?.setAttribute('content', light ? '#f5f7fc' : '#060608');
 }
 
 export function initTheme() {
