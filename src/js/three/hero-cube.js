@@ -8,6 +8,7 @@ import {
 	AgXToneMapping,
 	AmbientLight,
 	Box3,
+	BoxGeometry,
 	CanvasTexture,
 	Color,
 	DirectionalLight,
@@ -58,7 +59,7 @@ const debugLog = (...args) => {
 };
 
 // Состояние темы: материалы корпуса и свет перекрашиваются при переключении.
-const themed = { body: [], text: [], glow: [], lights: [] };
+const themed = { body: [], text: [], glow: [], lights: [], core: null };
 const isLight = () => document.documentElement.getAttribute('data-theme') === 'light';
 
 function applyCubeTheme(renderer) {
@@ -86,6 +87,7 @@ function applyCubeTheme(renderer) {
 		}
 		mat.needsUpdate = true;
 	});
+	if (themed.core) themed.core.visible = light;
 	themed.glow.forEach((mat) => {
 		mat.color.setHex(light ? 0x0a3fd8 : ELECTRIC_BLUE);
 	});
@@ -136,6 +138,10 @@ function addLights(scene) {
 
 	scene.add(ambient, hemi, key, rim, accent, textFill);
 	themed.hemi = hemi;
+	// Синий источник внутри куба: в светлой теме даёт глубокое голубое свечение полостей.
+	const core = new PointLight(0x1d5bff, 0, 3.2, 2);
+	core.position.set(0.15, 0.05, 0.15);
+	scene.add(core);
 	themed.lights = [
 		{ light: ambient, dark: 0.22, bright: 0.95 },
 		{ light: hemi, dark: 0.22, bright: 1.1 },
@@ -143,9 +149,26 @@ function addLights(scene) {
 		{ light: rim, dark: 0.8, bright: 2.4 },
 		{ light: accent, dark: 0.6, bright: 1.8 },
 		{ light: textFill, dark: 0.12, bright: 0.5 },
+		{ light: core, dark: 0, bright: 7 },
 	];
 }
 
+
+// Градиент для синего ядра: светлее в центре, глубокий синий к краям.
+function makeCoreTexture() {
+	const c = document.createElement('canvas');
+	c.width = c.height = 256;
+	const ctx = c.getContext('2d');
+	const g = ctx.createRadialGradient(128, 110, 8, 128, 128, 190);
+	g.addColorStop(0, '#9cc0ff');
+	g.addColorStop(0.35, '#3d7bff');
+	g.addColorStop(1, '#0a2fc4');
+	ctx.fillStyle = g;
+	ctx.fillRect(0, 0, 256, 256);
+	const t = new CanvasTexture(c);
+	t.colorSpace = SRGBColorSpace;
+	return t;
+}
 
 // ─── Надписи на гранях ───────────────────────────────────────────────────
 // Каждая грань — про то, что я делаю и что получает клиент. Только честные
@@ -408,6 +431,14 @@ export function initHeroCube() {
 
 	const cubeGroup = new Group();
 	scene.add(cubeGroup);
+	// Глубокое синее ядро: в светлой теме просвечивает в вырезах серебристого корпуса.
+	const coreBox = new Mesh(
+		new BoxGeometry(1.2, 1.2, 1.2),
+		new MeshBasicMaterial({ map: makeCoreTexture(), toneMapped: false })
+	);
+	coreBox.visible = false;
+	cubeGroup.add(coreBox);
+	themed.core = coreBox;
 	if (import.meta.env.DEV) { window.__cubeGroup = cubeGroup; window.__themed = themed; }
 	addFaceLabels(cubeGroup);
 	document.addEventListener('themechange', () => applyCubeTheme(renderer));
