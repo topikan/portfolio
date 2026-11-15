@@ -20,17 +20,17 @@ function lightTheme() {
     v = v.replace(/rgba\(\s*255,\s*255,\s*255,\s*([\d.]+)\s*\)/g, (_, a) => `rgba(12, 16, 32, ${alpha(a, 1.25)})`)
     // чёрные/почти чёрные: тени → мягкие синеватые, фоны → светлые
     v = v.replace(/rgba\(\s*(?:0,\s*0,\s*0|6,\s*6,\s*8|10,\s*10,\s*13),\s*([\d.]+)\s*\)/g, (_, a) =>
-      SHADOW_PROPS.test(prop) ? `rgba(30, 45, 90, ${alpha(a, 0.28)})` : `rgba(244, 245, 248, ${a})`
+      SHADOW_PROPS.test(prop) ? `rgba(30, 45, 90, ${alpha(a, 0.28)})` : `rgba(229, 232, 239, ${a})`
     )
-    v = v.replace(/#060608\b/gi, '#f4f5f8').replace(/#0a0a0d\b/gi, '#ffffff')
+    v = v.replace(/#060608\b/gi, '#e5e8ef').replace(/#0a0a0d\b/gi, '#f0f2f7')
     if (/^(color|--color-text|--color-accent-text)$/.test(prop) || prop.startsWith('--')) {
-      v = v.replace(/#f5f6f8\b/gi, '#0b0d14')
+      v = v.replace(/#f5f6f8\b/gi, '#242b3f')
     }
     v = v
       .replace(/#5d91ff\b/gi, '#2457d6')
       .replace(/#5b8cff\b/gi, '#2457d6')
       .replace(/#9db9ff\b/gi, '#2f5fd0')
-      .replace(/#8b8f98\b/gi, '#5b6070')
+      .replace(/#8b8f98\b/gi, '#596078')
       .replace(/#6f737c\b/gi, '#6b7080')
     return v
   }
