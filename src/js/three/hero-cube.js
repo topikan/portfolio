@@ -110,7 +110,7 @@ const FACE_SIZE = 1.5;
 // Надписи RODION и FRONTEND на двух гранях — часть самой модели. Остальные
 // грани (сплошные) занимают наши подписи.
 const FACES = [
-	{ pos: [-1, 0, 0], rot: [0, -Math.PI / 2, 0], kind: 'logo', big: 'ON', sub: { ru: 'родион', en: 'rodion' } },
+	{ pos: [-1, 0, 0], rot: [0, -Math.PI / 2, 0], kind: 'logo', big: 'ON' },
 	{
 		pos: [0, 0, -1],
 		rot: [0, Math.PI, 0],
@@ -177,15 +177,17 @@ function drawFace(canvas, face, lang) {
 	}
 
 	const big = face.big;
-	const sub = face.sub[lang] || face.sub.en;
+	const sub = face.sub ? face.sub[lang] || face.sub.en : '';
 	const cy = face.kind === 'number' ? size * (face.cy ?? 0.22) : size * 0.5;
 	const px = face.kind === 'number' ? size * 0.26 : size * 0.4;
 	glow(size * 0.045, '#6a9bff');
 	ctx.font = title(px);
 	ctx.fillText(big, size / 2, cy);
-	glow(size * 0.014, '#9db8ff');
-	ctx.font = text(size * 0.05);
-	ctx.fillText(sub.toUpperCase(), size / 2, cy + px * 0.62);
+	if (sub) {
+		glow(size * 0.014, '#9db8ff');
+		ctx.font = text(size * 0.05);
+		ctx.fillText(sub.toUpperCase(), size / 2, cy + px * 0.62);
+	}
 }
 
 function addFaceLabels(cubeGroup) {
