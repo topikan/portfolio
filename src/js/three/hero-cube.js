@@ -178,19 +178,10 @@ const FACE_SIZE = 1.5;
 // Надписи RODION и FRONTEND на двух гранях — часть самой модели. Остальные
 // грани (сплошные) занимают наши подписи.
 const FACES = [
-	{ pos: [-1, 0, 0], rot: [0, -Math.PI / 2, 0], kind: 'logo', big: 'ON' },
-	{
-		pos: [0, 0, -1],
-		rot: [0, Math.PI, 0],
-		kind: 'list',
-		items: [
-			{ ru: ['ЛЕНДИНГИ', 'запуск от 1 дня'], en: ['LANDING PAGES', 'launch from 1 day'] },
-			{ ru: ['САЙТЫ ДЛЯ БИЗНЕСА', 'от 7 дней'], en: ['BUSINESS SITES', 'from 7 days'] },
-			{ ru: ['МАКЕТ → КОД', 'точно по дизайну'], en: ['FIGMA → CODE', 'pixel-accurate'] },
-		],
-	},
+	{ pos: [-1, 0, 0], rot: [0, -Math.PI / 2, 0], kind: 'number', cy: 0.4, big: '90+', sub: { ru: 'цель PageSpeed', en: 'PageSpeed goal' } },
+	{ pos: [0, 0, -1], rot: [0, Math.PI, 0], kind: 'number', cy: 0.3, big: '41', sub: { ru: 'отзыв на YouDo', en: 'reviews on YouDo' } },
 	{ pos: [0, 1, 0], rot: [-Math.PI / 2, 0, 0], kind: 'number', big: '3+', sub: { ru: 'года опыта', en: 'years of experience' } },
-	{ pos: [0, -1, 0], rot: [Math.PI / 2, 0, 0], kind: 'number', big: '4,9', cy: 0.76, sub: { ru: 'на YouDo · 41 отзыв', en: 'on YouDo · 41 reviews' } },
+	{ pos: [0, -1, 0], rot: [Math.PI / 2, 0, 0], kind: 'number', big: '4,9', cy: 0.76, sub: { ru: 'рейтинг на YouDo', en: 'YouDo rating' } },
 ];
 
 function wrapLines(ctx, text, maxWidth) {
