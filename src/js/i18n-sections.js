@@ -54,7 +54,7 @@ export const sectionTranslations = {
 		'pricing.1.f4': 'Lead form to your email or Telegram',
 		'pricing.2.name': 'Business website',
 		'pricing.2.price': 'from $330',
-		'pricing.2.time': '1–2 weeks',
+		'pricing.2.time': 'up to 1 week',
 		'pricing.2.f1': 'Up to 6 pages',
 		'pricing.2.f2': 'Design in your brand style',
 		'pricing.2.f3': 'Animations, forms, analytics',
@@ -79,7 +79,7 @@ export const sectionTranslations = {
 			'A landing page starts at $100, a business website at $330, Figma-to-code work from $13/hour. The final price is fixed in writing after we discuss the task.',
 		'faq.2.q': 'How long does it take?',
 		'faq.2.a':
-			'A landing page takes 1–3 days, a business website 1–2 weeks. Deadlines depend mostly on how fast texts and feedback arrive.',
+			'A landing page takes 1–3 days, a business website up to 1 week. Deadlines depend mostly on how fast texts and feedback arrive.',
 		'faq.3.q': 'Do you work with clients abroad? How do I pay?',
 		'faq.3.a':
 			'Yes. We can talk in English or Russian. Payment is by bank transfer or cryptocurrency (USDT). 50% upfront, 50% after delivery.',
@@ -208,7 +208,7 @@ export const sectionTranslations = {
 		'pricing.1.f4': 'Форма заявок на вашу почту или в Telegram',
 		'pricing.2.name': 'Сайт для бизнеса',
 		'pricing.2.price': 'от 25 000 ₽',
-		'pricing.2.time': '1–2 недели',
+		'pricing.2.time': 'до 1 недели',
 		'pricing.2.f1': 'До 6 страниц',
 		'pricing.2.f2': 'Дизайн в стиле вашего бренда',
 		'pricing.2.f3': 'Анимации, формы, аналитика',
@@ -233,7 +233,7 @@ export const sectionTranslations = {
 			'Лендинг — от 7 500 ₽, сайт для бизнеса — от 25 000 ₽, вёрстка по Figma — от 1 000 ₽/час. Итоговую цену фиксируем письменно после обсуждения задачи.',
 		'faq.2.q': 'Как быстро будет готово?',
 		'faq.2.a':
-			'Лендинг — 1–3 дня, сайт для бизнеса — 1–2 недели. Срок во многом зависит от того, как быстро приходят тексты и ответы на вопросы.',
+			'Лендинг — 1–3 дня, сайт для бизнеса — до 1 недели. Срок во многом зависит от того, как быстро приходят тексты и ответы на вопросы.',
 		'faq.3.q': 'Работаете с зарубежными клиентами? Как платить?',
 		'faq.3.a':
 			'Да, общаюсь на русском и английском. Оплата — банковским переводом или криптовалютой (USDT). 50% вперёд, 50% после сдачи.',
