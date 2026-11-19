@@ -87,25 +87,60 @@ function h(string $s): string
 	return htmlspecialchars($s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
+function tg_log(string $msg): void
+{
+	// Лог ошибок отправки рядом с базой (папка data закрыта .htaccess).
+	@file_put_contents(__DIR__ . '/data/telegram.log', date('c') . ' ' . $msg . "\n", FILE_APPEND);
+}
+
+function http_post(string $url, array $opts): array
+{
+	$ch = curl_init($url);
+	curl_setopt_array($ch, $opts + [
+		CURLOPT_POST => true,
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_FOLLOWLOCATION => true,
+		CURLOPT_CONNECTTIMEOUT => 5,
+		CURLOPT_TIMEOUT => 12,
+	]);
+	$res = curl_exec($ch);
+	$code = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+	$err = curl_error($ch);
+	curl_close($ch);
+	return [$res, $code, $err];
+}
+
 function telegram_send(string $text): bool
 {
 	$c = cfg();
+
+	// 1) Реле через Google Apps Script (если Telegram недоступен с хостинга).
+	if (!empty($c['tg_relay_url'])) {
+		[$res, $code, $err] = http_post($c['tg_relay_url'], [
+			CURLOPT_POSTFIELDS => json_encode(['secret' => $c['tg_relay_secret'] ?? '', 'text' => $text], JSON_UNESCAPED_UNICODE),
+			CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+		]);
+		if ($res !== false && $code === 200 && strpos((string) $res, '"ok":true') !== false) {
+			return true;
+		}
+		tg_log("relay failed: http=$code err=$err body=" . substr((string) $res, 0, 200));
+	}
+
+	// 2) Напрямую в Telegram.
 	if (empty($c['tg_token']) || empty($c['tg_chat'])) {
 		return false;
 	}
-	$ch = curl_init('https://api.telegram.org/bot' . $c['tg_token'] . '/sendMessage');
-	curl_setopt_array($ch, [
-		CURLOPT_POST => true,
+	[$res, $code, $err] = http_post('https://api.telegram.org/bot' . $c['tg_token'] . '/sendMessage', [
 		CURLOPT_POSTFIELDS => [
 			'chat_id' => $c['tg_chat'],
 			'text' => $text,
 			'disable_web_page_preview' => true,
 		],
-		CURLOPT_RETURNTRANSFER => true,
 		CURLOPT_TIMEOUT => 8,
 	]);
-	$res = curl_exec($ch);
-	$code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-	curl_close($ch);
-	return $res !== false && $code === 200;
+	if ($res !== false && $code === 200) {
+		return true;
+	}
+	tg_log("direct failed: http=$code err=$err body=" . substr((string) $res, 0, 200));
+	return false;
 }

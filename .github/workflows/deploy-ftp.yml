@@ -29,6 +29,8 @@ jobs:
           ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
           TG_TOKEN: ${{ secrets.TG_TOKEN }}
           TG_CHAT: ${{ secrets.TG_CHAT }}
+          TG_RELAY_URL: ${{ secrets.TG_RELAY_URL }}
+          TG_RELAY_SECRET: ${{ secrets.TG_RELAY_SECRET }}
         run: |
           test -n "$ADMIN_PASSWORD" && test -n "$TG_TOKEN" && test -n "$TG_CHAT" || { echo "Нужны секреты ADMIN_PASSWORD, TG_TOKEN, TG_CHAT"; exit 1; }
           php -r '
@@ -38,6 +40,8 @@ jobs:
               "admin_hash" => password_hash(getenv("ADMIN_PASSWORD"), PASSWORD_DEFAULT),
               "tg_token" => $t,
               "tg_chat" => getenv("TG_CHAT"),
+              "tg_relay_url" => getenv("TG_RELAY_URL") ?: "",
+              "tg_relay_secret" => getenv("TG_RELAY_SECRET") ?: "",
               "admin_url" => "https://rodionfrontend.ru/admin/",
               "salt" => hash("sha256", "salt|" . $t),
               "db_file" => "requests-" . substr(hash("sha256", "db|" . $t), 0, 12) . ".sqlite",
