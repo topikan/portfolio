@@ -87,8 +87,28 @@ function h(string $s): string
 	return htmlspecialchars($s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
 }
 
+// Запрос пришёл по HTTPS (в том числе когда TLS завершает nginx перед Apache).
+function is_https(): bool
+{
+	if (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') return true;
+	return strtolower((string) ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '')) === 'https';
+}
+
+// Админка и пароль — только по HTTPS: при заходе по http переводим на https до показа формы.
+function require_https(): void
+{
+	$fwd = strtolower((string) ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? ''));
+	$plain = $fwd === 'http' || (empty($_SERVER['HTTPS']) && $fwd === '' && (int) ($_SERVER['SERVER_PORT'] ?? 0) === 80);
+	if ($plain && !empty($_SERVER['HTTP_HOST'])) {
+		header('Location: https://' . preg_replace('/[^a-z0-9.:-]/i', '', (string) $_SERVER['HTTP_HOST']) . ($_SERVER['REQUEST_URI'] ?? '/'), true, 301);
+		exit;
+	}
+}
+
 function tg_log(string $msg): void
 {
+	// Токены и ключи в логи не пишем.
+	$msg = preg_replace('/\d{6,}:[A-Za-z0-9_-]{20,}/', '[token]', $msg);
 	// Лог ошибок отправки рядом с базой (папка data закрыта .htaccess).
 	@file_put_contents(__DIR__ . '/data/telegram.log', date('c') . ' ' . $msg . "\n", FILE_APPEND);
 }

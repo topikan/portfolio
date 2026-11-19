@@ -4,11 +4,12 @@
 declare(strict_types=1);
 require __DIR__ . '/../api/lib.php';
 
+require_https();
 session_name('adm');
 session_set_cookie_params([
 	'lifetime' => 0,
 	'path' => '/',
-	'secure' => !empty($_SERVER['HTTPS']),
+	'secure' => is_https(),
 	'httponly' => true,
 	'samesite' => 'Strict',
 ]);

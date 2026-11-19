@@ -19,6 +19,12 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
 	out(405, ['ok' => false, 'error' => 'method']);
 }
 
+// Заявки принимаем только со своего сайта (если браузер прислал Origin).
+$origin = (string) ($_SERVER['HTTP_ORIGIN'] ?? '');
+if ($origin !== '' && strcasecmp((string) parse_url($origin, PHP_URL_HOST), (string) preg_replace('/:\d+$/', '', (string) ($_SERVER['HTTP_HOST'] ?? ''))) !== 0) {
+	out(403, ['ok' => false, 'error' => 'origin']);
+}
+
 $in = json_decode((string) file_get_contents('php://input'), true);
 if (!is_array($in)) {
 	out(400, ['ok' => false, 'error' => 'bad_json']);

@@ -3,8 +3,9 @@
 declare(strict_types=1);
 require __DIR__ . '/../api/lib.php';
 
+require_https();
 session_name('adm');
-session_set_cookie_params(['lifetime' => 0, 'path' => '/', 'secure' => !empty($_SERVER['HTTPS']), 'httponly' => true, 'samesite' => 'Strict']);
+session_set_cookie_params(['lifetime' => 0, 'path' => '/', 'secure' => is_https(), 'httponly' => true, 'samesite' => 'Strict']);
 session_start();
 if (empty($_SESSION['ok'])) {
 	header('Location: ./');
@@ -14,6 +15,8 @@ $csrf = (string) $_SESSION['csrf'];
 header('X-Frame-Options: DENY');
 header('X-Robots-Tag: noindex, nofollow');
 header('Cache-Control: no-store');
+header('X-Content-Type-Options: nosniff');
+header("Content-Security-Policy: default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'");
 
 $dataDir = __DIR__ . '/../api/data';
 $contentFile = $dataDir . '/content.json';
@@ -127,9 +130,29 @@ if ($action !== '') {
 		if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
 		// В папке загрузок запрещаем выполнение скриптов.
 		if (!is_file($uploadDir . '/.htaccess')) {
-			file_put_contents($uploadDir . '/.htaccess', "Options -Indexes -ExecCGI\nRemoveHandler .php .phtml .php3 .php4 .php5 .php7 .phps\nphp_flag engine off\n<FilesMatch \"\\.(php|phtml|phar)$\">\nRequire all denied\n</FilesMatch>\n");
+			file_put_contents($uploadDir . '/.htaccess', "Options -Indexes -ExecCGI\n<IfModule mod_headers.c>\nHeader set X-Content-Type-Options nosniff\nHeader set Content-Security-Policy \"default-src 'none'; img-src 'self'; style-src 'none'\"\n</IfModule>\nRemoveHandler .php .phtml .php3 .php4 .php5 .php7 .phps\nphp_flag engine off\n<FilesMatch \"\\.(php|phtml|phar)$\">\nRequire all denied\n</FilesMatch>\n");
 		}
+		if ($info[0] > 8000 || $info[1] > 8000) jout(['ok' => false, 'error' => 'Картинка слишком большая (больше 8000 px)'], 400);
 		$name = date('ymd-His') . '-' . bin2hex(random_bytes(3)) . '.' . $types[$info[2]];
+		// Пересохраняем через GD: так внутри файла не остаётся ничего, кроме пикселей.
+		$saved = false;
+		if (function_exists('imagecreatefromstring')) {
+			$img = @imagecreatefromstring((string) file_get_contents($f['tmp_name']));
+			if ($img) {
+				$dest = $uploadDir . '/' . $name;
+				if ($info[2] === IMAGETYPE_PNG) {
+					imagealphablending($img, false);
+					imagesavealpha($img, true);
+					$saved = imagepng($img, $dest, 6);
+				} elseif ($info[2] === IMAGETYPE_WEBP && function_exists('imagewebp')) {
+					$saved = imagewebp($img, $dest, 88);
+				} elseif ($info[2] === IMAGETYPE_JPEG) {
+					$saved = imagejpeg($img, $dest, 90);
+				}
+				imagedestroy($img);
+			}
+		}
+		if ($saved) jout(['ok' => true, 'url' => '/uploads/' . $name]);
 		if (!move_uploaded_file($f['tmp_name'], $uploadDir . '/' . $name)) jout(['ok' => false, 'error' => 'Не удалось сохранить файл'], 500);
 		jout(['ok' => true, 'url' => '/uploads/' . $name]);
 	}

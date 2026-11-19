@@ -1,0 +1,30 @@
+# Защита и заголовки безопасности (Apache за nginx на reg.ru).
+Options -Indexes
+
+# Служебные и скрытые файлы наружу не отдаём (в том числе файл состояния деплоя).
+<FilesMatch "^\.|\.(sqlite|sqlite3|db|log|bak|sql|md)$">
+	Require all denied
+</FilesMatch>
+
+# Только HTTPS: если запрос пришёл по http — переводим на https (nginx передаёт схему в X-Forwarded-Proto).
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	# Случай 1: nginx явно сообщил, что запрос пришёл по http.
+	RewriteCond %{HTTP:X-Forwarded-Proto} =http
+	RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+	# Случай 2: заголовка нет, но Apache сам принял соединение на 80-м порту без TLS.
+	RewriteCond %{HTTP:X-Forwarded-Proto} ^$
+	RewriteCond %{HTTPS} off
+	RewriteCond %{SERVER_PORT} =80
+	RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+<IfModule mod_headers.c>
+	Header always set X-Content-Type-Options "nosniff"
+	Header always set X-Frame-Options "DENY"
+	Header always set Referrer-Policy "strict-origin-when-cross-origin"
+	Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+	Header always set Cross-Origin-Opener-Policy "same-origin"
+	Header always set Strict-Transport-Security "max-age=31536000"
+	Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self' data:; connect-src 'self' blob: data: https://api.web3forms.com; media-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+</IfModule>
