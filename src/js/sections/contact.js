@@ -19,10 +19,11 @@ const CHANNELS = [
 	{ key: 'github', label: 'GitHub', href: (v) => `https://github.com/${v}`, text: (v) => `github.com/${v}` },
 ];
 
-function renderLinks() {
+export function renderLinks() {
 	const list = document.querySelector('[data-contact-links]');
 	const empty = document.querySelector('[data-contact-empty]');
 	if (!list) return;
+	list.replaceChildren();
 
 	let shown = 0;
 	CHANNELS.forEach((ch) => {
@@ -63,11 +64,11 @@ function initForm() {
 	};
 
 	// Кнопки «Заказать» в ценах сразу выбирают тип проекта в форме.
-	document.querySelectorAll('[data-plan]').forEach((btn) => {
-		btn.addEventListener('click', () => {
-			const select = form.querySelector('[data-form-type]');
-			if (select) select.value = btn.getAttribute('data-plan');
-		});
+	document.addEventListener('click', (event) => {
+		const btn = event.target.closest('[data-plan]');
+		if (!btn) return;
+		const select = form.querySelector('[data-form-type]');
+		if (select) select.value = btn.getAttribute('data-plan');
 	});
 
 	form.addEventListener('submit', async (event) => {

@@ -12,6 +12,7 @@ import { initWorks } from './js/sections/works.js';
 import { initFaq } from './js/sections/faq.js';
 import { initSmoothAnchors } from './js/effects/smooth-anchors.js';
 import { initContact, initAnalytics } from './js/sections/contact.js';
+import { initContent } from './js/content.js';
 
 // Каждый блок стартует независимо: ошибка в одном (например, в браузере
 // нет WebGL и 3D-куб не создался) не должна ронять остальные — язык, меню,
@@ -34,6 +35,8 @@ safeInit('works', initWorks);
 safeInit('contact', initContact);
 safeInit('faq', initFaq);
 safeInit('smooth-anchors', initSmoothAnchors);
+// После стартовых блоков: подтягиваем правки из админки (работы, тарифы, FAQ, контакты, фото).
+safeInit('content', () => initContent().catch((error) => console.error('[content]', error)));
 safeInit('analytics', () => initAnalytics(ANALYTICS));
 
 // Самый тяжёлый блок (three.js, ~600 КБ JS) грузим отдельным чанком уже

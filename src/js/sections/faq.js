@@ -7,14 +7,16 @@
 import { gsap, ScrollTrigger } from '../utils/animate.js';
 
 export function initFaq() {
-	const items = document.querySelectorAll('.faq__item');
+	const list = document.querySelector('.faq__list');
+	if (!list) return;
 	const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-	items.forEach((item) => {
-		const summary = item.querySelector('summary');
-		if (!summary) return;
-
-		summary.addEventListener('click', (event) => {
+	// Делегирование: список вопросов может перерисоваться (правки из админки).
+	{
+		list.addEventListener('click', (event) => {
+			const summary = event.target.closest('summary');
+			const item = summary?.closest('.faq__item');
+			if (!summary || !item) return;
 			if (reduce.matches) return; // обычное поведение <details>
 			event.preventDefault();
 
@@ -55,5 +57,5 @@ export function initFaq() {
 				ScrollTrigger.refresh();
 			}
 		});
-	});
+	}
 }

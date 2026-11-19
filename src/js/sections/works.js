@@ -2,50 +2,14 @@
 //
 // Блок "Работы": рисует сетку карточек проектов.
 //
-// КАК ДОБАВИТЬ СВОЙ ПРОЕКТ: впиши объект в массив PROJECTS ниже. Пока массив
-// пустой, показываются 6 пустых шаблонов-заготовок. Когда проектов станет
-// больше — они встанут на свои места, а недостающие до полного ряда клетки
-// останутся заготовками ("скоро").
+// Работы редактируются в админке: /admin/ → «Редактор сайта». Список по умолчанию
+// лежит в src/js/works-data.js. Недостающие до полного ряда клетки — заготовки.
 
 import { t } from '../i18n.js';
+import { DEFAULT_WORKS } from '../works-data.js';
 
-export const PROJECTS = [
-	{
-		title: { en: 'Nedetsky Prazdnik — party venue', ru: 'Недетский праздник — пространство праздников' },
-		description: {
-			en: 'Website for a party venue in Krasnodar: gallery, video tour, pricing, FAQ and booking.',
-			ru: 'Сайт пространства праздников в Краснодаре: галерея, видеоэкскурсия, цены, FAQ и бронирование.',
-		},
-		tags: ['HTML', 'SCSS', 'JS', 'UI'],
-		image: `${import.meta.env.BASE_URL}images/nd-prazdnik.jpg`,
-		url: 'https://nd-prazdnik.com/',
-	},
-	{
-		title: { en: 'Vasilich Design — 3D studio', ru: 'Vasilich Design — студия 3D' },
-		description: {
-			en: 'Design reference for a 3D visualization studio: interactive hero, services, packages, RU/EN.',
-			ru: 'Дизайн-референс сайта студии 3D-визуализации: интерактивный первый экран, услуги, пакеты, RU/EN.',
-		},
-		tags: ['Three.js', 'HTML', 'SCSS', 'JS'],
-		image: `${import.meta.env.BASE_URL}images/vasilich-design.jpg`,
-		url: 'https://topikan.github.io/vasilich-design/site/',
-	},
-];
-
-// Временно скрыто: Mainfood (концепт редизайна кейтеринга). Чтобы вернуть —
-// перенеси объект обратно в PROJECTS.
-// const HIDDEN_PROJECTS = [
-// 	{
-// 		title: { en: 'Mainfood — catering redesign', ru: 'Mainfood — редизайн кейтеринга' },
-// 		description: {
-// 			en: 'Redesign concept for a catering company: services, event formats, price request in 24 hours.',
-// 			ru: 'Концепт редизайна сайта кейтеринга: услуги, форматы мероприятий, расчёт за 24 часа.',
-// 		},
-// 		tags: ['HTML', 'SCSS', 'JS', 'UI'],
-// 		image: `${import.meta.env.BASE_URL}images/mainfood.jpg`,
-// 		url: 'https://topikan.github.io/mainfood-redesign/',
-// 	},
-// ];
+// Работы можно менять в админке (Редактор сайта) — тогда список приходит с сервера.
+let projects = DEFAULT_WORKS;
 
 const MIN_CARDS = 3; // минимум карточек в сетке
 const COLUMNS = 3; // чтобы последний ряд не был неполным
@@ -116,16 +80,20 @@ function buildCard(project, index) {
 	return card;
 }
 
-export function initWorks() {
+function render() {
 	const grid = document.querySelector('[data-works-grid]');
 	if (!grid) return;
+	const total = Math.max(MIN_CARDS, Math.ceil(projects.length / COLUMNS) * COLUMNS);
+	const cards = Array.from({ length: total }, (_, i) => buildCard(projects[i], i));
+	grid.replaceChildren(...cards);
+}
 
-	const render = () => {
-		const total = Math.max(MIN_CARDS, Math.ceil(PROJECTS.length / COLUMNS) * COLUMNS);
-		const cards = Array.from({ length: total }, (_, i) => buildCard(PROJECTS[i], i));
-		grid.replaceChildren(...cards);
-	};
+export function setWorks(list) {
+	if (Array.isArray(list)) projects = list;
+	render();
+}
 
+export function initWorks() {
 	render();
 	// Язык сменился — перерисовываем тексты карточек.
 	document.addEventListener('langchange', render);

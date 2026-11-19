@@ -116,7 +116,7 @@ echo '<a href="./"' . ($filter === '' ? ' class="on"' : '') . '>Все (' . arra
 foreach (STATUSES as $k => $label) {
 	echo '<a href="./?s=' . $k . '"' . ($filter === $k ? ' class="on"' : '') . '>' . h($label) . ' (' . $counts[$k] . ')</a>';
 }
-echo '<a href="./?csv=1">CSV</a><a href="./?logout=1">Выйти</a></nav></header><main>';
+echo '<a href="content.php">Редактор сайта</a><a href="./?csv=1">CSV</a><a href="./?logout=1">Выйти</a></nav></header><main>';
 if (!$rows) echo '<p class="muted">Заявок пока нет.</p>';
 foreach ($rows as $r) {
 	$status = STATUSES[$r['status']] ?? $r['status'];

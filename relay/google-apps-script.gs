@@ -16,6 +16,12 @@ function doPost(e) {
   try {
     var data = JSON.parse(e.postData.contents);
     if (!data.secret || data.secret !== props.getProperty('SECRET')) return out({ ok: false, error: 'forbidden' });
+    if (data.action === 'translate') {
+      var texts = (data.texts || []).map(function (t) {
+        return t ? LanguageApp.translate(String(t), data.from || 'ru', data.to || 'en') : '';
+      });
+      return out({ ok: true, texts: texts });
+    }
     var url = 'https://api.telegram.org/bot' + props.getProperty('TG_TOKEN') + '/sendMessage';
     var res = UrlFetchApp.fetch(url, {
       method: 'post',
